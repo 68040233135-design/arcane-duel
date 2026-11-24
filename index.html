@@ -97,6 +97,8 @@ button small{display:block;font-family:'Sarabun';font-size:11px;opacity:.8}
 .mc.t1::after,.mc.t2::after{position:absolute;top:8px;right:8px;padding:1px 12px;font-family:var(--disp);font-size:13px;color:#1a1033;transform:skewX(-12deg)}
 .mc.t1::after{content:'P1';background:var(--gold)}.mc.t2::after{content:'P2';background:var(--cy)}
 #menu.aim .mc.t2::after{content:'AI'}
+.mc .cf{display:none;width:calc(100% - 20px);margin:10px 10px 0;transform:skewX(-6deg)}
+.mc.on .cf{display:block}
 /* ---------- battle HUD ---------- */
 #top{text-align:center;min-height:54px}
 #wv{display:flex;justify-content:center;align-items:center;gap:10px;font-family:var(--disp);font-size:13px}
@@ -240,7 +242,7 @@ M.querySelectorAll('.hh').forEach(el=>{el.onclick=()=>{const i=+el.dataset.i;el.
 if(!window._ck){window._ck=1;addEventListener('keydown',e=>{if(e.key=='Enter'&&M.classList.contains('cover')&&M.style.display!='none'&&document.activeElement==document.body){e.preventDefault();$('#m1').click()}})}
 $('#m1').onclick=()=>{MODE='pvp';pvp()};$('#m3').onclick=()=>{MODE='ai';pvp()};$('#m2').onclick=rules}
 function rules(){show(`<h1 style="font-size:30px">📖 กติกา</h1><div class=lvb style="text-align:left;max-width:600px;line-height:1.75;font-size:14.5px">
-<b>🎯 ดราฟ:</b> P1 เลือก 1 → P2 เลือก 2 → P1 เลือก 2 → P2 เลือก 1 (ตัวละ 10 วิ ถ้าไม่ทันระบบสุ่มให้ · ฮีโร่ที่ถูกเลือกแล้วเลือกซ้ำไม่ได้)<br><b>🤖 โหมด AI:</b> เล่นคนเดียว AI ดราฟและสู้เอง<br><br><b>ลำดับตา:</b> ตัวที่ SPD สูงสุดเล่นก่อน ในตาเลือก โจมตี / สกิล (ใช้ MP) / ป้องกัน<br>
+<b>🎯 ดราฟ:</b> P1 เลือก 1 → P2 เลือก 2 → P1 เลือก 2 → P2 เลือก 1 (4 รอบ รอบละ 10 วิ ถ้าไม่ทันระบบสุ่มตัวที่เหลือในรอบให้ · ฮีโร่ที่ถูกเลือกแล้วเลือกซ้ำไม่ได้)<br><b>🤖 โหมด AI:</b> เล่นคนเดียว AI ดราฟและสู้เอง<br><br><b>ลำดับตา:</b> ตัวที่ SPD สูงสุดเล่นก่อน ในตาเลือก โจมตี / สกิล (ใช้ MP) / ป้องกัน<br>
 • โจมตีธรรมดา ฟื้น MP +4 · ป้องกัน ลดดาเมจ 50% จนถึงตาหน้า และฟื้น MP +5<br><br>
 <b>💥 คริติคอล:</b> ทุกการโจมตีและสกิลที่ทำดาเมจ ทอยโอกาสคริตามค่า "คริ %" ของตัวนั้น (ดูใต้ชื่อบนการ์ด) ถ้าติดจะได้ดาเมจ ×ค่าดาเมจคริ (1.5–1.9 ตามตัว) ตัวเลขเด้งสีทองพร้อม 💥<br>
 • โอกาสคริเพิ่มได้จากพาสซีพ เช่น ตาเหยี่ยว<br>
@@ -255,22 +257,24 @@ c.onclick=()=>{pk.has(i)?pk.delete(i):pk.size<3&&pk.add(i);document.querySelecto
 $('#bk').onclick=back;$('#ok').onclick=()=>cb([...pk])}
 function pvp(){RN=0;W=[0,0];draft()}
 function aiPick(av,mine){const S=['heal','shield','cover','taunt','roar'],pf=mine.some(i=>S.includes(H[i].k))?[]:av.filter(i=>S.includes(H[i].k));return pf.length&&Math.random()<.7?rnd(pf):rnd(av)}
-function draft(){const ORD=[0,1,1,0,0,1],pk=[[],[]],own={},ai=MODE=='ai',nm=s=>s?(ai?'AI':'ผู้เล่น 2'):'ผู้เล่น 1',cs=[];let step=0,sel=-1,busy=1;
-show(`<h1 id=dh style="font-size:26px"></h1><div id=dsec></div><div class=dtm><i></i></div><div class=dts><div><b>P1</b><span></span><span></span><span></span></div><div><b>${ai?'AI':'P2'}</b><span></span><span></span><span></span></div></div><div id=grid></div><div class=bt><button id=bk>↩ กลับ</button><button id=ok disabled>✅ ยืนยัน</button></div>`);
-const id=DID,bar=$('.dtm'),fill=$('.dtm i');if(ai)M.classList.add('aim');
+function draft(){const RD=[[0],[1,1],[0,0],[1]],pk=[[],[]],own={},ai=MODE=='ai',nm=s=>s?(ai?'AI':'ผู้เล่น 2'):'ผู้เล่น 1',cs=[];let rd=-1,k=0,busy=1;
+show(`<h1 id=dh style="font-size:24px"></h1><div id=dsec></div><div class=dtm><i></i></div><div class=dts><div><b>P1</b><span></span><span></span><span></span></div><div><b>${ai?'AI':'P2'}</b><span></span><span></span><span></span></div></div><div id=grid></div><div class=bt><button id=bk>↩ กลับ</button></div>`);
+const id=DID,bar=$('.dtm'),fill=$('.dtm i'),sd=()=>RD[rd][0];if(ai)M.classList.add('aim');
 H.forEach((d,i)=>{const p=PS[i],c=document.createElement('div');c.className='mc';c.style.setProperty('--c',d.c);
-c.innerHTML=`<div class=em>${d.e}</div><b>${d.n}</b><small>HP ${Math.round(d.hp*HPX)} · MP ${d.mp} · ATK ${d.atk} · DEF ${d.def} · SPD ${d.spd}</small><small class=cr>💥 คริ ${Math.round((p.cr+(p.pid=='eagle'?.2:0))*100)}% · ดาเมจคริ ×${p.cd}</small><small>✨ ${d.sk} (${d.cost} MP): ${KD[d.k]}</small><small class=ps>💠 พาสซีพ "${p.pn}": ${p.pd}</small>`;
-c.onclick=()=>{if(busy||own[i]!=null)return;sel=i;cs.forEach((x,j)=>x.classList.toggle('on',j==i));$('#ok').disabled=false};$('#grid').append(c);cs.push(c)});
+c.innerHTML=`<div class=em>${d.e}</div><b>${d.n}</b><small>HP ${Math.round(d.hp*HPX)} · MP ${d.mp} · ATK ${d.atk} · DEF ${d.def} · SPD ${d.spd}</small><small class=cr>💥 คริ ${Math.round((p.cr+(p.pid=='eagle'?.2:0))*100)}% · ดาเมจคริ ×${p.cd}</small><small>✨ ${d.sk} (${d.cost} MP): ${KD[d.k]}</small><small class=ps>💠 พาสซีพ "${p.pn}": ${p.pd}</small><button class=cf>✅ ยืนยันเลือกตัวนี้</button>`;
+c.onclick=()=>{if(busy||own[i]!=null)return;cs.forEach((x,j)=>x.classList.toggle('on',j==i));c.scrollIntoView({block:'nearest',behavior:'smooth'})};
+c.querySelector('.cf').onclick=e=>{e.stopPropagation();if(!busy&&own[i]==null)lock(i)};$('#grid').append(c);cs.push(c)});
 const avail=()=>H.map((_,i)=>i).filter(i=>own[i]==null);
-const lock=i=>{clearInterval(window._dt);busy=1;const s=ORD[step];own[i]=s;pk[s].push(i);cs[i].classList.remove('on');cs[i].classList.add('t'+(s+1));
-M.querySelectorAll('.dts div')[s].querySelectorAll('span')[pk[s].length-1].textContent=H[i].e;$('#ok').disabled=true;step++;
-if(step>=6){$('#dh').textContent='⚔️ เริ่มศึก!';$('#dsec').textContent='';setTimeout(()=>{if(id==DID)pvpStart(pk[0],pk[1])},900);return}
-setTimeout(turn,450)};
-function turn(){if(id!=DID)return;const s=ORD[step];M.dataset.p=s+1;$('#dh').textContent=`${nm(s)} · เลือกตัวที่ ${pk[s].length+1}/3`;sel=-1;cs.forEach(x=>x.classList.remove('on'));$('#ok').disabled=true;bar.classList.remove('hot');fill.style.width='100%';
-if(ai&&s){busy=1;$('#dsec').textContent='🤖 กำลังเลือก…';setTimeout(()=>{if(id==DID)lock(aiPick(avail(),pk[1]))},1000+Math.random()*800);return}
+const hdr=()=>{M.dataset.p=sd()+1;$('#dh').textContent=`รอบ ${rd+1}/4 · ${nm(sd())} เลือก ${RD[rd].length} ตัว (เหลือ ${RD[rd].length-k})`};
+const lock=i=>{const s=sd();own[i]=s;pk[s].push(i);cs[i].classList.remove('on');cs[i].classList.add('t'+(s+1));
+M.querySelectorAll('.dts div')[s].querySelectorAll('span')[pk[s].length-1].textContent=H[i].e;k++;
+if(k>=RD[rd].length){clearInterval(window._dt);busy=1;setTimeout(next,500)}else hdr()};
+function next(){if(id!=DID)return;rd++;if(rd>=4){$('#dh').textContent='⚔️ เริ่มศึก!';$('#dsec').textContent='';cs.forEach(x=>x.classList.remove('on'));setTimeout(()=>{if(id==DID)pvpStart(pk[0],pk[1])},900);return}
+k=0;hdr();cs.forEach(x=>x.classList.remove('on'));bar.classList.remove('hot');fill.style.width='100%';
+if(ai&&sd()){busy=1;$('#dsec').textContent='🤖 กำลังเลือก…';const go=()=>{if(id!=DID||k>=RD[rd].length)return;lock(aiPick(avail(),pk[1]));if(k<RD[rd].length)setTimeout(go,900)};setTimeout(go,1000);return}
 busy=0;const T0=Date.now();$('#dsec').textContent='⏱ 10 วิ';
-window._dt=setInterval(()=>{const l=Math.max(0,10-(Date.now()-T0)/1000);fill.style.width=l*10+'%';bar.classList.toggle('hot',l<=3);$('#dsec').textContent='⏱ '+Math.ceil(l)+' วิ';if(l<=0){$('#dsec').textContent='🎲 สุ่ม!';lock(rnd(avail()))}},100)}
-$('#bk').onclick=home;$('#ok').onclick=()=>{if(sel>=0&&!busy)lock(sel)};turn()}
+window._dt=setInterval(()=>{const l=Math.max(0,10-(Date.now()-T0)/1000);fill.style.width=l*10+'%';bar.classList.toggle('hot',l<=3);$('#dsec').textContent='⏱ '+Math.ceil(l)+' วิ';if(l<=0){clearInterval(window._dt);$('#dsec').textContent='🎲 หมดเวลา สุ่มให้!';while(k<RD[rd].length)lock(rnd(avail()))}},100)}
+$('#bk').onclick=home;next()}
 async function aiTurn(u){const cmd=$('#cmd');cmd.style.borderColor='#6fd6ff';cmd.innerHTML=`<div class=who>🤖 AI · ${u.e} ตาของ ${u.n}</div><div class=pi>กำลังคิด…</div>`;await sleep(900);cmd.innerHTML='';if(over)return;
 const E=alive(opp(u)),A=alive(ally(u)),T=E.filter(x=>x.tt>0),pool=T.length?T:E,low=pool.reduce((a,b)=>a.hp/a.max<b.hp/b.max?a:b),tg=Math.random()<.6?low:rnd(pool),hurt=A.filter(x=>x.hp<x.max*.55).length,k=u.k,can=u.mp>=u.cost,r=Math.random();
 const guard=async()=>{u.guard=1;u.mp=Math.min(u.mpMax,u.mp+5);upd(u);msg(u.n+' ตั้งท่าป้องกัน');fx(u.el,'#8fd0ff',26,'burst');await sleep(700)};
