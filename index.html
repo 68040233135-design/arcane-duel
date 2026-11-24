@@ -58,6 +58,31 @@ button small{display:block;font-family:'Sarabun';font-size:11px;opacity:.8}
 .mc small{display:block;font-size:12px;opacity:.85;margin-top:3px}
 .mc .ps{color:#ffd98a;opacity:1;line-height:1.35}.mc .cr{color:#ff9e7a;opacity:1}
 
+/* ---------- cover ---------- */
+#menu.cover{background:radial-gradient(ellipse 80% 60% at 50% 0%,#4b3590 0%,transparent 70%),radial-gradient(ellipse 70% 50% at 50% 110%,#7a2a5a66,transparent 70%),linear-gradient(#1a1440,#0e0a24)}
+#menu.cover::before{inset:-20%;background:radial-gradient(circle at 20% 30%,#ffb86a24,transparent 36%),radial-gradient(circle at 80% 70%,#5ae0ff22,transparent 40%);animation:drift 18s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(3%,-3%) scale(1.08)}}
+.cv{position:relative;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:12px 0;font-family:'Mitr','Sarabun',sans-serif}
+.cv .st{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;pointer-events:none;animation:tw 4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.12}50%{opacity:.8}}
+#menu.cover h1.logo{margin:0;font-size:clamp(52px,15vw,112px);transform:skewX(-6deg);animation:rise .8s cubic-bezier(.2,1.2,.4,1) backwards,lf 5s 1s ease-in-out infinite}
+@keyframes rise{0%{opacity:0;transform:translateY(24px) skewX(-6deg) scale(.92)}}
+@keyframes lf{0%,100%{transform:skewX(-6deg)}50%{transform:translateY(-6px) skewX(-6deg)}}
+.cover .logo span{-webkit-text-stroke:0;background-image:linear-gradient(#fff6dc,#ffd98a 60%,#ffab5e);filter:drop-shadow(0 4px 0 #0007) drop-shadow(0 0 24px #ffb86655)}
+.cover .logo span+span{background-image:linear-gradient(#ecfcff,#8fe9ff 60%,#7aa2ff);filter:drop-shadow(0 4px 0 #0007) drop-shadow(0 0 24px #5ae0ff55)}
+.cv .tag{font-size:clamp(14px,3.6vw,18px);color:#e6dcff;opacity:.9;letter-spacing:.04em;text-align:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:520px}
+.chips span{padding:6px 14px;border-radius:99px;font-size:13px;color:#f3ecff;background:#ffffff14;border:1px solid #ffffff2a}
+.hr{display:flex;gap:clamp(6px,2.5vw,18px);justify-content:center;margin:6px 0 0}
+.hh{width:clamp(52px,14vw,76px);aspect-ratio:1;display:grid;place-items:center;font-size:clamp(30px,8vw,44px);border-radius:50%;cursor:pointer;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--c) 38%,transparent),#ffffff0a 75%);border:2px solid color-mix(in srgb,var(--c) 60%,#fff3);box-shadow:0 0 22px color-mix(in srgb,var(--c) 35%,transparent);animation:bob 3.2s ease-in-out infinite;transition:scale .15s}
+.hh:nth-child(2n){animation-delay:-1s}.hh:nth-child(3n){animation-delay:-2s}
+.hh:hover{scale:1.12}
+.hh.pop{animation:pp .5s}
+@keyframes pp{30%{transform:translateY(-22px) scale(1.2) rotate(-8deg)}60%{transform:translateY(0) scale(.95)}}
+.cv .tip{min-height:50px;max-width:440px;font-size:14px;line-height:1.5;color:#ffe3a8;text-align:center}
+#m2{background:#ffffff1c;color:#f3ecff;box-shadow:inset 0 0 0 2px #ffffff40}
+@media(prefers-reduced-motion:reduce){#menu.cover::before,.hh,.st,#m1,#menu.cover h1.logo{animation:none!important}}
+
 /* ---------- battle HUD ---------- */
 #top{text-align:center;min-height:54px}
 #wv{display:flex;justify-content:center;align-items:center;gap:10px;font-family:var(--disp);font-size:13px}
@@ -188,11 +213,17 @@ const PS=[
 {pid:'regen',pn:'ปราการฟื้นฟู',pd:'ต้นเทิร์นฟื้น HP ตัวเอง 5% ของสูงสุด',cr:.06,cd:1.5}];
 const opp=u=>u.side=='p'?foes:party,ally=u=>u.side=='p'?party:foes,M=$('#menu'),alive=a=>a.filter(x=>x.hp>0),has=(u,id)=>alive(ally(u)).some(x=>x.pid==id);
 const crOf=u=>Math.min(1,u.cr+(u.pid=='eagle'?.2:0)+(has(u,'anthem')?.06:0)),atkOf=u=>u.atk*(u.pid=='scale'&&u.hp<u.max*.35?1.4:1)*(u.pid=='charge'?1+.08*u.st:1)*(u.bt>0?u.bm:1)*(u.dt>0?.75:1)*(u.pid=='rage'?1+Math.min(.5,.8*(1-u.hp/u.max)):1),defOf=t=>t.def*(has(t,'guard')?1.25:1);
-function show(h){delete M.dataset.p;M.scrollTop=0;$('#end').style.display='none';M.style.display='block';M.innerHTML=h}
+function show(h){M.classList.remove('cover');delete M.dataset.p;M.scrollTop=0;$('#end').style.display='none';M.style.display='block';M.innerHTML=h}
 function msg(t){$('#msg').textContent=t}
 async function banner(t){const b=$('#banner');flash('#ff8a3c');b.textContent=t;b.classList.remove('go');void b.offsetWidth;b.classList.add('go');await sleep(1500)}
 // ---------- menus
-function home(){over=true;BID++;show(`<h1 class=logo><span>ARCANE</span><span>DUEL</span></h1><p>PvP 2 ผู้เล่น จอเดียว · ทีมละ 3 ตัว · 18 ฮีโร่ สายโจมตี · สายบัพ · สายแทงค์ พร้อมพาสซีพเฉพาะตัว</p><div class=ps1>▶ PRESS START ◀</div><div class=bt><button id=m1>⚔️ เริ่มศึก PvP</button><button id=m2 style="background:linear-gradient(#cfc4ff,#8f7bff);box-shadow:0 4px 0 #4a3aa8">📖 กติกา & คริติคอล</button></div>`);$('#m1').onclick=pvp;$('#m2').onclick=rules}
+function home(){over=true;BID++;const hs=[...H.keys()].sort(()=>Math.random()-.5).slice(0,5);
+show(`<div class=cv><h1 class=logo><span>ARCANE</span><span>DUEL</span></h1><div class=tag>ศึกจอมเวท PvP สองผู้เล่น บนจอเดียว</div><div class=chips><span>👥 2 ผู้เล่น</span><span>⚔️ ทีมละ 3 ตัว</span><span>🌟 18 ฮีโร่</span><span>💠 พาสซีพเฉพาะตัว</span></div><div class=hr>${hs.map(i=>`<span class=hh style="--c:${H[i].c}" data-i=${i}>${H[i].e}</span>`).join('')}</div><div class=tip>แตะฮีโร่เพื่อดูพาสซีพ</div><div class=bt><button id=m1>⚔️ เริ่มศึก PvP</button><button id=m2>📖 กติกา & คริติคอล</button></div><div class=tag style="font-size:12px;opacity:.5">กด Enter เพื่อเริ่มได้เลย</div></div>`);
+M.classList.add('cover');const cv=$('.cv');
+for(let i=0;i<24;i++){const t=document.createElement('i');t.className='st';t.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${-Math.random()*4}s;scale:${.6+Math.random()*1.2}`;cv.append(t)}
+M.querySelectorAll('.hh').forEach(el=>{el.onclick=()=>{const i=+el.dataset.i;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');$('.tip').innerHTML=`<b style="color:${H[i].c}">${H[i].n}</b> · 💠 ${PS[i].pn}<br><small style="opacity:.8">${PS[i].pd}</small>`};el.onanimationend=()=>el.classList.remove('pop')});
+if(!window._ck){window._ck=1;addEventListener('keydown',e=>{if(e.key=='Enter'&&M.classList.contains('cover')&&M.style.display!='none'&&document.activeElement==document.body){e.preventDefault();pvp()}})}
+$('#m1').onclick=pvp;$('#m2').onclick=rules}
 function rules(){show(`<h1 style="font-size:30px">📖 กติกา</h1><div class=lvb style="text-align:left;max-width:600px;line-height:1.75;font-size:14.5px">
 <b>ลำดับตา:</b> ตัวที่ SPD สูงสุดเล่นก่อน ในตาเลือก โจมตี / สกิล (ใช้ MP) / ป้องกัน<br>
 • โจมตีธรรมดา ฟื้น MP +4 · ป้องกัน ลดดาเมจ 50% จนถึงตาหน้า และฟื้น MP +5<br><br>
