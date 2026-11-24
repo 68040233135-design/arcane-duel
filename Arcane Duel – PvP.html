@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="th"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arcane Duel – PvP</title>
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;600&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--tx:#f4efe6;--gold:#ffc857;--ink:#120d22;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--ink);color:var(--tx);font-family:'Sarabun',system-ui,sans-serif;overflow:hidden}
+body{background:radial-gradient(ellipse at 50% 0%,#3b1d5e 0%,#1a1033 45%,#0a0716 100%)}
+h1,.who,#banner,.big{font-family:'Mitr',sans-serif}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+#floor{position:fixed;left:0;right:0;bottom:0;height:46%;background:repeating-linear-gradient(90deg,transparent 0 59px,rgba(255,200,87,.07) 59px 60px),linear-gradient(transparent,rgba(255,120,60,.12));transform:perspective(400px) rotateX(35deg);transform-origin:bottom;opacity:.7}
+#flash{position:fixed;inset:0;z-index:6;pointer-events:none;opacity:0}
+#stage{position:relative;height:100%;display:flex;flex-direction:column;max-width:960px;margin:0 auto;padding:10px}
+#menu{position:fixed;inset:0;z-index:10;overflow:auto;padding:18px;text-align:center;background:rgba(10,7,22,.88)}
+#menu h1{font-size:clamp(30px,7vw,52px);margin:6px 0;color:var(--gold);text-shadow:0 0 24px #ff8a3c88}
+#menu p{margin:4px 0 14px;opacity:.8}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;max-width:960px;margin:0 auto 16px}
+.mc{border:2px solid #ffffff22;border-radius:14px;padding:10px 8px;cursor:pointer;background:#ffffff0d;transition:.2s;--c:#fff}
+.mc:hover{border-color:var(--c);transform:translateY(-3px)}
+.mc.on{border-color:var(--c);background:color-mix(in srgb,var(--c) 22%,transparent);box-shadow:0 0 22px var(--c)}
+.mc .em{font-size:44px;filter:drop-shadow(0 0 10px var(--c))}
+.mc b{display:block;font-family:'Mitr';font-weight:400}
+.mc small{display:block;font-size:12px;opacity:.8;margin-top:3px}
+button{font:inherit;font-family:'Mitr';cursor:pointer;border:0;border-radius:12px;padding:10px 16px;color:#1a1033;background:linear-gradient(#ffd98a,#ffb133);box-shadow:0 4px 0 #a86a00,0 0 18px #ffb13355;transition:.15s}
+button:hover:not(:disabled){transform:translateY(-2px)}
+button:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 #a86a00}
+button:disabled{opacity:.35;cursor:not-allowed}
+button small{display:block;font-size:11px;opacity:.7}
+#top{text-align:center;min-height:54px}
+#wv{font-size:13px;opacity:.7}
+#msg{font-family:'Mitr';font-size:clamp(16px,3.6vw,22px);color:var(--gold);text-shadow:0 0 12px #ffb13388}
+.row{flex:1;display:flex;justify-content:center;align-items:center;gap:clamp(6px,3vw,34px)}
+.u{width:clamp(88px,26vw,140px);text-align:center;position:relative;--c:#fff}
+.u .em{font-size:clamp(46px,13vw,76px);line-height:1.1;filter:drop-shadow(0 0 16px var(--c));animation:bob 2.6s ease-in-out infinite}
+.u:nth-child(2) .em{animation-delay:-.9s}.u:nth-child(3) .em{animation-delay:-1.7s}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.foe .em{transform:scaleX(-1)}
+.foe .em{animation-name:bobf}
+@keyframes bobf{0%,100%{transform:scaleX(-1) translateY(0)}50%{transform:scaleX(-1) translateY(-8px)}}
+.u .nm{font-size:13px;font-family:'Mitr'}
+.bar{height:8px;background:#0008;border-radius:6px;margin-top:3px;overflow:hidden;border:1px solid #ffffff22}
+.bar i{display:block;height:100%;width:100%;transition:width .45s}
+.hp i{background:linear-gradient(90deg,#e8384f,#ff8a6b)}.mp i{background:linear-gradient(90deg,#3b6bff,#6fd6ff)}
+.bar.mp{height:5px}
+.num{font-size:11px;opacity:.85}
+.u.active::before{content:'';position:absolute;left:50%;top:-6px;width:70%;height:70%;transform:translateX(-50%);background:radial-gradient(circle,var(--c),transparent 68%);opacity:.45;z-index:-1;animation:pul 1s infinite}
+@keyframes pul{50%{opacity:.15}}
+.u.tgt{cursor:pointer;animation:tg .6s infinite alternate}
+@keyframes tg{to{transform:scale(1.1)}}
+.u.tgt::after{content:'🎯';position:absolute;top:-14px;right:4px;font-size:20px}
+.u.hit .em{animation:hit .35s}
+@keyframes hit{25%{filter:brightness(4) drop-shadow(0 0 20px #fff);transform:translateX(-10px)}60%{transform:translateX(8px)}}
+.foe.hit .em{animation-name:hitf}
+@keyframes hitf{25%{filter:brightness(4);transform:scaleX(-1) translateX(-10px)}60%{transform:scaleX(-1) translateX(8px)}}
+.u.dead{opacity:.18;filter:grayscale(1);transition:1s}.u.dead .em{animation:none}
+.u.dead.foe{opacity:0;transform:scale(.4) rotate(20deg);pointer-events:none}
+.f{position:fixed;z-index:7;font-family:'Mitr';font-weight:600;pointer-events:none;text-shadow:0 2px 0 #000,0 0 12px currentColor;animation:fl 1.1s ease-out forwards}
+@keyframes fl{0%{transform:translate(-50%,0) scale(.4);opacity:0}15%{transform:translate(-50%,-14px) scale(1.3);opacity:1}100%{transform:translate(-50%,-80px) scale(1);opacity:0}}
+#cmd{min-height:68px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding:10px;border-radius:16px;background:#ffffff0f;border:1px solid #ffffff1f;backdrop-filter:blur(6px);position:relative;z-index:8}
+.who{color:var(--gold);width:100%;text-align:center;font-size:15px}
+#banner{position:fixed;left:0;right:0;top:38%;text-align:center;font-size:clamp(40px,12vw,90px);color:var(--gold);z-index:9;pointer-events:none;opacity:0;text-shadow:0 0 30px #ff8a3c}
+#banner.go{animation:bn 1.6s ease-out}
+@keyframes bn{0%{opacity:0;transform:scale(2.4);letter-spacing:20px}25%{opacity:1;transform:scale(1);letter-spacing:2px}75%{opacity:1}100%{opacity:0;transform:scale(.9)}}
+.shake{animation:sk .3s}
+@keyframes sk{20%{transform:translate(-7px,4px)}40%{transform:translate(6px,-5px)}60%{transform:translate(-4px,-3px)}80%{transform:translate(3px,4px)}}
+#end{position:fixed;inset:0;z-index:12;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(10,7,22,.9);text-align:center}
+#end .big{font-size:clamp(40px,10vw,80px);color:var(--gold)}
+@media (prefers-reduced-motion:reduce){.u .em{animation:none}}
+
+.bt{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+.lvb{max-width:460px;margin:10px auto;padding:12px 16px;border-radius:14px;background:#ffffff12;border:1px solid #ffc85755}
+#grid{grid-template-columns:repeat(auto-fill,minmax(205px,1fr))}
+.mc .ps{color:#ffd98a;opacity:1;line-height:1.35}.mc .cr{color:#ff9e7a;opacity:1}
+.pn{font-size:11px;color:#ffd98a;line-height:1.2}.sb{font-size:12px;min-height:16px}
+.pi{width:100%;text-align:center;font-size:12.5px;opacity:.9;color:#ffd98a}
+#hm{position:fixed;left:10px;top:calc(10px + env(safe-area-inset-top,0px));z-index:9;padding:6px 10px}
+#cmd{transition:border-color .3s}
+</style></head><body>
+<div id="floor"></div><canvas id="cv"></canvas><div id="flash"></div><div id="banner"></div>
+<button id="hm" onclick="home()">🏠</button>
+<div id="stage"><div id="top"><div id="wv"></div><div id="msg"></div></div><div class="row" id="foes"></div><div class="row" id="party"></div><div id="cmd"></div></div>
+<div id="menu"></div><div id="end"></div>
+<script>
+const $=s=>document.querySelector(s),sleep=ms=>new Promise(r=>setTimeout(r,ms)),rnd=a=>a[Math.random()*a.length|0];
+const KD={single:'โจมตีเดี่ยวแรงมาก',aoe:'โจมตีศัตรูทุกตัว',multi:'ยิงสุ่มหลายครั้ง',heal:'ฟื้น HP ทั้งทีม',twin:'ฟัน 2 ครั้ง คริสูง',drain:'ดูดเลือดฟื้น HP',pierce:'เจาะเกราะ ไม่สนDEF',freeze:'ทุกตัวอาจแข็งติด',shield:'เกราะลดดาเมจทั้งทีม',atkbuff:'บัพทีมทั้งหมด ATK +30% 3 เทิร์น',empower:'บัพเพื่อน 1 คน ATK +50% 3 เทิร์น และคริครั้งถัดไปแน่นอน',vuln:'ตีเดี่ยว + ศัตรูรับดาเมจ +30% 3 เทิร์น',taunt:'แทงค์: ยั่วยุ ศัตรูต้องตีตัวนี้ 2 เทิร์น',roar:'แทงค์: ศัตรูทุกตัว ATK -25% 3 เทิร์น + ยั่วยุ 1 เทิร์น',cover:'แทงค์: รับดาเมจแทนเพื่อนทุกคน 50% นาน 3 เทิร์น'};
+const H=[
+{n:'อัศวินแสง',e:'🤺',hp:140,mp:30,atk:18,def:9,spd:8,sk:'ฟันสลาย',cost:8,k:'single',m:2.3,c:'#ffb347'},
+{n:'จอมเวทเพลิง',e:'🧙‍♂️',hp:90,mp:50,atk:22,def:4,spd:9,sk:'ลูกไฟระเบิด',cost:12,k:'aoe',m:1.3,c:'#ff5a3c'},
+{n:'พลธนูป่า',e:'🏹',hp:100,mp:40,atk:19,def:5,spd:13,sk:'ฝนธนู',cost:10,k:'multi',h:4,m:.95,c:'#7dff8a'},
+{n:'นักบวชแสง',e:'🧚',hp:95,mp:55,atk:14,def:5,spd:10,sk:'แสงฟื้นฟู',cost:12,k:'heal',m:1.9,c:'#fff59d'},
+{n:'นินจาเงา',e:'🥷',hp:95,mp:36,atk:20,def:5,spd:16,sk:'ดาบเงา',cost:9,k:'twin',m:1.3,c:'#b388ff'},
+{n:'ราชามังกร',e:'🐉',hp:130,mp:36,atk:19,def:8,spd:7,sk:'ลมหายใจมังกร',cost:14,k:'aoe',m:1.6,c:'#ff8a3c'},
+{n:'แวมไพร์',e:'🧛',hp:110,mp:38,atk:18,def:6,spd:12,sk:'ดูดเลือด',cost:10,k:'drain',m:1.7,c:'#ff3b6b'},
+{n:'เมคาโรบอท',e:'🤖',hp:120,mp:34,atk:21,def:10,spd:6,sk:'เลเซอร์ล้างผลาญ',cost:14,k:'pierce',m:2.8,c:'#4df0ff'},
+{n:'จอมเวทน้ำแข็ง',e:'🧙‍♀️',hp:90,mp:50,atk:17,def:4,spd:11,sk:'พายุหิมะ',cost:13,k:'freeze',m:1.1,c:'#9be7ff'},
+{n:'ผู้พิทักษ์',e:'🦸',hp:150,mp:40,atk:15,def:12,spd:5,sk:'เกราะศักดิ์สิทธิ์',cost:10,k:'shield',m:0,c:'#ffe27a'},
+{n:'เทพอสุนีบาต',e:'🧞',hp:100,mp:44,atk:23,def:5,spd:14,sk:'อสุนีบาต',cost:12,k:'multi',h:3,m:1.25,c:'#fff04d'},
+{n:'จิ้งจอกเก้าหาง',e:'🦊',hp:98,mp:42,atk:20,def:5,spd:15,sk:'เปลวจิ้งจอก',cost:11,k:'aoe',m:1.2,c:'#ff9ecb'},
+{n:'นักดนตรีศึก',e:'🎺',hp:105,mp:55,atk:13,def:5,spd:12,sk:'บทเพลงฮึกเหิม',cost:12,k:'atkbuff',m:0,c:'#ffd36b'},
+{n:'ผู้พยากรณ์',e:'🔮',hp:95,mp:50,atk:18,def:4,spd:13,sk:'เล็งจุดตาย',cost:10,k:'vuln',m:1.4,c:'#d58bff'},
+{n:'จอมทัพ',e:'👑',hp:125,mp:40,atk:17,def:8,spd:9,sk:'คำสั่งบุกทะลวง',cost:10,k:'empower',m:0,c:'#ff6b4a'},
+{n:'ยักษ์หินผา',e:'🗿',hp:230,mp:30,atk:13,def:16,spd:3,sk:'ยั่วยุ',cost:6,k:'taunt',m:0,c:'#b8a58a'},
+{n:'หมีคลั่งศึก',e:'🐻',hp:195,mp:34,atk:17,def:11,spd:6,sk:'คำรามสะท้านฟ้า',cost:11,k:'roar',m:0,c:'#c98a5a'},
+{n:'ยามปราสาท',e:'🏰',hp:175,mp:36,atk:14,def:13,spd:4,sk:'ปราการคุ้มกัน',cost:10,k:'cover',m:0,c:'#8fb8ff'}];
+const T1=[['หมาป่า','🐺'],['ค้างคาว','🦇'],['เห็ดพิษ','🍄'],['งูพิษ','🐍']],
+T2=[['ซอมบี้','🧟'],['วิญญาณ','👻'],['แมงมุมยักษ์','🕷️'],['แมงป่อง','🦂']],
+T3=[['ปีศาจ','👹'],['โทรลล์','🧌'],['ลิช','💀'],['ภูตแดง','👺']];
+const TS=[null,[60,12,2,9],[95,16,4,10],[150,21,7,11]],TC=['','#9be37a','#c79bff','#ff6b6b'];
+let party=[],foes=[],over=true,tgtCb=null,BID=0,PV=[];
+const HPX=1.5;
+const PS=[
+{pid:'thorn',pn:'เกราะสะท้อน',pd:'เมื่อโดนโจมตี สะท้อนดาเมจ 25% กลับไปหาผู้โจมตี',cr:.08,cd:1.6},
+{pid:'burn',pn:'เปลวเผาผลาญ',pd:'โจมตีโดนใคร คนนั้นติดไฟ 2 เทิร์น เสีย HP 6% ของสูงสุดทุกต้นเทิร์น',cr:.12,cd:1.6},
+{pid:'eagle',pn:'ตาเหยี่ยว',pd:'โอกาสคริ +20% และทุกครั้งที่คริ ฟื้น MP +4',cr:.15,cd:1.6},
+{pid:'bless',pn:'พรแห่งแสง',pd:'ต้นเทิร์นของตัวเอง ฟื้น HP 8% ให้เพื่อนที่เลือดน้อยสุด',cr:.10,cd:1.5},
+{pid:'dodge',pn:'เงาพริ้ว',pd:'หลบการโจมตี 25% แล้วการโจมตีครั้งถัดไปของตัวเองติดคริแน่นอน',cr:.22,cd:1.9},
+{pid:'scale',pn:'เกล็ดมังกร',pd:'ลดดาเมจที่ได้รับ 15% และถ้า HP ต่ำกว่า 35% ATK +40%',cr:.12,cd:1.6},
+{pid:'lifesteal',pn:'กระหายเลือด',pd:'ดูด HP 20% ของดาเมจที่ทำ ถ้าเป็นคริดูด 40%',cr:.12,cd:1.6},
+{pid:'ward',pn:'โล่พลังงาน',pd:'เริ่มศึกด้วยโล่ 30% ของ HP สูงสุด ดูดซับดาเมจก่อนเสีย HP',cr:.10,cd:1.7},
+{pid:'chill',pn:'หัวใจเยือกแข็ง',pd:'โจมตีมีโอกาส 20% แช่แข็งเป้าหมาย 1 เทิร์น และทีมจะคริแน่นอนใส่ศัตรูที่แข็งอยู่',cr:.12,cd:1.6},
+{pid:'guard',pn:'ออร่าพิทักษ์',pd:'ตราบที่ยังมีชีวิต เพื่อนร่วมทีมทุกคน (รวมตัวเอง) DEF +25%',cr:.08,cd:1.5},
+{pid:'charge',pn:'ประจุสายฟ้า',pd:'ทุกครั้งที่ทำคริ ATK +8% ซ้อนได้ 5 ชั้นจนจบศึก',cr:.15,cd:1.6},
+{pid:'fox',pn:'เก้าหางคืนชีพ',pd:'ตายครั้งแรกจะฟื้นคืนชีพด้วย HP 30% (ครั้งเดียว)',cr:.15,cd:1.7},
+{pid:'anthem',pn:'ทำนองนำชัย',pd:'ตราบที่ยังมีชีวิต เพื่อนร่วมทีมทุกคนมีโอกาสคริ +6%',cr:.10,cd:1.5},
+{pid:'weak',pn:'เล็งจุดอ่อน',pd:'โจมตีศัตรูที่ติดไฟ/แข็ง/เปราะบาง โอกาสคริ +25%',cr:.15,cd:1.7},
+{pid:'tactician',pn:'ยุทธศาสตร์',pd:'ตราบที่ยังมีชีวิต เพื่อนทุกคนดาเมจคริ +0.2 (เช่น ×1.6 เป็น ×1.8)',cr:.12,cd:1.6},
+{pid:'bulwark',pn:'กำแพงหิน',pd:'ดาเมจที่ได้รับต่อครั้งไม่เกิน 20% ของ HP สูงสุด',cr:.05,cd:1.5},
+{pid:'rage',pn:'เลือดแค้น',pd:'ทุก 1% HP ที่เสีย ATK +0.8% (สูงสุด +50%)',cr:.10,cd:1.7},
+{pid:'regen',pn:'ปราการฟื้นฟู',pd:'ต้นเทิร์นฟื้น HP ตัวเอง 5% ของสูงสุด',cr:.06,cd:1.5}];
+const opp=u=>u.side=='p'?foes:party,ally=u=>u.side=='p'?party:foes,M=$('#menu'),alive=a=>a.filter(x=>x.hp>0),has=(u,id)=>alive(ally(u)).some(x=>x.pid==id);
+const crOf=u=>Math.min(1,u.cr+(u.pid=='eagle'?.2:0)+(has(u,'anthem')?.06:0)),atkOf=u=>u.atk*(u.pid=='scale'&&u.hp<u.max*.35?1.4:1)*(u.pid=='charge'?1+.08*u.st:1)*(u.bt>0?u.bm:1)*(u.dt>0?.75:1)*(u.pid=='rage'?1+Math.min(.5,.8*(1-u.hp/u.max)):1),defOf=t=>t.def*(has(t,'guard')?1.25:1);
+function show(h){$('#end').style.display='none';M.style.display='block';M.innerHTML=h}
+function msg(t){$('#msg').textContent=t}
+async function banner(t){const b=$('#banner');b.textContent=t;b.classList.remove('go');void b.offsetWidth;b.classList.add('go');await sleep(1500)}
+// ---------- menus
+function home(){over=true;BID++;show(`<h1>⚔️ Arcane Duel ⚔️</h1><p>PvP 2 ผู้เล่น จอเดียว · ทีมละ 3 ตัว · 18 ฮีโร่ สายโจมตี · สายบัพ · สายแทงค์ พร้อมพาสซีพเฉพาะตัว</p><div class=bt><button id=m1>⚔️ เริ่มศึก PvP</button><button id=m2 style="background:linear-gradient(#cfc4ff,#8f7bff);box-shadow:0 4px 0 #4a3aa8">📖 กติกา & คริติคอล</button></div>`);$('#m1').onclick=pvp;$('#m2').onclick=rules}
+function rules(){show(`<h1 style="font-size:30px">📖 กติกา</h1><div class=lvb style="text-align:left;max-width:600px;line-height:1.75;font-size:14.5px">
+<b>ลำดับตา:</b> ตัวที่ SPD สูงสุดเล่นก่อน ในตาเลือก โจมตี / สกิล (ใช้ MP) / ป้องกัน<br>
+• โจมตีธรรมดา ฟื้น MP +4 · ป้องกัน ลดดาเมจ 50% จนถึงตาหน้า และฟื้น MP +5<br><br>
+<b>💥 คริติคอล:</b> ทุกการโจมตีและสกิลที่ทำดาเมจ ทอยโอกาสคริตามค่า "คริ %" ของตัวนั้น (ดูใต้ชื่อบนการ์ด) ถ้าติดจะได้ดาเมจ ×ค่าดาเมจคริ (1.5–1.9 ตามตัว) ตัวเลขเด้งสีทองพร้อม 💥<br>
+• โอกาสคริเพิ่มได้จากพาสซีพ เช่น ตาเหยี่ยว<br>
+• <b>คริแน่นอน 100%:</b> นินจาหลบสำเร็จ (การโจมตีครั้งถัดไป 🎯) และศัตรูที่ ❄️ แข็งอยู่ เมื่อฝั่งเรามีจอมเวทน้ำแข็ง<br>
+• สกิล "เจาะเกราะ" ไม่คิด DEF แต่คริได้ปกติ<br><br>
+<b>สัญลักษณ์สถานะใต้ตัวละคร:</b> 🛡 โล่ · 🔥 ติดไฟ (เทิร์นที่เหลือ) · ❄️ แช่แข็ง ข้ามตา · ✨ เกราะทีม · 🔰 ป้องกัน · ⚡ ชั้นประจุ · 🎯 คริครั้งหน้าแน่นอน<br>⚔️↑ บัพ ATK · 💢 เปราะบาง (รับดาเมจ +30%) · ⬇ ATK ถูกลด · 📣 ยั่วยุ (ศัตรูต้องตีตัวนี้ก่อน) · 🏰 คุ้มกัน (รับดาเมจแทนเพื่อน 50%) ตัวเลขคือเทิร์นที่เหลือ<br><br>
+<b>พาสซีพ</b> ทำงานเองตลอด ไม่เสีย MP ทุกฮีโร่มี 1 อย่าง อ่านรายละเอียดได้ที่หน้าเลือกทีม และที่แถบคำสั่งตอนถึงตาตัวนั้น</div><div class=bt><button id=bk>↩ กลับ</button></div>`);$('#bk').onclick=home}
+function choose(title,cb,back){const pk=new Set();show(`<h1 style="font-size:28px">${title}</h1><p>เลือก 3 ตัว (อ่านพาสซีพให้ครบก่อนเลือก)</p><div id=grid></div><div class=bt><button id=bk>↩ กลับ</button><button id=ok disabled>ยืนยัน</button></div>`);
+H.forEach((d,i)=>{const c=document.createElement('div'),p=PS[i];c.className='mc';c.style.setProperty('--c',d.c);
+c.innerHTML=`<div class=em>${d.e}</div><b>${d.n}</b><small>HP ${Math.round(d.hp*HPX)} · MP ${d.mp} · ATK ${d.atk} · DEF ${d.def} · SPD ${d.spd}</small><small class=cr>💥 คริ ${Math.round((p.cr+(p.pid=='eagle'?.2:0))*100)}% · ดาเมจคริ ×${p.cd}</small><small>✨ ${d.sk} (${d.cost} MP): ${KD[d.k]}</small><small class=ps>💠 พาสซีพ "${p.pn}": ${p.pd}</small>`;
+c.onclick=()=>{pk.has(i)?pk.delete(i):pk.size<3&&pk.add(i);document.querySelectorAll('.mc').forEach((x,j)=>x.classList.toggle('on',pk.has(j)));$('#ok').disabled=pk.size!=3};$('#grid').append(c)});
+$('#bk').onclick=back;$('#ok').onclick=()=>cb([...pk])}
+function pvp(){const p1=()=>choose('ผู้เล่น 1 เลือกทีม (ฝั่งล่าง)',a=>p2(a),home),p2=a=>choose('ผู้เล่น 2 เลือกทีม (ฝั่งบน)',b=>pvpStart(a,b),p1);p1()}
+function pvpStart(a,b){PV=[a,b];party=a.map(i=>mk(i,'p'));foes=b.map(i=>mk(i,'f'));begin()}
+// ---------- units & loop
+function mk(i,side){const u={...H[i],...PS[i],side,i,guard:0,shield:0,frz:0,burn:0,st:0,ncrit:0,mpMax:H[i].mp,hp:Math.round(H[i].hp*HPX),max:Math.round(H[i].hp*HPX)};u.ward=u.pid=='ward'?Math.round(u.max*.3):0;
+const el=document.createElement('div');el.className='u '+(side=='p'?'hero':'foe');el.style.setProperty('--c',u.c);
+el.innerHTML=`<div class=nm>${u.n}</div><div class=em>${u.e}</div><div class="bar hp"><i></i></div><div class="bar mp"><i></i></div><div class=num></div><div class=pn>💠${u.pn} · 💥${Math.round(crOf(u)*100)}%</div><div class=sb></div>`;
+el.onclick=()=>tgtCb&&tgtCb(u);u.el=el;upd(u);return u}
+function upd(u){const q=s=>u.el.querySelector(s);q('.hp i').style.width=u.hp/u.max*100+'%';q('.mp i').style.width=u.mp/u.mpMax*100+'%';q('.num').textContent=`${u.hp}/${u.max} · MP ${u.mp}`;
+q('.sb').textContent=[u.ward>0?'🛡'+u.ward:'',u.burn>0?'🔥'+u.burn:'',u.frz>0?'❄️':'',u.shield>0?'✨':'',u.guard?'🔰':'',u.st>0?'⚡'+u.st:'',u.ncrit?'🎯':'',u.bt>0?'⚔️↑'+u.bt:'',u.vt>0?'💢'+u.vt:'',u.dt>0?'⬇'+u.dt:'',u.tt>0?'📣'+u.tt:'',u.cv>0?'🏰'+u.cv:''].filter(Boolean).join(' ');u.el.classList.toggle('dead',u.hp<=0)}
+function begin(){M.style.display='none';$('#end').style.display='none';over=false;$('#cmd').innerHTML='';msg('');$('#party').innerHTML='';$('#foes').innerHTML='';
+party.forEach(u=>$('#party').append(u.el));foes.forEach(u=>$('#foes').append(u.el));$('#wv').textContent='ผู้เล่น 1 (ล่าง) vs ผู้เล่น 2 (บน)';
+const id=++BID;banner('FIGHT!').then(()=>battle(id))}
+const chk=()=>!party.some(p=>p.hp>0)?(finish(0),1):!foes.some(f=>f.hp>0)?(finish(1),1):0;
+async function battle(id){while(!over&&id==BID){const order=alive([...party,...foes]).sort((a,b)=>b.spd-a.spd);
+for(const u of order){if(u.hp<=0||over||id!=BID)continue;u.guard=0;if(u.shield>0)u.shield--;['bt','vt','dt','tt','cv'].forEach(k=>{if(u[k]>0)u[k]--});
+if(u.burn>0){u.burn--;msg(u.n+' ถูกไฟเผา 🔥');hit(u,{d:Math.max(1,Math.round(u.max*.06)),crit:0,src:null,nd:1,raw:1},'#ff7a3c');await sleep(700);if(chk())return;if(u.hp<=0)continue}
+if(u.frz>0){u.frz--;upd(u);msg(u.n+' แข็งติดอยู่ ❄️');await sleep(800);continue}
+if(u.pid=='regen'&&u.hp<u.max)heal(u,Math.round(u.max*.05));if(u.pid=='bless'){const a=alive(ally(u)).sort((x,y)=>x.hp/x.max-y.hp/y.max)[0];if(a&&a.hp<a.max){heal(a,Math.round(a.max*.08));await sleep(500)}}
+u.el.classList.add('active');await playerTurn(u);u.el.classList.remove('active');if(id!=BID)return;if(chk())return}}}
+function playerTurn(u){return new Promise(res=>{const cmd=$('#cmd');cmd.style.borderColor=u.side=='p'?'#ffc857':'#6fd6ff';
+const fin=async f=>{cmd.innerHTML='';clearTgt();await f();res()};
+const menu=()=>{clearTgt();cmd.innerHTML=`<div class=who>ผู้เล่น ${u.side=='p'?1:2} · ${u.e} ตาของ ${u.n}</div><div class=pi>💠 ${u.pn}: ${u.pd}</div><button id=ba>⚔️ โจมตี</button><button id=bs ${u.mp<u.cost?'disabled':''}>✨ ${u.sk}<small>${u.cost} MP</small></button><button id=bg>🛡️ ป้องกัน</button>`;
+$('#ba').onclick=()=>ask(t=>fin(()=>attack(u,t)));
+$('#bs').onclick=()=>u.k=='empower'?ask(t=>fin(()=>skill(u,t)),1):['single','drain','twin','pierce','vuln'].includes(u.k)?ask(t=>fin(()=>skill(u,t))):fin(()=>skill(u));
+$('#bg').onclick=()=>fin(async()=>{u.guard=1;u.mp=Math.min(u.mpMax,u.mp+5);upd(u);msg(u.n+' ตั้งท่าป้องกัน');fx(u.el,'#8fd0ff',26,'burst');await sleep(700)})};
+const ask=(cb,al)=>{cmd.innerHTML='<div class=who>แตะเลือกเป้าหมาย</div><button id=bc>↩ ย้อนกลับ</button>';$('#bc').onclick=menu;const O=alive(opp(u)),T=O.filter(x=>x.tt>0),L=al?alive(ally(u)):T.length?T:O;L.forEach(t=>t.el.classList.add('tgt'));tgtCb=t=>{if(L.includes(t)){clearTgt();cb(t)}}};
+msg('');menu()})}
+function clearTgt(){tgtCb=null;document.querySelectorAll('.tgt').forEach(e=>e.classList.remove('tgt'))}
+// ---------- damage & passives
+function calc(u,t,m,pierce,bonus=0){const crit=!!u.ncrit||Math.random()<crOf(u)+bonus+(u.pid=='weak'&&(t.burn>0||t.frz>0||t.vt>0)?.25:0)||(t.frz>0&&has(u,'chill'));if(u.ncrit){u.ncrit=0;upd(u)}
+const d=atkOf(u)*m*(.9+Math.random()*.2)*(crit?u.cd+(has(u,'tactician')?.2:0):1)-(pierce?0:defOf(t)*.6);return{d:Math.max(1,Math.round(d)),crit,src:u}}
+function hit(t,r,col){const u=r.src;
+if(t.pid=='dodge'&&!r.nd&&Math.random()<.25){t.ncrit=1;upd(t);float(t.el,'หลบ! 🎯','#c9a8ff',30);fx(t.el,'#b388ff',18,'burst');return 0}
+let d=r.d;if(!r.raw){if(t.guard)d*=.5;if(t.shield>0)d*=.6;if(t.pid=='scale')d*=.85;if(t.vt>0&&!r.rf)d*=1.3}d=Math.max(1,Math.round(d));
+if(t.pid=='bulwark')d=Math.min(d,Math.round(t.max*.2));
+if(!r.cv&&!r.rf&&!r.raw){const c=alive(ally(t)).find(x=>x.cv>0&&x!==t);if(c){const sh=Math.round(d*.5);d-=sh;float(c.el,'🏰รับแทน','#9bd4ff',18);hit(c,{d:sh,crit:0,src:null,nd:1,cv:1},col)}}
+if(t.ward>0){const a=Math.min(t.ward,d);t.ward-=a;d-=a;float(t.el,'🛡-'+a,'#9bd4ff',24)}
+t.hp=Math.max(0,t.hp-d);
+if(d>0)float(t.el,r.crit?'💥'+d+'!':d,r.crit?'#ffd23f':'#fff',r.crit?46:30);
+fx(t.el,col,r.crit?50:24,'burst');if(r.crit)fx(t.el,'#ffd23f',1,'ring');
+t.el.classList.remove('hit');void t.el.offsetWidth;t.el.classList.add('hit');shake(r.crit?12:6);
+if(u&&u!==t&&!r.rf){
+ if(r.crit){if(u.pid=='eagle'){u.mp=Math.min(u.mpMax,u.mp+4)}if(u.pid=='charge'&&u.st<5){u.st++;float(u.el,'⚡ATK +'+u.st*8+'%','#fff04d',20)}}
+ if(u.pid=='burn'&&t.hp>0){t.burn=2;float(t.el,'🔥ติดไฟ','#ff7a3c',24)}
+ if(u.pid=='chill'&&t.hp>0&&Math.random()<.2){t.frz=1;float(t.el,'❄️แข็ง','#9be7ff',28)}
+ if(u.pid=='lifesteal'&&d>0&&u.hp>0)heal(u,Math.max(1,Math.round(d*(r.crit?.4:.2))));
+ upd(u)}
+if(t.pid=='thorn'&&!r.rf&&d>0&&u&&u.hp>0&&u!==t){float(t.el,'สะท้อน!','#ffb347',20);hit(u,{d:Math.max(1,Math.round(d*.25)),crit:0,src:t,rf:1,nd:1,raw:1},'#ffb347')}
+if(t.hp<=0){if(t.pid=='fox'&&!t.used){t.used=1;t.hp=Math.round(t.max*.3);t.burn=0;float(t.el,'🦊 คืนชีพ!','#ff9ecb',28);fx(t.el,'#ff9ecb',70,'burst');fx(t.el,'#ff9ecb',1,'ring')}
+ else{t.burn=0;t.frz=0;fx(t.el,col,70,'burst');float(t.el,'ล้ม!','#ff7a7a',26)}}
+upd(t);return d}
+// ---------- combat
+function heal(t,a){a=Math.min(a,t.max-t.hp);t.hp+=a;upd(t);float(t.el,'+'+a,'#7dff8a',30);fx(t.el,'#7dff8a',24,'up')}
+function lunge(u){return u.el.animate([{transform:'none'},{transform:`translateY(${u.side=='p'?-60:60}px) scale(1.18)`,offset:.4},{transform:'none'}],{duration:480,easing:'ease-out'}).finished}
+async function attack(u,t){msg(`${u.n} โจมตี ${t.n}`);await lunge(u);fx(t.el,u.c,30,'slash');await sleep(120);hit(t,calc(u,t,1),u.c);
+u.mp=Math.min(u.mpMax,u.mp+4);upd(u);await sleep(650)}
+async function skill(u,t){u.mp-=u.cost;upd(u);msg(`${u.n} ใช้ ${u.sk}!`);await lunge(u);flash(u.c);
+const A=opp(u).filter(x=>x.hp>0);
+switch(u.k){
+case'single':case'pierce':fx(t.el,u.c,60,'slash');fx(t.el,u.c,1,'ring');await sleep(250);hit(t,calc(u,t,u.m,u.k=='pierce'),u.c);break;
+case'twin':for(let i=0;i<2;i++){if(t.hp<=0)break;fx(t.el,u.c,34,'slash');await sleep(200);hit(t,calc(u,t,u.m,0,.15),u.c);await sleep(150)}break;
+case'aoe':case'freeze':A.forEach(x=>{fx(x.el,u.c,50,'burst');fx(x.el,u.c,1,'ring');hit(x,calc(u,x,u.m),u.c);if(u.k=='freeze'&&x.hp>0&&Math.random()<.4){x.frz=1;float(x.el,'❄️','#9be7ff',34)}});break;
+case'multi':for(let i=0;i<u.h;i++){const x=rnd(opp(u).filter(f=>f.hp>0));if(!x)break;fx(x.el,u.c,40,'slash');await sleep(160);hit(x,calc(u,x,u.m),u.c);await sleep(120)}break;
+case'drain':fx(t.el,u.c,50,'slash');await sleep(250);{const d=hit(t,calc(u,t,u.m),u.c);heal(u,Math.round(d*.7))}break;
+case'heal':ally(u).filter(x=>x.hp>0).forEach(x=>{heal(x,Math.round((u.atk*u.m*1.8+10)*HPX));fx(x.el,u.c,1,'ring')});break;
+case'atkbuff':ally(u).filter(x=>x.hp>0).forEach(x=>{x.bm=1.3;x.bt=3;upd(x);float(x.el,'⚔️ATK+30%','#ffd36b',22);fx(x.el,u.c,26,'up');fx(x.el,u.c,1,'ring')});break;
+case'empower':t.bm=1.5;t.bt=3;t.ncrit=1;upd(t);float(t.el,'⚔️ATK+50% 🎯','#ffd36b',22);fx(t.el,u.c,40,'up');fx(t.el,u.c,1,'ring');break;
+case'vuln':fx(t.el,u.c,40,'burst');fx(t.el,u.c,1,'ring');await sleep(200);hit(t,calc(u,t,u.m),u.c);if(t.hp>0){t.vt=3;upd(t);float(t.el,'💢เปราะบาง +30%','#ff9e7a',22)}break;
+case'taunt':u.tt=2;upd(u);float(u.el,'📣ยั่วยุ!','#ffb347',26);fx(u.el,u.c,40,'burst');fx(u.el,u.c,1,'ring');break;
+case'roar':u.tt=1;upd(u);opp(u).filter(x=>x.hp>0).forEach(x=>{x.dt=3;upd(x);float(x.el,'⬇ATK-25%','#ff9e7a',22);fx(x.el,u.c,30,'burst')});fx(u.el,u.c,1,'ring');break;
+case'cover':u.cv=3;upd(u);float(u.el,'🏰คุ้มกัน','#9bd4ff',26);fx(u.el,u.c,1,'ring');fx(u.el,u.c,30,'up');break;
+case'shield':ally(u).filter(x=>x.hp>0).forEach(x=>{x.shield=3;float(x.el,'🛡️','#ffe27a',34);fx(x.el,u.c,1,'ring');fx(x.el,u.c,20,'up')});break}
+await sleep(750)}
+async function enemyTurn(u){const A=party.filter(p=>p.hp>0);let t=rnd(A);if(Math.random()<.4)t=A.reduce((a,b)=>a.hp<b.hp?a:b);
+if(u.sp&&Math.random()<.4){const s=rnd(u.sp);msg(`${u.n} ปล่อยสกิลพิเศษ!`);await lunge(u);flash(u.c);
+if(s=='aoe')A.forEach(x=>{fx(x.el,u.c,50,'burst');fx(x.el,u.c,1,'ring');hit(x,calc(u,x,.8),u.c)});
+else if(s=='heavy'){fx(t.el,u.c,60,'slash');await sleep(250);hit(t,calc(u,t,2),u.c)}
+else{fx(t.el,u.c,50,'slash');await sleep(250);const d=hit(t,calc(u,t,1.3),u.c);heal(u,Math.round(d*.8))}
+await sleep(750)}else{await attack(u,t)}}
+// ---------- effects
+const cv=$('#cv'),cx=cv.getContext('2d');let P=[],R=[],S=[];
+function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();addEventListener('resize',rs);
+for(let i=0;i<70;i++)S.push({x:Math.random(),y:Math.random(),r:Math.random()*1.6+.3,p:Math.random()*6});
+function ctr(el){const r=el.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height*.4}}
+function fx(el,col,n,type){const{x,y}=ctr(el);
+if(type=='ring'){R.push({x,y,r:10,col,l:1});return}
+for(let i=0;i<n;i++){let a=Math.random()*6.283,s=2+Math.random()*7,vx=Math.cos(a)*s,vy=Math.sin(a)*s;
+if(type=='slash'){const k=(Math.random()-.5)*2;vx=k*11;vy=k*11+(Math.random()-.5)*2}
+if(type=='up'){vx=(Math.random()-.5)*2;vy=-1-Math.random()*3}
+P.push({x,y,vx,vy,l:1,d:.018+Math.random()*.025,s:1+Math.random()*3,col})}}
+function float(el,t,col,sz){const{x,y}=ctr(el),d=document.createElement('div');d.className='f';d.textContent=t;d.style.cssText=`left:${x+(Math.random()*30-15)}px;top:${y-20}px;color:${col};font-size:${sz}px`;document.body.append(d);setTimeout(()=>d.remove(),1150)}
+function shake(px){const s=$('#stage');s.classList.remove('shake');void s.offsetWidth;s.classList.add('shake')}
+function flash(col){const f=$('#flash');f.style.background=`radial-gradient(circle,${col}66,transparent 70%)`;f.animate([{opacity:.9},{opacity:0}],{duration:500})}
+function loop(t){cx.clearRect(0,0,cv.width,cv.height);cx.globalCompositeOperation='lighter';
+S.forEach(s=>{cx.globalAlpha=.3+.5*Math.abs(Math.sin(t/900+s.p));cx.fillStyle='#fff';cx.beginPath();cx.arc(s.x*cv.width,s.y*cv.height*.75,s.r,0,6.283);cx.fill()});
+P=P.filter(p=>p.l>0);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vx*=.95;p.vy*=.95;p.l-=p.d;cx.globalAlpha=Math.max(0,p.l);cx.strokeStyle=p.col;cx.lineWidth=p.s;cx.shadowColor=p.col;cx.shadowBlur=10;cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(p.x-p.vx*2,p.y-p.vy*2);cx.stroke()});
+R=R.filter(r=>r.l>0);R.forEach(r=>{r.r+=6;r.l-=.035;cx.globalAlpha=Math.max(0,r.l);cx.strokeStyle=r.col;cx.lineWidth=4;cx.shadowBlur=18;cx.shadowColor=r.col;cx.beginPath();cx.arc(r.x,r.y,r.r,0,6.283);cx.stroke()});
+cx.shadowBlur=0;requestAnimationFrame(loop)}requestAnimationFrame(loop);
+function end(t,sub,btns){over=true;const e=$('#end');e.innerHTML=`<div class=big>${t}</div><div style="line-height:1.7">${sub}</div><div class=bt></div>`;
+btns.forEach(([l,f])=>{const b=document.createElement('button');b.textContent=l;b.onclick=f;e.querySelector('.bt').append(b)});e.style.display='flex';
+for(let i=0;i<14;i++)setTimeout(()=>{for(let j=0;j<40;j++){const a=Math.random()*6.283,v=2+Math.random()*8;P.push({x:Math.random()*cv.width,y:Math.random()*cv.height*.6,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,d:.015,s:3,col:rnd(['#ffc857','#ff5a3c','#7dff8a','#9be7ff','#ff9ecb'])})}},i*220)}
+async function finish(w){over=true;await sleep(700);end(w?'🏆 ผู้เล่น 1 ชนะ!':'🏆 ผู้เล่น 2 ชนะ!','จบการต่อสู้',[['สู้อีกยก (ทีมเดิม)',()=>pvpStart(...PV)],['เลือกทีมใหม่',pvp],['เมนู',home]])}
+home();
+</script></body></html>
