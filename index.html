@@ -99,6 +99,9 @@ button small{display:block;font-family:'Sarabun';font-size:11px;opacity:.8}
 #menu.aim .mc.t2::after{content:'AI'}
 .mc .cf{display:none;width:calc(100% - 20px);margin:10px 10px 0;transform:skewX(-6deg)}
 .mc.on .cf{display:block}
+.ix{position:fixed;right:calc(12px + env(safe-area-inset-right,0px));top:calc(12px + env(safe-area-inset-top,0px));z-index:11;padding:8px 14px;font-size:14px;background:#ffffff1c;color:#f3ecff;box-shadow:inset 0 0 0 2px #ffffff40}
+.flt{padding:6px 16px;font-size:14px;border-radius:99px;transform:none!important;background:#ffffff18;color:#f3ecff;box-shadow:inset 0 0 0 2px #ffffff33}
+.flt.on{background:linear-gradient(#ffe9a8,#ffc13a);color:#1a1033;box-shadow:0 0 16px #ffc13a66}
 /* ---------- battle HUD ---------- */
 #top{text-align:center;min-height:54px}
 #wv{display:flex;justify-content:center;align-items:center;gap:10px;font-family:var(--disp);font-size:13px}
@@ -232,17 +235,19 @@ const crOf=u=>Math.min(1,u.cr+(u.pid=='eagle'?.2:0)+(has(u,'anthem')?.06:0)),atk
 function show(h){DID++;clearInterval(window._dt);M.classList.remove('cover','aim');delete M.dataset.p;M.scrollTop=0;$('#end').style.display='none';M.style.display='block';M.innerHTML=h}
 function msg(t){$('#msg').textContent=t}
 async function banner(t){const b=$('#banner');flash('#ff8a3c');b.textContent=t;b.classList.remove('go');void b.offsetWidth;b.classList.add('go');await sleep(1500)}
-let MODE='pvp',DID=0;
+let MODE='pvp',DID=0,DIFF='normal';
+const DF={easy:{sk:.5,fo:.3,gd:.2,dr:0},normal:{sk:.85,fo:.75,gd:.1,dr:1},hard:{sk:1,fo:1,gd:0,dr:2}};
+const HROLE={atk:['single','pierce','twin','aoe','multi','drain','freeze','vuln'],buff:['atkbuff','empower','heal','shield'],tank:['taunt','roar','cover']},HRN={atk:'⚔️ สายโจมตี',buff:'✨ สายบัพ/ซัพพอร์ต',tank:'🛡️ สายแทงค์'},roleOf=k=>Object.keys(HROLE).find(r=>HROLE[r].includes(k))||'atk';
 // ---------- menus
 function home(){over=true;BID++;const hs=[...H.keys()].sort(()=>Math.random()-.5).slice(0,5);
-show(`<div class=cv><h1 class=logo><span>ARCANE</span><span>DUEL</span></h1><div class=tag>ศึกจอมเวท PvP สองผู้เล่น บนจอเดียว</div><div class=chips><span>👥 2 ผู้เล่น</span><span>🎯 ดราฟทีมละ 3 ตัว</span><span>🌟 18 ฮีโร่</span><span>💠 พาสซีพเฉพาะตัว</span></div><div class=hr>${hs.map(i=>`<span class=hh style="--c:${H[i].c}" data-i=${i}>${H[i].e}</span>`).join('')}</div><div class=tip>แตะฮีโร่เพื่อดูพาสซีพ</div><div class=bt><button id=m1>⚔️ PvP 2 ผู้เล่น</button><button id=m3>🤖 เล่นคนเดียว vs AI</button><button id=m2>📖 กติกา & คริติคอล</button></div><div class=tag style="font-size:12px;opacity:.5">กด Enter เพื่อเริ่มได้เลย</div></div>`);
+show(`<div class=cv><h1 class=logo><span>ARCANE</span><span>DUEL</span></h1><div class=tag>ศึกจอมเวท PvP สองผู้เล่น บนจอเดียว</div><div class=chips><span>👥 2 ผู้เล่น</span><span>🎯 ดราฟทีมละ 3 ตัว</span><span>🌟 18 ฮีโร่</span><span>💠 พาสซีพเฉพาะตัว</span></div><div class=hr>${hs.map(i=>`<span class=hh style="--c:${H[i].c}" data-i=${i}>${H[i].e}</span>`).join('')}</div><div class=tip>แตะฮีโร่เพื่อดูพาสซีพ</div><div class=bt><button id=mi class=ix>📚 ดัชนีฮีโร่</button><button id=m1>⚔️ PvP 2 ผู้เล่น</button><button id=m3>🤖 เล่นคนเดียว vs AI</button><button id=m2>📖 กติกา & คริติคอล</button></div><div class=tag style="font-size:12px;opacity:.5">กด Enter เพื่อเริ่มได้เลย</div></div>`);
 M.classList.add('cover');const cv=$('.cv');
 for(let i=0;i<24;i++){const t=document.createElement('i');t.className='st';t.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${-Math.random()*4}s;scale:${.6+Math.random()*1.2}`;cv.append(t)}
 M.querySelectorAll('.hh').forEach(el=>{el.onclick=()=>{const i=+el.dataset.i;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');$('.tip').innerHTML=`<b style="color:${H[i].c}">${H[i].n}</b> · 💠 ${PS[i].pn}<br><small style="opacity:.8">${PS[i].pd}</small>`};el.onanimationend=()=>el.classList.remove('pop')});
 if(!window._ck){window._ck=1;addEventListener('keydown',e=>{if(e.key=='Enter'&&M.classList.contains('cover')&&M.style.display!='none'&&document.activeElement==document.body){e.preventDefault();$('#m1').click()}})}
-$('#m1').onclick=()=>{MODE='pvp';pvp()};$('#m3').onclick=()=>{MODE='ai';pvp()};$('#m2').onclick=rules}
+$('#m1').onclick=()=>{MODE='pvp';pvp()};$('#m3').onclick=aiLevel;$('#mi').onclick=()=>heroIndex();$('#m2').onclick=rules}
 function rules(){show(`<h1 style="font-size:30px">📖 กติกา</h1><div class=lvb style="text-align:left;max-width:600px;line-height:1.75;font-size:14.5px">
-<b>🎯 ดราฟ:</b> P1 เลือก 1 → P2 เลือก 2 → P1 เลือก 2 → P2 เลือก 1 (4 รอบ รอบละ 10 วิ ถ้าไม่ทันระบบสุ่มตัวที่เหลือในรอบให้ · ฮีโร่ที่ถูกเลือกแล้วเลือกซ้ำไม่ได้)<br><b>🤖 โหมด AI:</b> เล่นคนเดียว AI ดราฟและสู้เอง<br><br><b>ลำดับตา:</b> ตัวที่ SPD สูงสุดเล่นก่อน ในตาเลือก โจมตี / สกิล (ใช้ MP) / ป้องกัน<br>
+<b>🎯 ดราฟ:</b> P1 เลือก 1 → P2 เลือก 2 → P1 เลือก 2 → P2 เลือก 1 (4 รอบ รอบละ 10 วิ ถ้าไม่ทันระบบสุ่มตัวที่เหลือในรอบให้ · ฮีโร่ที่ถูกเลือกแล้วเลือกซ้ำไม่ได้)<br><b>🤖 โหมด AI:</b> เล่นคนเดียว AI ดราฟและสู้เอง (เลือกความยากได้ 3 ระดับ)<br><br><b>ลำดับตา:</b> ตัวที่ SPD สูงสุดเล่นก่อน ในตาเลือก โจมตี / สกิล (ใช้ MP) / ป้องกัน<br>
 • โจมตีธรรมดา ฟื้น MP +4 · ป้องกัน ลดดาเมจ 50% จนถึงตาหน้า และฟื้น MP +5<br><br>
 <b>💥 คริติคอล:</b> ทุกการโจมตีและสกิลที่ทำดาเมจ ทอยโอกาสคริตามค่า "คริ %" ของตัวนั้น (ดูใต้ชื่อบนการ์ด) ถ้าติดจะได้ดาเมจ ×ค่าดาเมจคริ (1.5–1.9 ตามตัว) ตัวเลขเด้งสีทองพร้อม 💥<br>
 • โอกาสคริเพิ่มได้จากพาสซีพ เช่น ตาเหยี่ยว<br>
@@ -255,8 +260,17 @@ M.dataset.p=/1/.test(title)?1:2;H.forEach((d,i)=>{const c=document.createElement
 c.innerHTML=`<div class=em>${d.e}</div><b>${d.n}</b><small>HP ${Math.round(d.hp*HPX)} · MP ${d.mp} · ATK ${d.atk} · DEF ${d.def} · SPD ${d.spd}</small><small class=cr>💥 คริ ${Math.round((p.cr+(p.pid=='eagle'?.2:0))*100)}% · ดาเมจคริ ×${p.cd}</small><small>✨ ${d.sk} (${d.cost} MP): ${KD[d.k]}</small><small class=ps>💠 พาสซีพ "${p.pn}": ${p.pd}</small>`;
 c.onclick=()=>{pk.has(i)?pk.delete(i):pk.size<3&&pk.add(i);document.querySelectorAll('.mc').forEach((x,j)=>x.classList.toggle('on',pk.has(j)));$('#ok').disabled=pk.size!=3;$('#ok').textContent='⚔️ ยืนยัน '+pk.size+'/3'};$('#grid').append(c)});
 $('#bk').onclick=back;$('#ok').onclick=()=>cb([...pk])}
+function aiLevel(){show(`<h1 style="font-size:28px">🤖 เลือกระดับ AI</h1><div class=bt><button id=d1>🙂 ง่าย</button><button id=d2>😼 ปกติ</button><button id=d3>😈 ยาก</button></div><div class=lvb style="text-align:left;line-height:1.7;font-size:14px"><b>ง่าย:</b> ดราฟสุ่ม ใช้สกิลบ้างไม่ใช้บ้าง เล็งเป้ามั่ว<br><b>ปกติ:</b> ดราฟสมดุล ใช้สกิลบ่อย รุมเป้าเลือดน้อยเป็นส่วนใหญ่<br><b>ยาก:</b> ดราฟสายดาเมจแรงๆ ใช้สกิลทุกครั้งที่ทำได้ รุมตัวที่ใกล้ล้มที่สุดเสมอ</div><div class=bt><button id=bk>↩ กลับ</button></div>`);
+[['easy','d1'],['normal','d2'],['hard','d3']].forEach(([k,b])=>$('#'+b).onclick=()=>{DIFF=k;MODE='ai';pvp()});$('#bk').onclick=home}
+function heroIndex(f='all'){show(`<h1 style="font-size:28px">📚 ดัชนีฮีโร่</h1><div class=bt>${[['all','ทั้งหมด'],['atk','⚔️ โจมตี'],['buff','✨ บัพ'],['tank','🛡️ แทงค์']].map(([k,l])=>`<button class="flt${k==f?' on':''}" data-f=${k}>${l}</button>`).join('')}</div><div id=grid></div><div class=bt><button id=bk>↩ กลับ</button></div>`);
+H.forEach((d,i)=>{const r=roleOf(d.k);if(f!='all'&&r!=f)return;const p=PS[i],c=document.createElement('div');c.className='mc';c.style.setProperty('--c',d.c);
+c.innerHTML=`<div class=em>${d.e}</div><b>#${String(i+1).padStart(2,'0')} ${d.n}</b><small>${HRN[r]}</small><small>HP ${Math.round(d.hp*HPX)} · MP ${d.mp} · ATK ${d.atk} · DEF ${d.def} · SPD ${d.spd}</small><small class=cr>💥 คริ ${Math.round((p.cr+(p.pid=='eagle'?.2:0))*100)}% · ดาเมจคริ ×${p.cd}</small><small>✨ ${d.sk} (${d.cost} MP): ${KD[d.k]}</small><small class=ps>💠 พาสซีพ "${p.pn}": ${p.pd}</small>`;$('#grid').append(c)});
+M.querySelectorAll('.flt').forEach(b=>b.onclick=()=>heroIndex(b.dataset.f));$('#bk').onclick=home}
 function pvp(){RN=0;W=[0,0];draft()}
-function aiPick(av,mine){const S=['heal','shield','cover','taunt','roar'],pf=mine.some(i=>S.includes(H[i].k))?[]:av.filter(i=>S.includes(H[i].k));return pf.length&&Math.random()<.7?rnd(pf):rnd(av)}
+function aiPick(av,mine){const L=DF[DIFF].dr;if(!L)return rnd(av);const S=HROLE.tank.concat(['heal','shield']),D=HROLE.atk,nd=mine.filter(i=>D.includes(H[i].k)).length,hs=mine.some(i=>S.includes(H[i].k)),sc=i=>H[i].atk*(H[i].m||1),pick=a=>L>1?a.reduce((x,y)=>sc(x)>=sc(y)?x:y):rnd(a),dm=av.filter(i=>D.includes(H[i].k)),sp=av.filter(i=>S.includes(H[i].k));
+if(nd<(L>1?2:1)&&dm.length&&Math.random()<.9)return pick(dm);
+if(!hs&&sp.length&&mine.length>=1&&Math.random()<(L>1?.4:.65))return rnd(sp);
+return L>1&&dm.length&&Math.random()<.6?pick(dm):rnd(av)}
 function draft(){const RD=[[0],[1,1],[0,0],[1]],pk=[[],[]],own={},ai=MODE=='ai',nm=s=>s?(ai?'AI':'ผู้เล่น 2'):'ผู้เล่น 1',cs=[];let rd=-1,k=0,busy=1;
 show(`<h1 id=dh style="font-size:24px"></h1><div id=dsec></div><div class=dtm><i></i></div><div class=dts><div><b>P1</b><span></span><span></span><span></span></div><div><b>${ai?'AI':'P2'}</b><span></span><span></span><span></span></div></div><div id=grid></div><div class=bt><button id=bk>↩ กลับ</button></div>`);
 const id=DID,bar=$('.dtm'),fill=$('.dtm i'),sd=()=>RD[rd][0];if(ai)M.classList.add('aim');
@@ -276,10 +290,10 @@ busy=0;const T0=Date.now();$('#dsec').textContent='⏱ 10 วิ';
 window._dt=setInterval(()=>{const l=Math.max(0,10-(Date.now()-T0)/1000);fill.style.width=l*10+'%';bar.classList.toggle('hot',l<=3);$('#dsec').textContent='⏱ '+Math.ceil(l)+' วิ';if(l<=0){clearInterval(window._dt);$('#dsec').textContent='🎲 หมดเวลา สุ่มให้!';while(k<RD[rd].length)lock(rnd(avail()))}},100)}
 $('#bk').onclick=home;next()}
 async function aiTurn(u){const cmd=$('#cmd');cmd.style.borderColor='#6fd6ff';cmd.innerHTML=`<div class=who>🤖 AI · ${u.e} ตาของ ${u.n}</div><div class=pi>กำลังคิด…</div>`;await sleep(900);cmd.innerHTML='';if(over)return;
-const E=alive(opp(u)),A=alive(ally(u)),T=E.filter(x=>x.tt>0),pool=T.length?T:E,low=pool.reduce((a,b)=>a.hp/a.max<b.hp/b.max?a:b),tg=Math.random()<.6?low:rnd(pool),hurt=A.filter(x=>x.hp<x.max*.55).length,k=u.k,can=u.mp>=u.cost,r=Math.random();
+const E=alive(opp(u)),A=alive(ally(u)),T=E.filter(x=>x.tt>0),pool=T.length?T:E,low=pool.reduce((a,b)=>a.hp<b.hp?a:b),tg=Math.random()<DF[DIFF].fo?low:rnd(pool),hurt=A.filter(x=>x.hp<x.max*.55).length,k=u.k,can=u.mp>=u.cost,r=Math.random();
 const guard=async()=>{u.guard=1;u.mp=Math.min(u.mpMax,u.mp+5);upd(u);msg(u.n+' ตั้งท่าป้องกัน');fx(u.el,'#8fd0ff',26,'burst');await sleep(700)};
-if(!can&&((u.hp<u.max*.3&&r<.4)||r<.1))return guard();
-if(can){const buffed=A.some(x=>x.bt>0),use=k=='heal'?hurt>0:(k=='atkbuff'||k=='empower')?!buffed&&r<.9:k=='shield'?A.some(x=>!x.shield)&&r<.7:k=='taunt'?!(u.tt>0)&&r<.6:k=='cover'?!(u.cv>0)&&r<.6:k=='roar'?E.some(x=>!(x.dt>0))&&r<.6:k=='vuln'?!(tg.vt>0)&&r<.85:r<.75;
+if(!can&&((u.hp<u.max*.3&&r<.4)||r<DF[DIFF].gd))return guard();
+if(can){const buffed=A.some(x=>x.bt>0),use=k=='heal'?hurt>0:(k=='atkbuff'||k=='empower')?!buffed&&r<.9:k=='shield'?A.some(x=>!x.shield)&&r<.7:k=='taunt'?!(u.tt>0)&&r<.6:k=='cover'?!(u.cv>0)&&r<.6:k=='roar'?E.some(x=>!(x.dt>0))&&r<.6:k=='vuln'?!(tg.vt>0)&&r<.85:r<DF[DIFF].sk;
 if(use)return k=='empower'?skill(u,A.reduce((a,b)=>a.atk>b.atk?a:b)):['single','drain','twin','pierce','vuln'].includes(k)?skill(u,tg):skill(u)}
 return attack(u,tg)}
 function pvpStart(a,b){PV=[a,b];party=a.map(i=>mk(i,'p'));foes=b.map(i=>mk(i,'f'));begin()}
