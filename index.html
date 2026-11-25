@@ -110,6 +110,164 @@ button small{display:block;font-family:'Sarabun';font-size:11px;opacity:.8}
 .sth{font-family:var(--disp);color:var(--tc);margin-bottom:4px;font-size:16px}
 .str{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:6px;align-items:center;padding:3px 0;border-top:1px solid #ffffff14}
 .str>i{font-style:normal;display:block;padding:2px 6px;border-radius:6px;font-size:12px;text-align:right;background:linear-gradient(90deg,color-mix(in srgb,var(--b,#fff) 38%,transparent) var(--p,0%),transparent var(--p,0%))}
+.ah{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:6px 52px 6px 0;font-size:14px;font-family:'Mitr','Sarabun',sans-serif}
+.xb{width:110px;height:8px;border-radius:9px;background:#ffffff22;overflow:hidden}.xb i{display:block;height:100%;background:linear-gradient(90deg,#7dff8a,#ffe27a)}
+.tg{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:760px;margin:8px auto}
+.tl{width:96px;padding:8px 4px;border-radius:14px;text-align:center;background:#ffffff10;border:2px solid color-mix(in srgb,var(--c,#888) 55%,#fff2);cursor:pointer;font-size:12px;line-height:1.35}
+.tl.no{filter:grayscale(1) brightness(.55);cursor:default}.tl.on{box-shadow:0 0 14px var(--c)}.em2{font-size:34px;line-height:1.2}
+.sg{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:420px;margin:10px auto}
+.stb{padding:10px 0;font-size:18px}.stb small{display:block;font-size:10px;opacity:.75}.stb.ok{box-shadow:0 0 0 2px #7dff8a99}
+.stb.bs{background:linear-gradient(#ff9e7a,#d8452a);color:#fff}
+.sp{max-width:420px;margin:8px auto;padding:10px 14px;border-radius:14px;background:#ffffff10;font-size:14px;line-height:1.7;font-family:'Mitr','Sarabun',sans-serif}
+.tip2{padding:6px 14px;border-radius:99px;background:#7dff8a22;border:1px solid #7dff8a66;color:#d6ffd9;font-size:14px}
+#m4{background:linear-gradient(#b9ff9e,#4cd964 55%,#1f9a3a);color:#06210d;box-shadow:0 4px 0 #0f5a22,0 0 20px #4cd96455}
+/* ---------- adventure UI v2 ---------- */
+#adv{position:fixed;inset:0;z-index:20;display:none;flex-direction:column;color:#fff;font-family:'Mitr','Sarabun',sans-serif;background:radial-gradient(ellipse 80% 50% at 15% 0%,#43308f66,transparent 60%),radial-gradient(ellipse 70% 50% at 100% 100%,#0d6e8f55,transparent 60%),linear-gradient(#171040,#080819);overflow:hidden;-webkit-tap-highlight-color:transparent}
+#adv::before{content:'';position:absolute;inset:-20%;background:radial-gradient(circle at 25% 35%,#ffb86a1c,transparent 30%),radial-gradient(circle at 75% 65%,#5ae0ff1a,transparent 32%);animation:drift 20s ease-in-out infinite alternate;pointer-events:none}
+#adv *{box-sizing:border-box}:where(#adv) button{all:unset;box-sizing:border-box;cursor:pointer;font-family:inherit}
+.a-top{position:relative;z-index:2;display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top,0px)) 60px 10px 12px;background:linear-gradient(#0b0826dd,#0b082600)}
+.a-bk{width:38px;height:38px;border-radius:12px;background:#ffffff18;border:1px solid #ffffff2a;display:grid;place-items:center;font-size:22px;flex:none}
+.a-pf{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.a-ring{width:46px;height:46px;border-radius:50%;background:conic-gradient(#ffd23f var(--p),#ffffff24 0);display:grid;place-items:center;flex:none}
+.a-ring b{width:36px;height:36px;border-radius:50%;background:#1a1440;display:grid;place-items:center;font-size:16px}
+.a-pn{font-size:14px;line-height:1.2}.a-xt{font-size:11px;opacity:.7}
+.a-rs{display:flex;gap:6px;flex:none}.a-rc{padding:4px 10px;border-radius:99px;background:#ffffff14;border:1px solid #ffffff26;font-size:13px;white-space:nowrap}
+#am{position:relative;z-index:1;flex:1;overflow-y:auto;padding:6px 14px calc(100px + env(safe-area-inset-bottom,0px))}
+#am>*{max-width:720px;margin-left:auto;margin-right:auto}
+.a-nav{position:absolute;z-index:3;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:6px;padding:14px 10px calc(8px + env(safe-area-inset-bottom,0px));background:linear-gradient(#0b082600,#0b0826f2 40%)}
+.a-nav button{flex:1;max-width:120px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;border-radius:16px;font-size:12px;opacity:.65;transition:.2s}
+.a-nav i{font-style:normal;font-size:24px}
+.a-nav button.on{opacity:1;background:linear-gradient(#ffffff26,#ffffff0d);box-shadow:inset 0 0 0 1px #ffffff40,0 0 18px #ffc13a33;transform:translateY(-4px)}
+.a-h{display:flex;justify-content:space-between;align-items:baseline;margin:14px 2px 8px;font-size:16px}.a-h small{opacity:.7;font-size:12px}
+.a-bn{display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 18px;border-radius:14px;font-size:16px;font-weight:600;color:#2a1700;background:linear-gradient(#ffeaa5,#ffc13a);box-shadow:0 4px 0 #a86a00,0 8px 18px #0006;transition:transform .08s}
+.a-bn:active{transform:translateY(3px);box-shadow:0 1px 0 #a86a00}
+.a-bn.g{background:linear-gradient(#b9ff9e,#4cd964);box-shadow:0 4px 0 #1b7a30,0 8px 18px #0006;color:#06210d}
+.a-bn.b{background:linear-gradient(#b4ecff,#38a8ff);box-shadow:0 4px 0 #0e5aa0,0 8px 18px #0006;color:#04162b}
+.a-bn.x{background:#ffffff1c;color:#ffffff88;box-shadow:none;cursor:default}.a-bn.big{width:100%;padding:14px;font-size:19px}
+.a-pnl{margin:12px auto 0;padding:12px 14px;border-radius:18px;background:linear-gradient(#ffffff16,#ffffff08);border:1px solid #ffffff22;backdrop-filter:blur(6px)}
+.a-note{margin-top:14px;font-size:12px;opacity:.65;text-align:center;line-height:1.6}
+.a-lg{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:6px 0 0;font-size:11px}.a-lg span{padding:2px 8px;border-radius:99px;background:#ffffff12;border:1px solid var(--k)}
+.a-gr{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:10px}.a-tm{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.a-sl{aspect-ratio:3/4;border-radius:16px;border:2px dashed #ffffff33;display:grid;place-items:center;text-align:center;font-size:11px;opacity:.75;background:#ffffff08;line-height:1.4}
+.a-hc{position:relative;aspect-ratio:3/4;border-radius:16px;padding:3px;cursor:pointer;background:linear-gradient(160deg,var(--fc),color-mix(in srgb,var(--fc) 30%,#000));box-shadow:0 6px 14px #0008,0 0 16px color-mix(in srgb,var(--fc) 40%,transparent);overflow:hidden;transition:transform .15s}
+.a-hc:active{transform:scale(.96)}.a-hc.in{outline:2px solid #fff8;outline-offset:1px}
+.a-hc>i{position:relative;display:flex;align-items:center;justify-content:center;height:100%;border-radius:13px;font-style:normal;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--c) 50%,#1a1440),#0b0824 78%)}
+.a-hc .ar{font-size:clamp(38px,10vw,56px);filter:drop-shadow(0 0 10px var(--c));margin-top:-8px}
+.a-hc .lv{position:absolute;left:5px;top:5px;font-size:10px;padding:0 6px;border-radius:8px;background:#000b;border:1px solid var(--fc)}
+.a-hc .sr{position:absolute;left:0;right:0;bottom:19px;text-align:center;font-size:9px;color:#ffe27a;letter-spacing:-1px}
+.a-hc .nx{position:absolute;left:0;right:0;bottom:0;padding:2px 2px 3px;text-align:center;font-size:10px;background:linear-gradient(#0000,#000c);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a-hc .rb{position:absolute;right:-24px;top:9px;transform:rotate(40deg);background:linear-gradient(#ffe27a,#ff9a3a);color:#3a1c00;font-size:9px;font-weight:700;padding:1px 26px}
+.a-hc.gold::after,.a-hc.red::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 40%,#ffffff55 50%,transparent 60%);transform:translateX(-120%);animation:shn 3s infinite;pointer-events:none}
+@keyframes shn{60%,100%{transform:translateX(120%)}}
+.a-hc.red{animation:rgl 2s ease-in-out infinite}@keyframes rgl{50%{box-shadow:0 6px 14px #0008,0 0 28px #ff4a4a}}
+.a-hc.no{filter:grayscale(1) brightness(.45);cursor:default}
+.a-cht{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px}
+.a-chb{flex:none;display:flex;flex-direction:column;align-items:center;min-width:64px;padding:6px 12px;border-radius:14px;background:#ffffff12;border:1px solid #ffffff22;font-size:12px}
+.a-chb i{font-style:normal;font-size:24px}.a-chb.on{background:linear-gradient(#ffffff30,#ffffff10);border-color:#ffd23f;box-shadow:0 0 14px #ffd23f66}.a-chb.lk{opacity:.5}
+.a-world{position:relative;border-radius:24px;overflow:hidden;margin-top:6px;background:linear-gradient(var(--g1),var(--g2));border:1px solid #ffffff2a;box-shadow:inset 0 0 60px #0006}
+.a-wt{position:absolute;z-index:2;left:14px;top:12px;right:14px;display:flex;justify-content:space-between;font-size:17px;text-shadow:0 2px 6px #000a}
+.a-world svg{position:absolute;inset:0;width:100%;height:100%}
+.a-dc{position:absolute;font-size:30px;opacity:.16;animation:bob 4s ease-in-out infinite;pointer-events:none}
+.a-nd{position:absolute;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:700;background:radial-gradient(circle at 35% 30%,#ffffff40,#ffffff10);border:3px solid #ffffff66;box-shadow:0 6px 14px #0008;z-index:1}
+.a-nd small{position:absolute;top:100%;margin-top:2px;font-size:10px;font-weight:400;opacity:.85;white-space:nowrap}
+.a-nd u{position:absolute;right:-4px;top:-4px;width:20px;height:20px;border-radius:50%;background:#2fd05a;font-size:12px;text-decoration:none;display:grid;place-items:center;border:2px solid #0a2a14}
+.a-nd.ok{border-color:#7dff8a;background:radial-gradient(circle at 35% 30%,#7dff8a66,#0a3a1a99)}
+.a-nd.cur{border-color:#ffd23f;animation:pls 1.4s infinite}.a-nd.lk{filter:grayscale(1) brightness(.6)}
+.a-nd.bs{width:74px;height:74px;font-size:36px;border-color:#ff7a5a;box-shadow:0 0 22px #ff5a3caa,0 6px 14px #0008}
+@keyframes pls{50%{box-shadow:0 0 0 12px #ffd23f33,0 6px 14px #0008;scale:1.08}}
+.a-sw{position:absolute;inset:0;z-index:10;pointer-events:none}.a-sw.open{pointer-events:auto}
+.a-bd{position:absolute;inset:0;background:#000b;opacity:0;transition:.25s}.open .a-bd{opacity:1}
+.a-sh{position:absolute;left:0;right:0;bottom:0;max-height:86%;overflow:auto;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));border-radius:26px 26px 0 0;background:linear-gradient(#2c2266,#16113d);border-top:2px solid #ffffff33;transform:translateY(105%);transition:transform .3s cubic-bezier(.2,.9,.3,1);max-width:720px;margin:0 auto}
+.open .a-sh{transform:none}
+.a-sht{font-size:20px;text-align:center;margin-bottom:10px}
+.a-en{display:flex;gap:8px;justify-content:center;align-items:center;margin:6px 0}
+.a-ee,.a-eb{display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--c) 45%,#1a1440),#0b0824);border:2px solid color-mix(in srgb,var(--c) 70%,#fff3)}
+.a-ee{width:48px;height:48px;font-size:26px}.a-eb{width:78px;height:78px;font-size:44px;border-color:#ff5a3c;box-shadow:0 0 22px #ff5a3caa;position:relative}
+.a-eb small{position:absolute;bottom:-8px;background:#ff5a3c;font-size:10px;padding:0 8px;border-radius:99px}
+.a-ch{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:6px 0;font-size:13px}.a-ch span{padding:3px 10px;border-radius:99px;background:#ffffff14;border:1px solid #ffffff22}
+.a-dr{text-align:center;font-size:13px;color:#ffe3a8;margin:6px 0;line-height:1.6}
+.a-hero{text-align:center;padding-top:4px}.a-hero h2{margin:14px 0 2px;font-size:24px}.a-sr{font-size:22px;color:#ffe27a;letter-spacing:2px}
+.a-art{position:relative;width:170px;height:170px;margin:6px auto;border-radius:30px;padding:5px;background:linear-gradient(160deg,var(--fc),color-mix(in srgb,var(--fc) 25%,#000));box-shadow:0 0 32px color-mix(in srgb,var(--fc) 55%,transparent)}
+.a-art>span{display:grid;place-items:center;height:100%;border-radius:25px;font-size:92px;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--c) 55%,#1a1440),#0b0824 80%)}
+.a-art>span b{font-weight:400;filter:drop-shadow(0 0 14px var(--c));animation:bob 3s ease-in-out infinite}
+.a-art em{position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(var(--fc),color-mix(in srgb,var(--fc) 50%,#000));padding:1px 16px;border-radius:99px;font-style:normal;font-weight:700;border:2px solid #0009;white-space:nowrap}
+.a-art.lvup{animation:lvu .7s}@keyframes lvu{30%{transform:scale(1.12);filter:brightness(1.8)}}
+.a-sts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;text-align:center}.a-sts div{padding:6px 2px;border-radius:12px;background:#ffffff12;font-size:11px}.a-sts b{display:block;font-size:15px;margin-top:2px}
+.a-bar{position:relative;height:14px;border-radius:99px;background:#ffffff1c;overflow:hidden;margin:8px 0 4px}.a-bar i{display:block;height:100%;background:linear-gradient(90deg,#7dff8a,#ffe27a)}
+.a-bar u{position:absolute;top:0;bottom:0;width:3px;background:#fff;opacity:.8}
+.a-two{display:flex;gap:8px;margin-top:8px}.a-two .a-bn{flex:1;font-size:14px;padding:10px 6px}
+.a-eqs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.a-eq{aspect-ratio:1;border-radius:14px;border:2px solid var(--k,#ffffff33);background:#ffffff0c;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:20px;text-align:center;line-height:1.1;overflow:hidden}
+.a-eq small{font-size:9px;max-width:100%;padding:0 2px}
+.a-it{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:14px;background:#ffffff0d;border:2px solid var(--k);margin-bottom:8px;font-size:13px}
+.a-it i{font-style:normal;font-size:26px}.a-it div{flex:1;line-height:1.4}.a-it small{opacity:.8}
+.a-back{padding:6px 12px;border-radius:12px;background:#ffffff14;font-size:14px;display:inline-block;margin:4px 0}
+.a-toast{position:absolute;z-index:30;left:50%;bottom:104px;transform:translate(-50%,20px);padding:8px 18px;border-radius:99px;background:#000c;border:1px solid #ffffff40;opacity:0;transition:.25s;pointer-events:none;font-size:14px;text-align:center;max-width:92%}
+.a-toast.show{opacity:1;transform:translate(-50%,0)}
+.a-sum{position:relative;text-align:center;padding-top:6px}.a-sum h2{margin:4px 0}.a-sub{font-size:13px;opacity:.75;margin-bottom:10px}
+.a-rays{position:absolute;left:50%;top:150px;width:520px;height:520px;margin:-260px 0 0 -260px;background:repeating-conic-gradient(#ffd23f26 0 8deg,transparent 8deg 20deg);-webkit-mask:radial-gradient(circle,#000 10%,transparent 68%);mask:radial-gradient(circle,#000 10%,transparent 68%);animation:spin 40s linear infinite;pointer-events:none}
+.a-bxs{position:relative;display:grid;gap:10px;justify-content:center;align-items:center;min-height:200px;margin:12px 0}
+.a-bxs.n1{grid-template-columns:130px}.a-bxs.n10{grid-template-columns:repeat(5,minmax(0,1fr))}
+.a-bx{display:grid;place-items:center;aspect-ratio:3/4;cursor:pointer;animation:bob 2.4s ease-in-out infinite}.a-bx:nth-child(2n){animation-delay:-.8s}.a-bx:nth-child(3n){animation-delay:-1.6s}
+.a-bx span{font-size:clamp(44px,12vw,72px);filter:drop-shadow(0 0 14px #ff8ad8) drop-shadow(0 0 28px #ffc13a88)}
+.n1 .a-bx span{font-size:96px}
+.a-bx.shk{animation:shk .8s ease-in}
+@keyframes shk{0%,100%{transform:none}15%{transform:rotate(-14deg) scale(1.1)}30%{transform:rotate(14deg) scale(1.15)}45%{transform:rotate(-12deg) scale(1.2)}60%{transform:rotate(12deg) scale(1.25)}85%{transform:scale(1.5);filter:brightness(2.2)}}
+.a-rv{animation:pop .55s cubic-bezier(.2,1.4,.4,1)}.a-rv.new .a-hc{box-shadow:0 0 30px #ffd23f,0 0 60px #ffd23f66}
+@keyframes pop{0%{transform:scale(.2) rotate(-15deg);opacity:0}60%{transform:scale(1.18) rotate(4deg);opacity:1}100%{transform:none}}
+.a-sp{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 12px var(--c);pointer-events:none;z-index:50;animation:spk .9s ease-out forwards}
+@keyframes spk{to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+.a-btns{display:flex;gap:10px;justify-content:center;margin-top:8px}.a-btns .a-bn{flex:1;max-width:220px;flex-direction:column;gap:0}.a-btns small{font-size:12px;font-weight:400}
+@media(prefers-reduced-motion:reduce){#adv *{animation-duration:.01ms!important}}
+
+/* ---------- open-world adventure skin ---------- */
+#adv button:hover:not(:disabled){transform:var(--t,none);filter:brightness(1.13)}
+#adv button:active:not(:disabled){transform:var(--t,none) translateY(3px);box-shadow:none}
+#adv button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+#adv .a-bn{--sh:0 5px 0 #7a4a00,0 10px 18px #0009;min-height:52px;padding:12px 22px;border-radius:14px;border:3px solid #fff3b0;font-size:17px;font-weight:600;background:linear-gradient(#fff0b0,#ffc13a 55%,#e8940a);color:#3a2000;text-shadow:0 1px 0 #fff9;box-shadow:var(--sh),inset 0 2px 0 #fffb}
+#adv .a-bn.g{--sh:0 5px 0 #14602a,0 10px 18px #0009;border-color:#d4ffc2;background:linear-gradient(#c9ffb0,#4cd964 55%,#1f9a3a);color:#05200c;text-shadow:0 1px 0 #fff8}
+#adv .a-bn.b{--sh:0 5px 0 #0a4a8a,0 10px 18px #0009;border-color:#c8f1ff;background:linear-gradient(#c4f0ff,#38a8ff 55%,#1262c4);color:#03162b}
+#adv .a-bn.r{--sh:0 5px 0 #6a0a1c,0 10px 18px #0009;border-color:#ffc0c0;background:linear-gradient(#ff9a8a,#ff2e4d 55%,#b0102c);color:#fff;text-shadow:0 2px 0 #5a0014}
+#adv .a-bn.x{--sh:none;border-color:#ffffff30;background:#241d52;color:#ffffff80;text-shadow:none;box-shadow:inset 0 0 0 1px #0006}
+#adv .a-bn.big{font-size:20px;min-height:58px}
+#adv .a-bk,#adv .a-back{--sh:0 3px 0 #7a4a00;border:2px solid #ffd23f;border-radius:12px;background:linear-gradient(#4a3a9a,#251b63);color:#ffe9a8;box-shadow:var(--sh),inset 0 1px 0 #fff4}
+#adv .a-bk{width:46px;height:46px;font-size:26px}
+#adv .a-back{padding:8px 16px;font-size:15px;margin:6px 0}
+#adv .a-nav{gap:8px;padding:16px 10px calc(10px + env(safe-area-inset-bottom,0px));border-top:2px solid #ffd23f66;background:linear-gradient(#0b082600,#0b0826 28%)}
+#adv .a-nav button{max-width:92px;padding:8px 0 6px;border-radius:14px;border:2px solid #ffffff2a;background:linear-gradient(#352a7a,#1b1450);font-size:12px;opacity:1;color:#d9d0ff;box-shadow:0 3px 0 #0a0724}
+#adv .a-nav button.on{--t:translateY(-6px);border-color:#ffd23f;background:linear-gradient(#ffe9a8,#ffb830);color:#3a2000;box-shadow:0 5px 0 #8a5200,0 0 18px #ffc13a88}
+#adv .a-nav i{font-size:26px}
+#adv .a-chb{min-width:76px;padding:8px 12px;border-radius:12px;border:2px solid #ffffff33;background:linear-gradient(#352a7a,#1b1450);font-size:13px;box-shadow:0 3px 0 #0a0724}
+#adv .a-chb.on{border-color:#ffd23f;background:linear-gradient(#5a4ab8,#2d2278);box-shadow:0 3px 0 #0a0724,0 0 14px #ffd23f88}
+#adv .a-it{border-width:2px;border-radius:14px;background:linear-gradient(#ffffff14,#ffffff06)}
+#adv .a-eq{border-width:3px;border-radius:14px;background:linear-gradient(#352a7a,#1b1450);box-shadow:0 3px 0 #0a0724}
+#adv .a-sh{border-top:3px solid #ffd23f;box-shadow:0 -10px 40px #000a}
+#adv .a-rc{border:2px solid #ffd23f88;background:linear-gradient(#352a7a,#1b1450);font-weight:600}
+/* world */
+#am.wm{padding:0;overflow:auto;-webkit-overflow-scrolling:touch}
+#am.wm>*{max-width:none;margin:0}
+#am.wm .a-cht{position:sticky;top:0;left:0;z-index:6;padding:6px 10px;background:linear-gradient(#0b0826f0,#0b0826aa);border-bottom:2px solid #ffd23f55}
+#am.wm .a-cht+.a-world{margin-top:0}
+.a-world{width:900px;border-radius:0;border:0;margin:0}
+.a-rg{position:absolute;left:0;right:0;background:linear-gradient(var(--g1),var(--g2));border-top:3px solid #ffd23f88;box-shadow:inset 0 0 80px #0008}
+.a-rg::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,#ffffff14,transparent 40%),radial-gradient(circle at 80% 75%,#ffffff10,transparent 45%)}
+.a-rt{position:absolute;left:12px;top:10px;padding:6px 18px;border-radius:12px;border:2px solid #ffd23f;background:#0b0826cc;font-size:17px;font-weight:600;color:#ffe9a8;z-index:3;box-shadow:0 4px 0 #0008}
+.a-rt small{font-weight:400;opacity:.85;margin-left:8px;font-size:12px}
+.a-rg.lkd::after{content:'';position:absolute;inset:0;background:#05031299;backdrop-filter:grayscale(.8) blur(1px)}
+.a-world svg{width:900px;height:100%}
+#adv .a-nd{--t:translate(-50%,-50%);transform:var(--t);width:62px;height:62px;font-size:24px;border:4px solid #ffe9a8;background:radial-gradient(circle at 35% 30%,#7a64d8,#2a1f72);box-shadow:0 5px 0 #0008,0 0 0 2px #0009;z-index:2}
+#adv .a-nd small{top:calc(100% + 4px);padding:1px 10px;border-radius:99px;background:#000c;border:1px solid #ffffff44;font-size:11px;opacity:1}
+#adv .a-nd.ok{border-color:#7dff8a;background:radial-gradient(circle at 35% 30%,#7dff8a88,#0a3a1a)}
+#adv .a-nd.cur{border-color:#ffd23f;background:radial-gradient(circle at 35% 30%,#fff3b0,#e8940a);color:#3a2000}
+#adv .a-nd.cur::before{content:'📍';position:absolute;top:-34px;font-size:26px;animation:bob 1s ease-in-out infinite}
+#adv .a-nd.bs{width:84px;height:84px;font-size:42px;border-color:#ff7a5a;background:radial-gradient(circle at 35% 30%,#ff9a7a,#6a0a1c)}
+#adv .a-nd.lk{filter:grayscale(1) brightness(.55)}
+/* hero boss cards */
+#adv .a-bc{display:flex;align-items:center;gap:12px;width:100%;margin-top:10px;padding:10px 14px;border-radius:16px;border:3px solid color-mix(in srgb,var(--c) 70%,#fff);background:linear-gradient(135deg,color-mix(in srgb,var(--c) 40%,#1a1440),#0b0824);box-shadow:0 5px 0 #0a0724,0 0 16px color-mix(in srgb,var(--c) 40%,transparent);--t:none}
+#adv .a-bc .ar{font-style:normal;font-size:44px;filter:drop-shadow(0 0 8px var(--c))}
+#adv .a-bc div{flex:1;line-height:1.5;font-size:14px}#adv .a-bc small{opacity:.85}
+#adv .a-bc .a-go{flex:none;padding:8px 14px;border-radius:10px;border:2px solid #ffd23f;background:linear-gradient(#ff9a8a,#c4142f);font-weight:600;font-size:14px}
+#adv .a-bc.lk{filter:grayscale(.8) brightness(.6)}#adv .a-bc.dn .a-go{background:linear-gradient(#b9ff9e,#2f9a3f);color:#05200c}
 /* ---------- battle HUD ---------- */
 #top{text-align:center;min-height:54px}
 #wv{display:flex;justify-content:center;align-items:center;gap:10px;font-family:var(--disp);font-size:13px}
@@ -239,7 +397,7 @@ const PS=[
 {pid:'rage',pn:'เลือดแค้น',pd:'ทุก 1% HP ที่เสีย ATK +0.8% (สูงสุด +50%)',cr:.10,cd:1.7},
 {pid:'regen',pn:'ปราการฟื้นฟู',pd:'ต้นเทิร์นฟื้น HP ตัวเอง 5% ของสูงสุด',cr:.06,cd:1.5}];
 const opp=u=>u.side=='p'?foes:party,ally=u=>u.side=='p'?party:foes,M=$('#menu'),alive=a=>a.filter(x=>x.hp>0),has=(u,id)=>alive(ally(u)).some(x=>x.pid==id);
-const crOf=u=>Math.min(1,u.cr+(u.pid=='eagle'?.2:0)+(has(u,'anthem')?.06:0)),atkOf=u=>u.atk*(u.pid=='scale'&&u.hp<u.max*.35?1.4:1)*(u.pid=='charge'?1+.08*u.st:1)*(u.bt>0?u.bm:1)*(u.dt>0?.75:1)*(u.pid=='rage'?1+Math.min(.5,.8*(1-u.hp/u.max)):1),defOf=t=>t.def*(has(t,'guard')?1.25:1);
+const crOf=u=>Math.min(1,u.cr+(u.pid=='eagle'?.2:0)+(has(u,'anthem')?.06:0)),atkOf=u=>u.atk*(u.pid=='scale'&&u.hp<u.max*.35?1.4:1)*(u.pid=='charge'?1+.08*u.st:1)*(u.bt>0?u.bm:1)*(u.et>0?1.5:1)*(u.dt>0?.75:1)*(u.pid=='rage'?1+Math.min(.5,.8*(1-u.hp/u.max)):1),defOf=t=>t.def*(has(t,'guard')?1.25:1);
 function show(h){DID++;clearInterval(window._dt);M.classList.remove('cover','aim');delete M.dataset.p;M.scrollTop=0;$('#end').style.display='none';M.style.display='block';M.innerHTML=h}
 function msg(t){$('#msg').textContent=t}
 async function banner(t){const b=$('#banner');flash('#ff8a3c');b.textContent=t;b.classList.remove('go');void b.offsetWidth;b.classList.add('go');await sleep(1500)}
@@ -318,12 +476,12 @@ const DF={easy:{sk:.5,fo:.3,gd:.2,dr:0},normal:{sk:.85,fo:.75,gd:.1,dr:1},hard:{
 const HROLE={atk:['single','pierce','twin','aoe','multi','drain','freeze','vuln'],buff:['atkbuff','empower','heal','shield'],tank:['taunt','roar','cover']},HRN={atk:'⚔️ สายโจมตี',buff:'✨ สายบัพ/ซัพพอร์ต',tank:'🛡️ สายแทงค์'},roleOf=k=>Object.keys(HROLE).find(r=>HROLE[r].includes(k))||'atk';
 // ---------- menus
 function home(){over=true;BID++;AU.music('menu');const hs=[...H.keys()].sort(()=>Math.random()-.5).slice(0,5);
-show(`<div class=cv><h1 class=logo><span>ARCANE</span><span>DUEL</span></h1><div class=tag>ศึกจอมเวท PvP สองผู้เล่น บนจอเดียว</div><div class=chips><span>👥 2 ผู้เล่น</span><span>🎯 ดราฟทีมละ 4 ตัว</span><span>🌟 18 ฮีโร่</span><span>💠 พาสซีพเฉพาะตัว</span></div><div class=hr>${hs.map(i=>`<span class=hh style="--c:${H[i].c}" data-i=${i}>${H[i].e}</span>`).join('')}</div><div class=tip>แตะฮีโร่เพื่อดูพาสซีพ</div><div class=bt><button id=mi class=ix>📚 ดัชนีฮีโร่</button><button id=m1>⚔️ PvP 2 ผู้เล่น</button><button id=m3>🤖 เล่นคนเดียว vs AI</button><button id=m2>📖 กติกา & คริติคอล</button></div><div class=tag style="font-size:12px;opacity:.5">กด Enter เพื่อเริ่มได้เลย</div></div>`);
+show(`<div class=cv><h1 class=logo><span>ARCANE</span><span>DUEL</span></h1><div class=tag>ศึกจอมเวท PvP สองผู้เล่น บนจอเดียว</div><div class=chips><span>👥 2 ผู้เล่น</span><span>🎯 ดราฟทีมละ 4 ตัว</span><span>🌟 18 ฮีโร่</span><span>💠 พาสซีพเฉพาะตัว</span></div><div class=hr>${hs.map(i=>`<span class=hh style="--c:${H[i].c}" data-i=${i}>${H[i].e}</span>`).join('')}</div><div class=tip>แตะฮีโร่เพื่อดูพาสซีพ</div><div class=bt><button id=mi class=ix>📚 ดัชนีฮีโร่</button><button id=m4>🏰 โหมดผจญภัย</button><button id=m1>⚔️ PvP 2 ผู้เล่น</button><button id=m3>🤖 เล่นคนเดียว vs AI</button><button id=m2>📖 กติกา & คริติคอล</button></div><div class=tag style="font-size:12px;opacity:.5">กด Enter เพื่อเริ่มได้เลย</div></div>`);
 M.classList.add('cover');const cv=$('.cv');
 for(let i=0;i<24;i++){const t=document.createElement('i');t.className='st';t.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${-Math.random()*4}s;scale:${.6+Math.random()*1.2}`;cv.append(t)}
 M.querySelectorAll('.hh').forEach(el=>{el.onclick=()=>{const i=+el.dataset.i;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');$('.tip').innerHTML=`<b style="color:${H[i].c}">${H[i].n}</b> · 💠 ${PS[i].pn}<br><small style="opacity:.8">${PS[i].pd}</small>`};el.onanimationend=()=>el.classList.remove('pop')});
 if(!window._ck){window._ck=1;addEventListener('keydown',e=>{if(e.key=='Enter'&&M.classList.contains('cover')&&M.style.display!='none'&&document.activeElement==document.body){e.preventDefault();$('#m1').click()}})}
-$('#m1').onclick=()=>{MODE='pvp';pvp()};$('#m3').onclick=aiLevel;$('#mi').onclick=()=>heroIndex();$('#m2').onclick=rules}
+$('#m1').onclick=()=>{MODE='pvp';pvp()};$('#m3').onclick=aiLevel;$('#m4').onclick=advHub;$('#mi').onclick=()=>heroIndex();$('#m2').onclick=rules}
 function rules(){show(`<h1 style="font-size:30px">📖 กติกา</h1><div class=lvb style="text-align:left;max-width:600px;line-height:1.75;font-size:14.5px">
 <b>🎯 ดราฟ:</b> P1 เลือก 1 → P2 เลือก 2 → P1 เลือก 2 → P2 เลือก 2 → P1 เลือก 1 (5 รอบ รอบละ 10 วิ ถ้าไม่ทันระบบสุ่มตัวที่เหลือในรอบให้ · ฮีโร่ที่ถูกเลือกแล้วเลือกซ้ำไม่ได้)<br><b>🤖 โหมด AI:</b> เล่นคนเดียว AI ดราฟและสู้เอง (เลือกความยากได้ 3 ระดับ)<br><br><b>ลำดับตา:</b> ตัวที่ SPD สูงสุดเล่นก่อน ในตาเลือก โจมตี / สกิล (ใช้ MP) / ป้องกัน<br>
 • โจมตีธรรมดา ฟื้น MP +4 · ป้องกัน ลดดาเมจ 50% จนถึงตาหน้า และฟื้น MP +5<br><br>
@@ -331,7 +489,7 @@ function rules(){show(`<h1 style="font-size:30px">📖 กติกา</h1><div 
 • โอกาสคริเพิ่มได้จากพาสซีพ เช่น ตาเหยี่ยว<br>
 • <b>คริแน่นอน 100%:</b> นินจาหลบสำเร็จ (การโจมตีครั้งถัดไป 🎯) และศัตรูที่ ❄️ แข็งอยู่ เมื่อฝั่งเรามีจอมเวทน้ำแข็ง<br>
 • สกิล "เจาะเกราะ" ไม่คิด DEF แต่คริได้ปกติ<br><br>
-<b>สัญลักษณ์สถานะใต้ตัวละคร:</b> 🛡 โล่ · 🔥 ติดไฟ (เทิร์นที่เหลือ · ฮีลที่ได้รับลด 50% นาน 2 เทิร์น) · ❄️ แช่แข็ง ข้ามตา · ✨ เกราะทีม · 🔰 ป้องกัน · ⚡ ชั้นประจุ · 🎯 คริครั้งหน้าแน่นอน<br>⚔️↑ บัพ ATK · 💢 เปราะบาง (รับดาเมจ +30%) · ⬇ ATK ถูกลด · 📣 ยั่วยุ (ศัตรูต้องตีตัวนี้ก่อน) · 🏰 คุ้มกัน (รับดาเมจแทนเพื่อน 50%) ตัวเลขคือเทิร์นที่เหลือ<br><br>
+<b>สัญลักษณ์สถานะใต้ตัวละคร:</b> 🛡 โล่ · 🔥 ติดไฟ (เทิร์นที่เหลือ · ฮีลที่ได้รับลด 50% นาน 2 เทิร์น) · ❄️ แช่แข็ง ข้ามตา · ✨ เกราะทีม · 🔰 ป้องกัน · ⚡ ชั้นประจุ · 🎯 คริครั้งหน้าแน่นอน<br>⚔️↑ บัพทีมจากนักดนตรีศึก (ATK +30%) · 🎖️ บัพจากจอมทัพ (ATK +50% ใช้กับเพื่อน 1 คน) — สองบัพนี้แยกกัน ซ้อนกันได้ รวมเป็น ATK ×1.95 · 💢 เปราะบาง (รับดาเมจ +30%) · ⬇ ATK ถูกลด · 📣 ยั่วยุ (ศัตรูต้องตีตัวนี้ก่อน) · 🏰 คุ้มกัน (รับดาเมจแทนเพื่อน 50%) ตัวเลขคือเทิร์นที่เหลือ<br><br>
 <b>พาสซีพ</b> ทำงานเองตลอด ไม่เสีย MP ทุกฮีโร่มี 1 อย่าง อ่านรายละเอียดได้ที่หน้าเลือกทีม และที่แถบคำสั่งตอนถึงตาตัวนั้น</div><div class=bt><button id=bk>↩ กลับ</button></div>`);$('#bk').onclick=home}
 function choose(title,cb,back){const pk=new Set();show(`<h1 style="font-size:28px">${title}</h1><p>เลือก 3 ตัว (อ่านพาสซีพให้ครบก่อนเลือก)</p><div id=grid></div><div class=bt><button id=bk>↩ กลับ</button><button id=ok disabled>ยืนยัน</button></div>`);
 M.dataset.p=/1/.test(title)?1:2;H.forEach((d,i)=>{const c=document.createElement('div'),p=PS[i];c.className='mc';c.style.setProperty('--c',d.c);
@@ -371,8 +529,8 @@ async function aiTurn(u){const cmd=$('#cmd');cmd.style.borderColor='#6fd6ff';cmd
 const E=alive(opp(u)),A=alive(ally(u)),T=E.filter(x=>x.tt>0),pool=T.length?T:E,low=pool.reduce((a,b)=>a.hp<b.hp?a:b),tg=Math.random()<DF[DIFF].fo?low:rnd(pool),hurt=A.filter(x=>x.hp<x.max*.55).length,k=u.k,can=u.mp>=u.cost,r=Math.random();
 const guard=async()=>{u.guard=1;u.mp=Math.min(u.mpMax,u.mp+5);upd(u);msg(u.n+' ตั้งท่าป้องกัน');fx(u.el,'#8fd0ff',26,'burst');await sleep(700)};
 if(!can&&((u.hp<u.max*.3&&r<.4)||r<DF[DIFF].gd))return guard();
-if(can){const buffed=A.some(x=>x.bt>0),use=k=='heal'?hurt>0:(k=='atkbuff'||k=='empower')?!buffed&&r<.9:k=='shield'?A.some(x=>!x.shield)&&r<.7:k=='taunt'?!(u.tt>0)&&r<.6:k=='cover'?!(u.cv>0)&&r<.6:k=='roar'?E.some(x=>!(x.dt>0))&&r<.6:k=='vuln'?!(tg.vt>0)&&r<.85:r<DF[DIFF].sk;
-if(use)return k=='empower'?skill(u,A.reduce((a,b)=>a.atk>b.atk?a:b)):['single','drain','twin','pierce','vuln'].includes(k)?skill(u,tg):skill(u)}
+if(can){const buffed=A.some(x=>x.bt>0),nE=A.filter(x=>!(x.et>0)),use=k=='heal'?hurt>0:k=='atkbuff'?!buffed&&r<.9:k=='empower'?nE.length>0&&r<.9:k=='shield'?A.some(x=>!x.shield)&&r<.7:k=='taunt'?!(u.tt>0)&&r<.6:k=='cover'?!(u.cv>0)&&r<.6:k=='roar'?E.some(x=>!(x.dt>0))&&r<.6:k=='vuln'?!(tg.vt>0)&&r<.85:r<DF[DIFF].sk;
+if(use)return k=='empower'?skill(u,(nE.length?nE:A).reduce((a,b)=>a.atk>b.atk?a:b)):['single','drain','twin','pierce','vuln'].includes(k)?skill(u,tg):skill(u)}
 return attack(u,tg)}
 function pvpStart(a,b){PV=[a,b];party=a.map(i=>mk(i,'p'));foes=b.map(i=>mk(i,'f'));begin()}
 // ---------- units & loop
@@ -381,18 +539,18 @@ const el=document.createElement('div');el.className='u '+(side=='p'?'hero':'foe'
 el.innerHTML=`<div class=nm>${u.n}</div><div class=em>${u.e}</div><div class="bar hp"><i></i></div><div class="bar mp"><i></i></div><div class=num></div><div class=pn>💠${u.pn} · 💥${Math.round(crOf(u)*100)}%</div><div class=sb></div>`;
 el.onclick=()=>tgtCb&&tgtCb(u);u.el=el;upd(u);return u}
 function upd(u){const q=s=>u.el.querySelector(s);q('.hp i').style.width=u.hp/u.max*100+'%';q('.hp').style.setProperty('--w',u.hp/u.max*100+'%');u.el.classList.toggle('low',u.hp>0&&u.hp<u.max*.3);q('.mp i').style.width=u.mp/u.mpMax*100+'%';q('.num').textContent=`${u.hp}/${u.max} · MP ${u.mp}`;
-q('.sb').textContent=[u.ward>0?'🛡'+u.ward:'',u.burn>0?'🔥'+u.burn:'',u.frz>0?'❄️':'',u.shield>0?'✨':'',u.guard?'🔰':'',u.st>0?'⚡'+u.st:'',u.ncrit?'🎯':'',u.bt>0?'⚔️↑'+u.bt:'',u.vt>0?'💢'+u.vt:'',u.dt>0?'⬇'+u.dt:'',u.tt>0?'📣'+u.tt:'',u.cv>0?'🏰'+u.cv:''].filter(Boolean).join(' ');u.el.classList.toggle('dead',u.hp<=0)}
+q('.sb').textContent=[u.ward>0?'🛡'+u.ward:'',u.burn>0?'🔥'+u.burn:'',u.frz>0?'❄️':'',u.shield>0?'✨':'',u.guard?'🔰':'',u.st>0?'⚡'+u.st:'',u.ncrit?'🎯':'',u.bt>0?'⚔️↑'+u.bt:'',u.et>0?'🎖️'+u.et:'',u.vt>0?'💢'+u.vt:'',u.dt>0?'⬇'+u.dt:'',u.tt>0?'📣'+u.tt:'',u.cv>0?'🏰'+u.cv:''].filter(Boolean).join(' ');u.el.classList.toggle('dead',u.hp<=0)}
 function begin(){M.style.display='none';$('#end').style.display='none';over=false;$('#cmd').innerHTML='';msg('');$('#party').innerHTML='';$('#foes').innerHTML='';
-party.forEach(u=>$('#party').append(u.el));foes.forEach(u=>$('#foes').append(u.el));$('#wv').innerHTML='<b class=t1>P1 '+'★'.repeat(W[0])+'</b><i>VS</i><b class=t2>'+'★'.repeat(W[1])+' '+(MODE=='ai'?'AI':'P2')+'</b>';
-const id=++BID;AU.music(null);AU.sfx('round');banner('ROUND '+(++RN)).then(()=>{AU.sfx('fight');AU.music('battle');return banner('FIGHT!')}).then(()=>battle(id))}
+party.forEach(u=>$('#party').append(u.el));foes.forEach(u=>$('#foes').append(u.el));$('#wv').innerHTML=MODE=='adv'?advWv():'<b class=t1>P1 '+'★'.repeat(W[0])+'</b><i>VS</i><b class=t2>'+'★'.repeat(W[1])+' '+(MODE=='ai'?'AI':'P2')+'</b>';
+const id=++BID;AU.music(null);AU.sfx('round');banner(MODE=='adv'?(ADV.hb!=null?'BOSS BATTLE':'STAGE '+(ADV.c+1)+'-'+ADV.s):'ROUND '+(++RN)).then(()=>{AU.sfx('fight');AU.music('battle');return banner('FIGHT!')}).then(()=>battle(id))}
 const chk=()=>!party.some(p=>p.hp>0)?(finish(0),1):!foes.some(f=>f.hp>0)?(finish(1),1):0;
 async function battle(id){while(!over&&id==BID){const order=alive([...party,...foes]).sort((a,b)=>b.spd-a.spd);
-for(const u of order){if(u.hp<=0||over||id!=BID)continue;u.guard=0;u.hb=0;if(u.shield>0)u.shield--;['bt','vt','dt','tt','cv'].forEach(k=>{if(u[k]>0)u[k]--});
+for(const u of order){if(u.hp<=0||over||id!=BID)continue;u.guard=0;u.hb=0;if(u.shield>0)u.shield--;['bt','et','vt','dt','tt','cv'].forEach(k=>{if(u[k]>0)u[k]--});
 if(u.burn>0){u.burn--;u.hb=1;msg(u.n+' ถูกไฟเผา 🔥');hit(u,{d:Math.max(1,Math.round(u.max*.06)),crit:0,src:null,nd:1,raw:1},'#ff7a3c');await sleep(700);if(chk())return;if(u.hp<=0)continue}
 if(u.frz>0){u.frz--;upd(u);msg(u.n+' แข็งติดอยู่ ❄️');await sleep(800);continue}
 if(u.pid=='regen'&&u.hp<u.max)heal(u,Math.round(u.max*.05));if(u.pid=='bless'){const a=alive(ally(u)).sort((x,y)=>x.hp/x.max-y.hp/y.max)[0];if(a&&a.hp<a.max){heal(a,Math.round(a.max*.08),u);await sleep(500)}}
 u.el.classList.add('active');await playerTurn(u);u.el.classList.remove('active');if(id!=BID)return;if(chk())return}}}
-function playerTurn(u){if(MODE=='ai'&&u.side=='f')return aiTurn(u);return new Promise(res=>{const cmd=$('#cmd');cmd.style.borderColor=u.side=='p'?'#ffc857':'#6fd6ff';
+function playerTurn(u){if((MODE=='ai'||MODE=='adv')&&u.side=='f')return aiTurn(u);return new Promise(res=>{const cmd=$('#cmd');cmd.style.borderColor=u.side=='p'?'#ffc857':'#6fd6ff';
 const fin=async f=>{cmd.innerHTML='';clearTgt();await f();res()};
 const menu=()=>{clearTgt();cmd.innerHTML=`<div class=who>ผู้เล่น ${u.side=='p'?1:2} · ${u.e} ตาของ ${u.n}</div><div class=pi>💠 ${u.pn}: ${u.pd}</div><button id=ba>⚔️ โจมตี</button><button id=bs ${u.mp<u.cost?'disabled':''}>✨ ${u.sk}<small>${u.cost} MP</small></button><button id=bg>🛡️ ป้องกัน</button>`;
 $('#ba').onclick=()=>ask(t=>fin(()=>attack(u,t)));
@@ -439,7 +597,7 @@ case'multi':for(let i=0;i<u.h;i++){const x=rnd(opp(u).filter(f=>f.hp>0));if(!x)b
 case'drain':fx(t.el,u.c,50,'slash');await sleep(250);{const d=hit(t,calc(u,t,u.m),u.c);heal(u,Math.round(d*.7))}break;
 case'heal':ally(u).filter(x=>x.hp>0).forEach(x=>{heal(x,Math.round((u.atk*u.m*1.8+10)*HPX),u);fx(x.el,u.c,1,'ring')});break;
 case'atkbuff':AU.sfx('buff');ally(u).filter(x=>x.hp>0).forEach(x=>{x.bm=1.3;x.bt=3;upd(x);float(x.el,'⚔️ATK+30%','#ffd36b',22);fx(x.el,u.c,26,'up');fx(x.el,u.c,1,'ring')});break;
-case'empower':AU.sfx('buff');t.bm=1.5;t.bt=3;t.ncrit=1;upd(t);float(t.el,'⚔️ATK+50% 🎯','#ffd36b',22);fx(t.el,u.c,40,'up');fx(t.el,u.c,1,'ring');break;
+case'empower':AU.sfx('buff');t.et=3;t.ncrit=1;upd(t);float(t.el,'⚔️ATK+50% 🎯','#ffd36b',22);fx(t.el,u.c,40,'up');fx(t.el,u.c,1,'ring');break;
 case'vuln':fx(t.el,u.c,40,'burst');fx(t.el,u.c,1,'ring');await sleep(200);hit(t,calc(u,t,u.m),u.c);if(t.hp>0){t.vt=3;upd(t);float(t.el,'💢เปราะบาง +30%','#ff9e7a',22)}break;
 case'taunt':AU.sfx('roar');u.tt=2;upd(u);float(u.el,'📣ยั่วยุ!','#ffb347',26);fx(u.el,u.c,40,'burst');fx(u.el,u.c,1,'ring');break;
 case'roar':AU.sfx('roar');u.tt=1;upd(u);opp(u).filter(x=>x.hp>0).forEach(x=>{x.dt=3;upd(x);float(x.el,'⬇ATK-25%','#ff9e7a',22);fx(x.el,u.c,30,'burst')});fx(u.el,u.c,1,'ring');break;
@@ -477,7 +635,120 @@ btns.forEach(([l,f])=>{const b=document.createElement('button');b.textContent=l;
 for(let i=0;i<14;i++)setTimeout(()=>{for(let j=0;j<40;j++){const a=Math.random()*6.283,v=2+Math.random()*8;P.push({x:Math.random()*cv.width,y:Math.random()*cv.height*.6,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,d:.015,s:3,col:rnd(['#ffc857','#ff5a3c','#7dff8a','#9be7ff','#ff9ecb'])})}},i*220)}
 function statsHTML(){const all=[...party,...foes],mx=k=>Math.max(1,...all.map(u=>u[k])),cols=[['sD','⚔️ ดาเมจ','#ffb347'],['sT','🩸 รับดาเมจ','#ff7a7a'],['sH','💚 ฮีล','#7dff8a']],mvp=all.reduce((a,b)=>b.sD>a.sD?b:a);
 const tb=(arr,nm,c)=>`<div class=stt style="--tc:${c}"><div class=sth>${nm}</div><div class=str><span></span>${cols.map(a=>`<i>${a[1]}</i>`).join('')}</div>${arr.map(u=>`<div class=str><span>${u.e} ${u.n}${u===mvp?' 👑':''}${u.hp<=0?' 💀':''}</span>${cols.map(([k,,b])=>`<i style="--p:${Math.round(u[k]/mx(k)*100)}%;--b:${b}"><b>${u[k]}</b></i>`).join('')}</div>`).join('')}</div>`;
-return `<div class=sts>${tb(party,'ทีม P1','#ffc857')}${tb(foes,MODE=='ai'?'ทีม AI':'ทีม P2','#6fd6ff')}</div>`}
-async function finish(w){over=true;const id=BID;w?W[0]++:W[1]++;AU.music(null);await sleep(500);AU.sfx('finish');await banner('K.O.!');if(id!=BID)return;AU.sfx(MODE=='ai'&&!w?'lose':'win');end(w?'🏆 ผู้เล่น 1 ชนะ!':MODE=='ai'?'💀 AI ชนะ!':'🏆 ผู้เล่น 2 ชนะ!',`ชัยชนะ P1 ${W[0]} : ${W[1]} ${MODE=='ai'?'AI':'P2'}`,[['สู้อีกยก (ทีมเดิม)',()=>pvpStart(...PV)],['เลือกทีมใหม่',pvp],['เมนู',home]],statsHTML())}
+return `<div class=sts>${tb(party,MODE=='adv'?'ทีมเรา':'ทีม P1','#ffc857')}${tb(foes,MODE=='adv'?'ศัตรู':MODE=='ai'?'ทีม AI':'ทีม P2','#6fd6ff')}</div>`}
+async function finish(w){over=true;const id=BID;w?W[0]++:W[1]++;AU.music(null);await sleep(500);AU.sfx('finish');await banner('K.O.!');if(id!=BID)return;AU.sfx(MODE!='pvp'&&!w?'lose':'win');if(MODE=='adv')return advEnd(w);end(w?'🏆 ผู้เล่น 1 ชนะ!':MODE=='ai'?'💀 AI ชนะ!':'🏆 ผู้เล่น 2 ชนะ!',`ชัยชนะ P1 ${W[0]} : ${W[1]} ${MODE=='ai'?'AI':'P2'}`,[['สู้อีกยก (ทีมเดิม)',()=>pvpStart(...PV)],['เลือกทีมใหม่',pvp],['เมนู',home]],statsHTML())}
+// ---------- adventure mode
+const SV='arcane_adv1',SL=['hat','shirt','pants','shoes','sig'],SLE={hat:'🎩',shirt:'👕',pants:'👖',shoes:'👟',sig:'🌟'},SLP={hat:'หมวก',shirt:'เสื้อ',pants:'กางเกง',shoes:'รองเท้า',sig:'เฉพาะตัว'},
+TIER={r:{n:'แดง',c:'#ff5a5a',m:1.6,k:[3,4]},y:{n:'เหลือง',c:'#ffd23f',m:1.2,k:[2,3]},b:{n:'น้ำเงิน',c:'#5aa8ff',m:.8,k:[1,2]}},
+BV={hp:7,atk:6,def:7,spd:2,cr:3},SNM={hp:'HP',atk:'ATK',def:'DEF',spd:'SPD',cr:'คริ'},SU={hp:'%',atk:'%',def:'%',spd:'',cr:'%'},CHN=['มือใหม่','นักล่า','ชั้นสูง','ราชัน','ตำนาน'],
+CH=[{n:'ป่าสนธยา',ic:'🌲',pool:[2,4,11,16,3],b5:16,b10:11},{n:'ธารน้ำแข็ง',ic:'🧊',pool:[8,9,12,13,15],b5:15,b10:8},{n:'ทะเลทรายเพลิง',ic:'🌋',pool:[1,5,10,0,14],b5:1,b10:5},{n:'ปราสาทราตรี',ic:'🏰',pool:[6,7,13,17,4],b5:17,b10:6},{n:'หอคอยสวรรค์',ic:'🌌',pool:[...Array(18).keys()],b5:7,b10:14}];
+let G=null,ADV=null;
+const sv=()=>{try{localStorage.setItem(SV,JSON.stringify(G))}catch(e){}},star=s=>'★'.repeat(s)+'☆'.repeat(5-s),
+lvOf=xp=>{let l=1,r=xp;while(l<30&&r>=30+20*l){r-=30+20*l;l++}return{l,r,need:l<30?30+20*l:1}},nSl=l=>l>=10?4:l>=6?3:l>=3?2:1,
+itOf=id=>G.inv.find(x=>x.id==id),eqIt=i=>SL.map(s=>itOf(G.heroes[i].eq[s])).filter(Boolean),
+iTxt=it=>Object.entries(it.st).map(([k,v])=>`${SNM[k]}+${v}${SU[k]}`).join(' '),iNm=it=>it.sl=='sig'?`ตราประจำตัว ${H[it.h].n}`:SLP[it.sl]+CHN[it.ch-1],stI=n=>({c:(n-1)/10|0,s:(n-1)%10+1});
+function ld(){if(G)return;try{G=JSON.parse(localStorage.getItem(SV))}catch(e){}if(!G||!G.heroes){const h=rnd([...H.keys()]);G={xp:0,gems:100,heroes:{[h]:{s:1,lv:1,eq:{}}},bread:100,inv:[],team:[h],prog:0,clr:{},nid:1,first:h,isNew:1};sv()}G.bread==null&&(G.bread=100);G.pity||(G.pity={});for(const k in G.heroes)G.heroes[k].lv||(G.heroes[k].lv=1)}
+const hdr=()=>{const l=lvOf(G.xp);return`<div class=ah><b>Lv.${l.l}</b><span class=xb><i style="width:${l.l>=30?100:l.r/l.need*100}%"></i></span><span>${l.l>=30?'MAX':l.r+'/'+l.need}</span><b>💎 ${G.gems}</b><small>ช่องทีม ${nSl(l.l)}/4</small></div>`};
+function pM(i){const h=G.heroes[i],b=(1+.05*(h.lv-1))*(1+.1*(h.s-1)),S={hp:0,atk:0,def:0,spd:0,cr:0};eqIt(i).forEach(it=>{for(const k in it.st)S[k]+=it.st[k]});return{h:b*(1+S.hp/100),a:b*(1+S.atk/100),d:b*(1+S.def/100),s:S.spd,c:S.cr/100}}
+function scaleU(u,m){u.max=Math.round(u.max*m.h);u.hp=u.max;u.atk=Math.round(u.atk*m.a);u.def=Math.round(u.def*m.d);u.spd+=m.s;u.cr=Math.min(1,u.cr+m.c);if(u.pid=='ward')u.ward=Math.round(u.max*.3);u.el.querySelector('.pn').textContent=`💠${u.pn} · 💥${Math.round(crOf(u)*100)}%`;upd(u)}
+function mkItem(t,sl,ch,h){const T=TIER[t],ks=['hp','atk','def','spd','cr'].sort(()=>Math.random()-.5).slice(0,sl=='sig'?4:T.k[0]+(Math.random()*(T.k[1]-T.k[0]+1)|0)),st={};ks.forEach(k=>st[k]=Math.max(1,Math.round(BV[k]*T.m*(1+.15*(ch-1))*(.8+Math.random()*.4)*(sl=='sig'?1.3:1))));return{id:G.nid++,t,sl,st,ch,h}}
+function advWv(){if(ADV.hb!=null)return'<b class=t1>👹 บอสประจำตัว</b><i>VS</i><b class=t2>เงา '+H[ADV.hb].n+'</b>';return`<b class=t1>ด่าน ${ADV.c+1}-${ADV.s}</b><i>VS</i><b class=t2>${ADV.boss?'👹 บอส':'ศัตรู'}</b>`}
+function advStart(n){ld();advHide();const{c,s}=stI(n),boss=s%5==0,cnt=G.team.length,e=.65+.045*n,ids=[];ADV={n,c,s,boss};MODE='adv';DIFF=n<=12?'easy':n<=36?'normal':'hard';RN=0;
+if(boss)ids.push(s==5?CH[c].b5:CH[c].b10);const pl=[...CH[c].pool].filter(x=>!ids.includes(x)).sort(()=>Math.random()-.5);while(ids.length<cnt)ids.push(pl.length?pl.shift():rnd(CH[c].pool));
+party=G.team.map(i=>{const u=mk(i,'p');scaleU(u,pM(i));return u});
+foes=ids.map((i,k)=>{const u=mk(i,'f'),b=boss&&!k;scaleU(u,{h:e*(b?1.8:1),a:e*(b?1.25:1),d:Math.pow(e,.8)*(b?1.1:1),s:0,c:0});if(b)u.el.querySelector('.nm').textContent='👹 '+u.n;return u});begin()}
+function advEnd(w){if(ADV.hb!=null)return hbEnd(w);const{n,c,s,boss}=ADV,L0=lvOf(G.xp).l,first=w&&!G.clr[n],xp=w?Math.round((30+4*n)*(first?1.5:1)):8,dr=[];let gem=0,br=0;
+if(w){gem=Math.round((20+2*n)*(boss?2:1)*(first?2:.6));br=Math.round((25+3*n)*(boss?1.5:1)*(first?1.5:.8));G.clr[n]=1;G.prog=Math.max(G.prog,n);
+if(boss&&Math.random()<(s==5?.6:1)){const p=s==10?[.25,.4]:[.1,.3],r=Math.random();dr.push(mkItem(r<p[0]?'r':r<p[0]+p[1]?'y':'b',rnd(SL.slice(0,4)),c+1))}
+}
+G.gems+=gem;G.bread+=br;G.xp+=xp;G.inv.push(...dr);const L1=lvOf(G.xp).l;sv();
+const ln=[w?`💎 +${gem}${first?' (ผ่านครั้งแรก ×2)':''}`:'ลองปรับทีม ใส่ไอเทม หรือสุ่มฮีโร่เพื่อเพิ่มดาวแล้วกลับมาสู้ใหม่',w?`🍞 ขนมปัง +${br}`:'',`⭐ EXP +${xp}`,L1>L0?`🎉 เลเวลอัป! Lv.${L0} → Lv.${L1}${nSl(L1)>nSl(L0)?` · 🔓 ปลดล็อคช่องทีมที่ ${nSl(L1)}`:''}${Math.floor(L1/5)>Math.floor(L0/5)?` · 🔓 เพดานเลเวลฮีโร่ → ${hCap()}`:''}`:'',...dr.map(it=>`<span style="color:${TIER[it.t].c}">🎁 ${iNm(it)} [${TIER[it.t].n}] ${iTxt(it)}</span>`)].filter(Boolean).join('<br>');
+end(w?`🏆 ผ่านด่าน ${c+1}-${s}!`:'💀 พ่ายแพ้',ln,[...(w&&n<50?[['▶ ด่านถัดไป',()=>advStart(n+1)]]:[]),['🔁 เล่นซ้ำ',()=>advStart(n)],['🗺️ แผนที่',()=>advGo('map',c)],['🦸 ฮีโร่',()=>advGo('heroes')]],statsHTML())}
+// ---------- adventure UI v2
+const FR={gray:'#9aa3b5',green:'#4cd964',blue:'#4aa3ff',gold:'#ffc83a',red:'#ff4a4a'},frK=l=>l>=50?'red':l>=40?'gold':l>=30?'blue':l>=20?'green':'gray',hCap=()=>Math.min(50,10+10*Math.floor(lvOf(G.xp).l/5)),lvCost=l=>20+8*l,
+CHT=[['#1c5a3a','#0c2a22'],['#1f5f8f','#0a2540'],['#8a4a1c','#3a1608'],['#4a2a6a','#150a2a'],['#2a3a8a','#0a0f33']],SLT=['hat','shirt','pants','shoes','sig'];
+let AV=null,AT='map',AC=0,AH=null,PEND=[];
+const advEl=()=>{if(!AV){AV=document.createElement('div');AV.id='adv';document.body.append(AV)}return AV};
+function advHide(){if(AV)AV.style.display='none'}
+function advHub(){ld();AC=stI(Math.min(G.prog+1,50)).c;advGo('map')}
+function advGo(t,a){ld();const V=advEl();M.style.display='none';V.style.display='flex';AT=t;if(t=='map'&&a!=null)AC=a;if(t=='hero')AH=a;AU.music('menu');advRender()}
+const hudH=()=>{const l=lvOf(G.xp),p=l.l>=30?100:Math.round(l.r/l.need*100);return`<div class=a-top><button class=a-bk id=xb>‹</button><div class=a-pf><div class=a-ring style="--p:${p}%"><b>${l.l}</b></div><div><div class=a-pn>นักผจญภัย</div><div class=a-xt>${l.l>=30?'เลเวลสูงสุด':`EXP ${l.r}/${l.need}`}</div></div></div><div class=a-rs><span class=a-rc>🍞 ${G.bread}</span><span class=a-rc>💎 ${G.gems}</span></div></div>`};
+const navH=()=>`<nav class=a-nav>${[['map','🗺️','ผจญภัย'],['heroes','🦸','ฮีโร่'],['summon','🎁','สุ่ม'],['boss','👹','บอส'],['bag','🎒','ไอเทม']].map(([k,e,n])=>`<button data-t=${k} class="${AT==k||(AT=='hero'&&k=='heroes')?'on':''}"><i>${e}</i><span>${n}</span></button>`).join('')}</nav>`;
+function bindTop(){$('#xb').onclick=()=>{advHide();home()}}
+function hudUp(){$('.a-top').outerHTML=hudH();bindTop()}
+function advRender(){const V=advEl();V.innerHTML=`${hudH()}<div id=am></div>${navH()}<div class=a-toast id=a-toast></div><div class=a-sw id=a-sw></div>`;bindTop();V.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>advGo(b.dataset.t));({map:rMap,heroes:rHeroes,hero:rHero,summon:rSummon,bag:rBag,boss:rBoss})[AT]()}
+function toast(t){const e=$('#a-toast');if(!e)return;e.textContent=t;e.classList.add('show');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),1900)}
+const hcH=(i,x={})=>{const d=H[i],h=G.heroes[i],k=frK(h.lv);return`<div class="a-hc ${k}${x.on?' in':''}" style="--c:${d.c};--fc:${FR[k]}" data-h=${i}><i><span class=lv>Lv.${h.lv}</span><span class=ar>${d.e}</span><span class=sr>${star(h.s)}</span><span class=nx>${d.n}</span>${x.tag?`<span class=rb>${x.tag}</span>`:''}</i></div>`};
+const bindHC=()=>advEl().querySelectorAll('#am [data-h]').forEach(e=>e.onclick=()=>advGo('hero',+e.dataset.h));
+const closeSh=()=>$('#a-sw').classList.remove('open');
+function rMap(){const RH=560,WH=5*RH+170,pos=n=>{const c=(n-1)/10|0,k=(n-1)%10;return{x:Math.round(450+300*Math.sin(n*1.1+.6)),y:Math.round(60+(5-c)*RH-80-k*(RH-160)/9)}},pts=[],dn=[0,0,0,0,0];let nd='',rg='';
+for(let n=1;n<=50;n++){const{c,s}=stI(n),K=CH[c],p=pos(n),lk=n>G.prog+1,bs=s%5==0,ok=G.clr[n];if(ok)dn[c]++;pts.push(p.x+','+p.y);
+nd+=`<button class="a-nd${lk?' lk':''}${bs?' bs':''}${ok?' ok':''}${n==G.prog+1?' cur':''}" style="left:${p.x}px;top:${p.y}px" data-n=${n}>${lk?'🔒':bs?H[s==5?K.b5:K.b10].e:s}${ok?'<u>✔</u>':''}<small>${c+1}-${s}</small></button>`}
+for(let c=0;c<5;c++){const K=CH[c],g=CHT[c],lk=c*10+1>G.prog+1;rg+=`<div class="a-rg${lk?' lkd':''}" style="top:${60+(4-c)*RH}px;height:${RH}px;--g1:${g[0]};--g2:${g[1]}"><div class=a-rt>${K.ic} ${K.n}<small>บท ${c+1} · ${dn[c]}/10</small></div>${Array.from({length:12},(_,k)=>`<span class=a-dc style="left:${(k*71+c*37)%860}px;top:${70+(k*131+c*53)%(RH-120)}px;animation-delay:${-k*.6}s">${K.ic}</span>`).join('')}</div>`}
+$('#am').classList.add('wm');
+$('#am').innerHTML=`<div class=a-cht>${CH.map((x,k)=>{const lk=k*10+1>G.prog+1;return`<button class="a-chb${k==AC?' on':''}${lk?' lk':''}" data-c=${k}><i>${lk?'🔒':x.ic}</i>บท ${k+1}</button>`}).join('')}<button class="a-chb" id=loc><i>📍</i>ตำแหน่งฉัน</button></div><div class=a-world style="height:${WH}px">${rg}<svg viewBox="0 0 900 ${WH}"><polyline points="${pts.join(' ')}" fill=none stroke="#ffe9a8" stroke-opacity=".55" stroke-width=5 stroke-dasharray="3 12" stroke-linecap=round /></svg>${nd}</div>`;
+const A=$('#am'),go=(x,y,sm)=>A.scrollTo({left:x-A.clientWidth/2,top:y-A.clientHeight/2,behavior:sm?'smooth':'auto'}),me=()=>{const n=Math.min(G.prog+1,50),p=pos(n);return p},focus=sm=>{const m=me();go(m.x,m.y,sm)};
+advEl().querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{const k=+b.dataset.c;AC=k;advEl().querySelectorAll('[data-c]').forEach(x=>x.classList.toggle('on',+x.dataset.c==k));if(k*10+1>G.prog+1)toast('🔒 ดินแดนนี้ยังถูกหมอกปิดอยู่ — ผ่านบทก่อนหน้าก่อน');go(450,60+(4-k)*RH+RH/2,1)});
+$('#loc').onclick=()=>focus(1);
+advEl().querySelectorAll('.a-nd').forEach(b=>b.onclick=()=>b.classList.contains('lk')?toast('🔒 ผ่านด่านก่อนหน้าก่อน'):openSheet(+b.dataset.n));
+setTimeout(()=>{if(AC==stI(Math.min(G.prog+1,50)).c)focus();else go(450,60+(4-AC)*RH+RH/2)},40)}
+function openSheet(n){const{c,s}=stI(n),K=CH[c],boss=s%5==0,b=boss?(s==5?K.b5:K.b10):null,pv=K.pool.filter(x=>x!=b).slice(0,boss?3:4),first=!G.clr[n],S=$('#a-sw'),
+gm=Math.round((20+2*n)*(boss?2:1)*(first?2:.6)),br=Math.round((25+3*n)*(boss?1.5:1)*(first?1.5:.8)),xp=Math.round((30+4*n)*(first?1.5:1));
+S.classList.remove('open');S.innerHTML=`<div class=a-bd></div><div class=a-sh><div class=a-sht>${K.ic} ด่าน ${c+1}-${s}${boss?(s==10?' · 👑 บอสใหญ่':' · 👹 บอสกลาง'):''}</div><div class=a-en>${b!=null?`<div class=a-eb style="--c:${H[b].c}">${H[b].e}<small>บอส</small></div>`:''}${pv.map(x=>`<div class=a-ee style="--c:${H[x].c}">${H[x].e}</div>`).join('')}</div><div class=a-ch><span>⚔️ พลังศัตรู ×${(.65+.045*n).toFixed(2)}</span><span>👥 ศัตรู ${G.team.length} ตัว</span><span>🎚 AI ${n<=12?'ง่าย':n<=36?'ปกติ':'ยาก'}</span></div><div class=a-ch><span>💎 ~${gm}</span><span>🍞 ~${br}</span><span>⭐ EXP ~${xp}</span></div>${boss?`<div class=a-dr>🎁 บอสดรอปไอเทม${s==5?' (60%)':' (100%)'}<br>🌟 ไอเทมประจำตัว → ท้าบอสประจำตัวที่แท็บ 👹</div>`:''}<div class=a-tm style="grid-template-columns:repeat(${G.team.length},minmax(0,78px));justify-content:center;margin:12px 0">${G.team.map(i=>hcH(i)).join('')}</div><button class="a-bn big" id=go>⚔️ เริ่มศึก</button></div>`;
+void S.offsetWidth;S.classList.add('open');S.querySelector('.a-bd').onclick=closeSh;$('#go').onclick=()=>advStart(n)}
+function rHeroes(){const ns=nSl(lvOf(G.xp).l),own=Object.keys(G.heroes).map(Number).sort((a,b)=>G.heroes[b].lv-G.heroes[a].lv||a-b);
+$('#am').innerHTML=`<div class=a-h><b>⚔️ ทีมออกศึก</b><small>${G.team.length}/${ns} ช่อง</small></div><div class=a-tm>${[0,1,2,3].map(k=>k>=ns?`<div class=a-sl><div>🔒<br>ผู้เล่น<br>Lv.${[1,3,6,10][k]}</div></div>`:G.team[k]==null?`<div class=a-sl><div>＋<br>ว่าง</div></div>`:hcH(G.team[k])).join('')}</div><div class=a-h><b>🦸 ฮีโร่ทั้งหมด</b><small>${own.length}/${H.length}</small></div><div class=a-gr>${own.map(i=>hcH(i,{on:G.team.includes(i)})).join('')}${H.map((d,i)=>G.heroes[i]?'':`<div class="a-hc no" style="--c:#666;--fc:#555"><i><span class=ar>❓</span><span class=nx>ยังไม่มี</span></i></div>`).join('')}</div><div class=a-lg>${[['gray','<20'],['green','20+'],['blue','30+'],['gold','40+'],['red','50']].map(([k,t])=>`<span style="--k:${FR[k]}">กรอบ ${t}</span>`).join('')}</div><div class=a-note>เลเวลฮีโร่สูงสุดตอนนี้ Lv.${hCap()} · ทุก 5 เลเวลผู้เล่น ปลดเพดาน +10 (สูงสุด Lv.50)</div>`;bindHC()}
+function rHero(){const i=AH,d=H[i],h=G.heroes[i],m=pM(i),p=PS[i],k=frK(h.lv),cap=hCap(),inT=G.team.includes(i),ns=nSl(lvOf(G.xp).l),cost=lvCost(h.lv),ul=lvOf(G.xp).l,can=h.lv<cap&&G.bread>=cost,
+st=[['❤️','HP',Math.round(d.hp*HPX*m.h)],['⚔️','ATK',Math.round(d.atk*m.a)],['🛡️','DEF',Math.round(d.def*m.d)],['💨','SPD',d.spd+m.s],['🎯','คริ',Math.round((p.cr+m.c+(p.pid=='eagle'?.2:0))*100)+'%']];
+$('#am').innerHTML=`<button class=a-back id=hb>‹ ฮีโร่ทั้งหมด</button><div class=a-hero style="--c:${d.c};--fc:${FR[k]}"><div class="a-art ${k}"><span><b>${d.e}</b></span><em>Lv.${h.lv}</em></div><h2>${d.n}</h2><div class=a-sr>${star(h.s)}</div></div>
+<div class=a-pnl><div class=a-sts>${st.map(([e,n,v])=>`<div>${e} ${n}<b>${v}</b></div>`).join('')}</div></div>
+<div class=a-pnl><div style="display:flex;justify-content:space-between"><b>⬆️ อัปเลเวล</b><span>Lv.${h.lv} / ${cap}${cap<50?'':' (MAX)'}</span></div><div class=a-bar><i style="width:${h.lv/50*100}%"></i><u style="left:${cap/50*100}%"></u></div><div style="font-size:12px;opacity:.75">${h.lv>=50?'เลเวลสูงสุดแล้ว!':h.lv>=cap?`🔒 ติดเพดาน — ผู้เล่น Lv.${(Math.floor(ul/5)+1)*5} จะปลดเป็น Lv.${cap+10}`:`ต้องใช้ 🍞 ${cost} (มี ${G.bread})`}</div><div class=a-two><button class="a-bn g${can?'':' x'}" id=l1>⬆️ ×1${h.lv<cap?` · 🍞${cost}`:''}</button><button class="a-bn b${can?'':' x'}" id=l2>⏫ สูงสุด</button></div></div>
+<div class=a-pnl><b>🎽 ไอเทม</b><div class=a-eqs style="margin-top:8px">${SLT.map(s=>{const it=itOf(h.eq[s]);return`<button class=a-eq data-s=${s} style="--k:${it?TIER[it.t].c:'#ffffff33'}">${SLE[s]}<small>${it?iTxt(it).slice(0,18):SLP[s]}</small></button>`}).join('')}</div></div>
+<div class=a-pnl style="font-size:13px;line-height:1.7"><b>✨ ${d.sk}</b> <small>(${d.cost} MP)</small><br>${KD[d.k]}<br><b>💠 ${p.pn}</b><br>${p.pd}</div>
+<div class=a-two style="margin-top:14px"><button class="a-bn${inT?' x':''}" id=tm>${inT?'➖ นำออกจากทีม':'➕ ใส่ทีม'}</button></div>`;
+$('#hb').onclick=()=>advGo('heroes');$('#l1').onclick=()=>lvUp(0);$('#l2').onclick=()=>lvUp(1);
+advEl().querySelectorAll('[data-s]').forEach(e=>e.onclick=()=>openPick(i,e.dataset.s));
+$('#tm').onclick=()=>{if(inT){if(G.team.length<2)return toast('ต้องมีในทีมอย่างน้อย 1 ตัว');G.team=G.team.filter(x=>x!=i)}else{if(G.team.length>=ns)return toast(`ทีมเต็ม (${ns} ช่อง) — นำตัวอื่นออกก่อน`);G.team.push(i)}sv();rHero()}}
+function lvUp(all){const h=G.heroes[AH],o=frK(h.lv);let n=0;while(h.lv<hCap()&&G.bread>=lvCost(h.lv)){G.bread-=lvCost(h.lv);h.lv++;n++;if(!all)break}
+if(!n)return toast(h.lv>=50?'เลเวลสูงสุดแล้ว!':h.lv>=hCap()?`ติดเพดาน Lv.${hCap()} — เพิ่มเลเวลผู้เล่นเพื่อปลดล็อก`:'ขนมปังไม่พอ — ไปลงด่านเพื่อหา 🍞');
+sv();AU.sfx('buff');hudUp();rHero();$('.a-art').classList.add('lvup');toast(frK(h.lv)!=o?`✨ กรอบเลื่อนระดับ! Lv.${h.lv}`:`⬆️ LEVEL UP! Lv.${h.lv}`)}
+function openPick(i,s){const h=G.heroes[i],cur=h.eq[s],S=$('#a-sw'),list=G.inv.filter(x=>x.sl==s&&(s!='sig'||x.h==i)).sort((a,b)=>'ryb'.indexOf(a.t)-'ryb'.indexOf(b.t));
+S.classList.remove('open');S.innerHTML=`<div class=a-bd></div><div class=a-sh><div class=a-sht>${SLE[s]} ${SLP[s]} · ${H[i].n}</div>${list.map(it=>{const o=Object.keys(G.heroes).find(k=>G.heroes[k].eq[s]==it.id);return`<button class=a-it style="--k:${TIER[it.t].c};display:flex;width:100%" data-id=${it.id}><i>${SLE[s]}</i><div><b style="color:${TIER[it.t].c}">${iNm(it)}</b> <small>[${TIER[it.t].n}]</small><br><small>${iTxt(it)}${o!=null?' · ใส่อยู่: '+H[o].e:''}</small></div></button>`}).join('')||'<div class=a-note>ยังไม่มีไอเทมช่องนี้<br>'+(s=='sig'?'ไปท้า 👹 บอสประจำตัวที่แท็บบอสได้เลย!':'ไปสู้บอสด่าน 5 และ 10 ได้เลย!')+'</div>'}${cur?'<button class="a-bn x" id=un style="margin-top:6px;width:100%;color:#fff">ถอดออก</button>':''}</div>`;
+void S.offsetWidth;S.classList.add('open');S.querySelector('.a-bd').onclick=closeSh;
+S.querySelectorAll('[data-id]').forEach(e=>e.onclick=()=>{const id=+e.dataset.id;for(const k in G.heroes)if(G.heroes[k].eq[s]==id)delete G.heroes[k].eq[s];h.eq[s]=id;sv();closeSh();rHero();toast('ใส่ไอเทมแล้ว')});
+if(cur)$('#un').onclick=()=>{delete h.eq[s];sv();closeSh();rHero()}}
+function rBag(){const its=[...G.inv].sort((a,b)=>'ryb'.indexOf(a.t)-'ryb'.indexOf(b.t));
+$('#am').innerHTML=`<div class=a-h><b>🎒 ไอเทมทั้งหมด</b><small>${its.length} ชิ้น</small></div>${its.map(it=>{const o=Object.keys(G.heroes).find(k=>G.heroes[k].eq[it.sl]==it.id);return`<div class=a-it style="--k:${TIER[it.t].c}"><i>${SLE[it.sl]}</i><div><b style="color:${TIER[it.t].c}">${iNm(it)}</b> <small>[${TIER[it.t].n}]</small><br><small>${iTxt(it)}</small></div>${o!=null?`<span>${H[o].e}</span>`:''}</div>`}).join('')||'<div class=a-note>ยังไม่มีไอเทม<br>บอสด่าน 5 และ 10 มีโอกาสดรอป!</div>'}`}
+function pull(){const i=rnd([...H.keys()]),h=G.heroes[i];if(h){if(h.s<5){h.s++;return{i,k:'star'}}G.gems+=50;return{i,k:'max'}}G.heroes[i]={s:1,lv:1,eq:{}};return{i,k:'new'}}
+const revH=r=>`<div class="a-rv ${r.k}">${hcH(r.i,{tag:r.k=='new'?'NEW!':r.k=='star'?'★UP':'MAX'})}</div>`;
+function sumBtns(){const all=PEND.length&&PEND.every(x=>x.o),B=$('#a-btns');if(!B)return;
+B.innerHTML=!PEND.length?`<button class="a-bn" id=p1 ${G.gems<100?'style="opacity:.5"':''}>สุ่ม ×1<small>💎 100</small></button><button class="a-bn g" id=p10 ${G.gems<900?'style="opacity:.5"':''}>สุ่ม ×10<small>💎 900</small></button>`:all?`<button class="a-bn" id=pd>เสร็จสิ้น</button>`:`<button class="a-bn b" id=oa>เปิดทั้งหมด</button>`;
+if(!PEND.length){$('#p1').onclick=()=>doPull(1);$('#p10').onclick=()=>doPull(10)}else if(all){$('#pd').onclick=()=>{PEND=[];rSummon()};const nw=PEND.filter(x=>x.k=='new').length,su=PEND.filter(x=>x.k=='star').length;$('#a-sm').textContent=`ได้ฮีโร่ใหม่ ${nw} ตัว · เพิ่มดาว ${su} ครั้ง`}else $('#oa').onclick=()=>PEND.forEach((r,k)=>setTimeout(()=>openBox(k,1),k*220))}
+function rSummon(){$('#am').innerHTML=`<div class=a-sum><div class=a-rays></div><h2>🎁 สุ่มฮีโร่</h2><div class=a-sub>สะสมแล้ว ${Object.keys(G.heroes).length}/${H.length} · ซ้ำ = เพิ่มดาว (สูงสุด ★5)</div><div class="a-bxs n${PEND.length>1?10:1}" id=a-bxs>${PEND.length?PEND.map((r,k)=>r.o?revH(r):`<div class=a-bx data-k=${k}><span>🎁</span></div>`).join(''):'<div class=a-bx id=a-idle><span>🎁</span></div>'}</div><div id=a-sm class=a-sub>${PEND.length?'แตะกล่องเพื่อเปิด!':'กดสุ่มแล้วแตะกล่องเพื่อเปิด'}</div><div class=a-btns id=a-btns></div></div>`;
+advEl().querySelectorAll('.a-bx[data-k]').forEach(e=>e.onclick=()=>openBox(+e.dataset.k));sumBtns()}
+function doPull(n){const c=n==10?900:100;if(G.gems<c)return toast('💎 ไม่พอ — ลงด่านเพื่อหาเจม');G.gems-=c;PEND=Array.from({length:n},()=>({...pull(),o:0}));sv();hudUp();AU.sfx('fight');rSummon()}
+function sparks(el){const V=advEl(),b=el.getBoundingClientRect(),r=V.getBoundingClientRect();for(let k=0;k<16;k++){const a=Math.random()*6.283,v=50+Math.random()*80,e=document.createElement('s');e.className='a-sp';e.style.cssText=`left:${b.left-r.left+b.width/2}px;top:${b.top-r.top+b.height/2}px;--dx:${Math.cos(a)*v}px;--dy:${Math.sin(a)*v}px;--c:${rnd(['#ffd23f','#ff8ad8','#7dff8a','#9be7ff','#fff'])}`;V.append(e);setTimeout(()=>e.remove(),900)}}
+function openBox(k,fast){const r=PEND[k];if(!r||r.o||r.b)return;const el=advEl().querySelector(`.a-bx[data-k="${k}"]`);if(!el){r.o=1;return}r.b=1;el.classList.add('shk');AU.sfx('roar');
+setTimeout(()=>{if(!el.isConnected){r.o=1;return}sparks(el);el.outerHTML=revH(r);r.o=1;AU.sfx(r.k=='new'?'revive':'pick');if(r.k=='new')AU.sfx('win');sumBtns()},fast?260:800)}
+
+// ---------- hero signature boss mode
+const HBF=50,HBL=10,hasSig=i=>G.inv.some(q=>q.sl=='sig'&&q.h==i),hbRate=i=>Math.min(1,.15+.12*(G.pity[i]||0)),hbE=i=>1+.04*G.heroes[i].lv;
+function rBoss(){const own=Object.keys(G.heroes).map(Number).sort((a,b)=>G.heroes[b].lv-G.heroes[a].lv||a-b);
+$('#am').innerHTML=`<div class=a-h><b>👹 บอสประจำตัวฮีโร่</b><small>ได้ตราแล้ว ${own.filter(hasSig).length}/${own.length}</small></div><div class=a-pnl style="margin-top:0;font-size:13px;line-height:1.7">ท้า <b>เงาของฮีโร่</b> เพื่อชิง 🌟 ไอเทมประจำตัว<br>☠️ ความยาก: สูง · 🍞 ค่าเข้า ${HBF} (คืนเมื่อชนะ) · ฮีโร่ต้อง Lv.${HBL}+<br>🎲 ดรอปเริ่ม 15% · +12% ทุกครั้งที่ชนะแต่ไม่ดรอป · การันตีชัยชนะที่ 8</div>${own.map(i=>{const d=H[i],h=G.heroes[i],ok=hasSig(i),lk=h.lv<HBL;return`<button class="a-bc${lk?' lk':''}${ok?' dn':''}" style="--c:${d.c}" data-b=${i}><i class=ar>${d.e}</i><div><b>เงา${d.n}</b> <small>Lv.${h.lv}</small><br><small>${ok?'✔ ได้ตราประจำตัวแล้ว':lk?'🔒 ต้องฮีโร่ Lv.'+HBL:'🎲 ดรอป '+Math.round(hbRate(i)*100)+'%'}</small></div><span class=a-go>${ok?'ได้แล้ว':'ท้า ›'}</span></button>`}).join('')}`;
+advEl().querySelectorAll('[data-b]').forEach(e=>e.onclick=()=>openBoss(+e.dataset.b))}
+function openBoss(i){const d=H[i],h=G.heroes[i],S=$('#a-sw'),ok=hasSig(i),lk=h.lv<HBL,pt=G.pity[i]||0,e=hbE(i),xp=40+h.lv;
+S.classList.remove('open');S.innerHTML=`<div class=a-bd></div><div class=a-sh><div class=a-sht>👹 เงา${d.n} · บอสประจำตัว</div><div class=a-en><div class=a-eb style="--c:${d.c}">${d.e}<small>บอส</small></div></div><div class=a-ch><span>☠️ ความยาก: สูง</span><span>⚔️ พลังบอส ×${e.toFixed(2)} (HP ×2.2)</span><span>👥 ลูกสมุนเพิ่ม</span></div><div class=a-ch><span>🍞 เข้า ${HBF}</span><span>💎 ~${30+h.lv}</span><span>⭐ EXP ~${xp}</span></div><div class=a-dr>${ok?'✔ ฮีโร่ตัวนี้มีไอเทมประจำตัวแล้ว':`🌟 โอกาสดรอปไอเทมประจำตัว <b>${pt>=7?100:Math.round(hbRate(i)*100)}%</b><br>${pt>=7?'การันตีรอบนี้!':'ชนะแต่ไม่ดรอป โอกาสเพิ่มขึ้นเรื่อย ๆ (การันตีอีก '+(7-pt)+' ครั้ง)'}<br>ระดับตรา: แดง 20% · เหลือง 40% · น้ำเงิน 40%`}</div><div class=a-tm style="grid-template-columns:repeat(${G.team.length},minmax(0,78px));justify-content:center;margin:12px 0">${G.team.map(k=>hcH(k)).join('')}</div><button class="a-bn r big${ok||lk?' x':''}" id=go>${ok?'✔ ได้ไอเทมแล้ว':lk?'🔒 ต้อง Lv.'+HBL:'⚔️ ท้าเงา'+d.n}</button></div>`;
+void S.offsetWidth;S.classList.add('open');S.querySelector('.a-bd').onclick=closeSh;$('#go').onclick=()=>ok||lk?0:hbStart(i)}
+function hbStart(i){ld();const h=G.heroes[i];if(!h||h.lv<HBL)return;if(G.bread<HBF)return toast('🍞 ขนมปังไม่พอ — ไปลงด่านเพื่อหา');
+G.bread-=HBF;sv();advHide();const e=hbE(i),cnt=Math.max(2,G.team.length);ADV={n:0,c:0,s:'BOSS',boss:1,hb:i};MODE='adv';DIFF='hard';RN=0;
+party=G.team.map(k=>{const u=mk(k,'p');scaleU(u,pM(k));return u});
+const ids=[i,...[...H.keys()].filter(x=>x!=i).sort(()=>Math.random()-.5).slice(0,cnt-1)];
+foes=ids.map((x,k)=>{const u=mk(x,'f');scaleU(u,!k?{h:e*2.2,a:e*1.3,d:Math.pow(e,.8)*1.15,s:2,c:.1}:{h:e*.8,a:e*.8,d:Math.pow(e,.8)*.8,s:0,c:0});if(!k)u.el.querySelector('.nm').textContent='👹 เงา'+u.n;return u});begin()}
+function hbEnd(w){const i=ADV.hb,lv=G.heroes[i].lv,L0=lvOf(G.xp).l,pt=G.pity[i]||0,own=hasSig(i),dr=[];let gem=0,br=0,xp=w?40+lv:8,got=0;
+if(w){gem=30+lv;br=HBF+40+2*lv;if(!own){if(pt>=7||Math.random()<hbRate(i)){const r=Math.random();dr.push(mkItem(r<.2?'r':r<.6?'y':'b','sig',Math.min(5,1+(lv/10|0)),i));G.pity[i]=0;got=1}else G.pity[i]=pt+1}}
+G.gems+=gem;G.bread+=br;G.xp+=xp;G.inv.push(...dr);const L1=lvOf(G.xp).l;sv();
+const ln=[w?`💎 +${gem}`:'เงาแข็งแกร่งมาก! อัปเลเวล ใส่ไอเทม หรือปรับทีมแล้วท้าใหม่',w?`🍞 +${br} (รวมคืนค่าเข้า ${HBF})`:'',`⭐ EXP +${xp}`,L1>L0?`🎉 เลเวลอัป! Lv.${L0} → Lv.${L1}`:'',w&&own?'✔ ฮีโร่ตัวนี้มีไอเทมประจำตัวแล้ว':'',w&&!own&&!got?`🎲 ไม่ดรอป — รอบหน้าโอกาส ${Math.round(Math.min(1,.15+.12*(pt+1))*100)}%`:'',...dr.map(it=>`<span style="color:${TIER[it.t].c}">🌟 ${iNm(it)} [${TIER[it.t].n}] ${iTxt(it)}</span>`)].filter(Boolean).join('<br>');
+end(w?`🏆 ล้มเงา${H[i].n}สำเร็จ!`:'💀 พ่ายแพ้',ln,[['🔁 ท้าอีกครั้ง',()=>hbStart(i)],['👹 หน้าบอส',()=>advGo('boss')],['🗺️ แผนที่',()=>advGo('map')]],statsHTML())}
+
 home();
 </script></body></html>
