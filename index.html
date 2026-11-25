@@ -268,6 +268,9 @@ button small{display:block;font-family:'Sarabun';font-size:11px;opacity:.8}
 #adv .a-bc div{flex:1;line-height:1.5;font-size:14px}#adv .a-bc small{opacity:.85}
 #adv .a-bc .a-go{flex:none;padding:8px 14px;border-radius:10px;border:2px solid #ffd23f;background:linear-gradient(#ff9a8a,#c4142f);font-weight:600;font-size:14px}
 #adv .a-bc.lk{filter:grayscale(.8) brightness(.6)}#adv .a-bc.dn .a-go{background:linear-gradient(#b9ff9e,#2f9a3f);color:#05200c}
+#auto{position:fixed;left:10px;top:calc(56px + env(safe-area-inset-top,0px));z-index:9;display:none;padding:8px 14px;font-size:14px;border-radius:12px;transform:none!important;border:2px solid #ffd23f;color:#ffe9a8;background:linear-gradient(#4a3a9a,#251b63);box-shadow:0 3px 0 #0a0724}
+#auto.on{color:#05200c;border-color:#d4ffc2;background:linear-gradient(#c9ffb0,#4cd964 55%,#1f9a3a);box-shadow:0 3px 0 #14602a,0 0 18px #4cd96488}
+#auto.on b{animation:bl 1s steps(2) infinite}
 /* ---------- battle HUD ---------- */
 #top{text-align:center;min-height:54px}
 #wv{display:flex;justify-content:center;align-items:center;gap:10px;font-family:var(--disp);font-size:13px}
@@ -346,7 +349,7 @@ button small{display:block;font-family:'Sarabun';font-size:11px;opacity:.8}
 @media (prefers-reduced-motion:reduce){.u .em,body::before,#menu::before,#end::before,#m1,.ps1,.u.active .nm,#menu h1.logo{animation:none!important}}
 </style></head><body>
 <div id="floor"></div><canvas id="cv"></canvas><div id="flash"></div><div id="banner"></div><div id="lines"></div><div id="cut"></div>
-<button id="hm" onclick="home()">🏠</button>
+<button id="auto" onclick="toggleAuto()"></button><button id="hm" onclick="home()">🏠</button>
 <div id="stage"><div id="top"><div id="wv"></div><div id="msg"></div></div><div class="row" id="foes"></div><div id="vs"></div><div class="row" id="party"></div><div id="cmd"></div></div>
 <div id="menu"></div><div id="end"></div>
 <script>
@@ -475,7 +478,7 @@ const SN=['sword','fire','bow','heal','sword','fire','magic','laser','ice','punc
 const DF={easy:{sk:.5,fo:.3,gd:.2,dr:0},normal:{sk:.85,fo:.75,gd:.1,dr:1},hard:{sk:1,fo:1,gd:0,dr:2}};
 const HROLE={atk:['single','pierce','twin','aoe','multi','drain','freeze','vuln'],buff:['atkbuff','empower','heal','shield'],tank:['taunt','roar','cover']},HRN={atk:'⚔️ สายโจมตี',buff:'✨ สายบัพ/ซัพพอร์ต',tank:'🛡️ สายแทงค์'},roleOf=k=>Object.keys(HROLE).find(r=>HROLE[r].includes(k))||'atk';
 // ---------- menus
-function home(){over=true;BID++;AU.music('menu');const hs=[...H.keys()].sort(()=>Math.random()-.5).slice(0,5);
+function home(){autoBtn(0);over=true;BID++;AU.music('menu');const hs=[...H.keys()].sort(()=>Math.random()-.5).slice(0,5);
 show(`<div class=cv><h1 class=logo><span>ARCANE</span><span>DUEL</span></h1><div class=tag>ศึกจอมเวท PvP สองผู้เล่น บนจอเดียว</div><div class=chips><span>👥 2 ผู้เล่น</span><span>🎯 ดราฟทีมละ 4 ตัว</span><span>🌟 18 ฮีโร่</span><span>💠 พาสซีพเฉพาะตัว</span></div><div class=hr>${hs.map(i=>`<span class=hh style="--c:${H[i].c}" data-i=${i}>${H[i].e}</span>`).join('')}</div><div class=tip>แตะฮีโร่เพื่อดูพาสซีพ</div><div class=bt><button id=mi class=ix>📚 ดัชนีฮีโร่</button><button id=m4>🏰 โหมดผจญภัย</button><button id=m1>⚔️ PvP 2 ผู้เล่น</button><button id=m3>🤖 เล่นคนเดียว vs AI</button><button id=m2>📖 กติกา & คริติคอล</button></div><div class=tag style="font-size:12px;opacity:.5">กด Enter เพื่อเริ่มได้เลย</div></div>`);
 M.classList.add('cover');const cv=$('.cv');
 for(let i=0;i<24;i++){const t=document.createElement('i');t.className='st';t.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${-Math.random()*4}s;scale:${.6+Math.random()*1.2}`;cv.append(t)}
@@ -532,6 +535,13 @@ if(!can&&((u.hp<u.max*.3&&r<.4)||r<DF[DIFF].gd))return guard();
 if(can){const buffed=A.some(x=>x.bt>0),nE=A.filter(x=>!(x.et>0)),use=k=='heal'?hurt>0:k=='atkbuff'?!buffed&&r<.9:k=='empower'?nE.length>0&&r<.9:k=='shield'?A.some(x=>!x.shield)&&r<.7:k=='taunt'?!(u.tt>0)&&r<.6:k=='cover'?!(u.cv>0)&&r<.6:k=='roar'?E.some(x=>!(x.dt>0))&&r<.6:k=='vuln'?!(tg.vt>0)&&r<.85:r<DF[DIFF].sk;
 if(use)return k=='empower'?skill(u,(nE.length?nE:A).reduce((a,b)=>a.atk>b.atk?a:b)):['single','drain','twin','pierce','vuln'].includes(k)?skill(u,tg):skill(u)}
 return attack(u,tg)}
+
+// ---------- autoplay (all modes)
+let AUTO=false,AUTOK=null;try{AUTO=localStorage.getItem('arcane_auto')=='1'}catch(e){}
+function autoBtn(v){const b=$('#auto');if(!b)return;if(v!=null)b.style.display=v?'block':'none';b.className=AUTO?'on':'';b.innerHTML=AUTO?'<b>🤖</b> AUTO: เปิด':'🤖 AUTO: ปิด'}
+function toggleAuto(){AUTO=!AUTO;try{localStorage.setItem('arcane_auto',AUTO?'1':'0')}catch(e){}autoBtn();if(AUTO&&AUTOK)AUTOK()}
+function autoTurn(u){if(!DF[DIFF])DIFF='normal';return aiTurn(u)}
+function playerTurn(u){if(AUTO&&!over)return autoTurn(u);return new Promise(res=>{let done=0;AUTOK=()=>{if(done)return;done=1;AUTOK=null;$('#cmd').innerHTML='';clearTgt();autoTurn(u).then(res)};playerTurn0(u).then(()=>{if(!done){done=1;AUTOK=null;res()}})})}
 function pvpStart(a,b){PV=[a,b];party=a.map(i=>mk(i,'p'));foes=b.map(i=>mk(i,'f'));begin()}
 // ---------- units & loop
 function mk(i,side){const u={...H[i],...PS[i],snd:SN[i],side,i,guard:0,shield:0,frz:0,sD:0,sT:0,sH:0,burn:0,st:0,ncrit:0,mpMax:H[i].mp,hp:Math.round(H[i].hp*HPX),max:Math.round(H[i].hp*HPX)};u.ward=u.pid=='ward'?Math.round(u.max*.3):0;
@@ -540,7 +550,7 @@ el.innerHTML=`<div class=nm>${u.n}</div><div class=em>${u.e}</div><div class="ba
 el.onclick=()=>tgtCb&&tgtCb(u);u.el=el;upd(u);return u}
 function upd(u){const q=s=>u.el.querySelector(s);q('.hp i').style.width=u.hp/u.max*100+'%';q('.hp').style.setProperty('--w',u.hp/u.max*100+'%');u.el.classList.toggle('low',u.hp>0&&u.hp<u.max*.3);q('.mp i').style.width=u.mp/u.mpMax*100+'%';q('.num').textContent=`${u.hp}/${u.max} · MP ${u.mp}`;
 q('.sb').textContent=[u.ward>0?'🛡'+u.ward:'',u.burn>0?'🔥'+u.burn:'',u.frz>0?'❄️':'',u.shield>0?'✨':'',u.guard?'🔰':'',u.st>0?'⚡'+u.st:'',u.ncrit?'🎯':'',u.bt>0?'⚔️↑'+u.bt:'',u.et>0?'🎖️'+u.et:'',u.vt>0?'💢'+u.vt:'',u.dt>0?'⬇'+u.dt:'',u.tt>0?'📣'+u.tt:'',u.cv>0?'🏰'+u.cv:''].filter(Boolean).join(' ');u.el.classList.toggle('dead',u.hp<=0)}
-function begin(){M.style.display='none';$('#end').style.display='none';over=false;$('#cmd').innerHTML='';msg('');$('#party').innerHTML='';$('#foes').innerHTML='';
+function begin(){autoBtn(1);M.style.display='none';$('#end').style.display='none';over=false;$('#cmd').innerHTML='';msg('');$('#party').innerHTML='';$('#foes').innerHTML='';
 party.forEach(u=>$('#party').append(u.el));foes.forEach(u=>$('#foes').append(u.el));$('#wv').innerHTML=MODE=='adv'?advWv():'<b class=t1>P1 '+'★'.repeat(W[0])+'</b><i>VS</i><b class=t2>'+'★'.repeat(W[1])+' '+(MODE=='ai'?'AI':'P2')+'</b>';
 const id=++BID;AU.music(null);AU.sfx('round');banner(MODE=='adv'?(ADV.hb!=null?'BOSS BATTLE':'STAGE '+(ADV.c+1)+'-'+ADV.s):'ROUND '+(++RN)).then(()=>{AU.sfx('fight');AU.music('battle');return banner('FIGHT!')}).then(()=>battle(id))}
 const chk=()=>!party.some(p=>p.hp>0)?(finish(0),1):!foes.some(f=>f.hp>0)?(finish(1),1):0;
@@ -550,7 +560,7 @@ if(u.burn>0){u.burn--;u.hb=1;msg(u.n+' ถูกไฟเผา 🔥');hit(u,{d:
 if(u.frz>0){u.frz--;upd(u);msg(u.n+' แข็งติดอยู่ ❄️');await sleep(800);continue}
 if(u.pid=='regen'&&u.hp<u.max)heal(u,Math.round(u.max*.05));if(u.pid=='bless'){const a=alive(ally(u)).sort((x,y)=>x.hp/x.max-y.hp/y.max)[0];if(a&&a.hp<a.max){heal(a,Math.round(a.max*.08),u);await sleep(500)}}
 u.el.classList.add('active');await playerTurn(u);u.el.classList.remove('active');if(id!=BID)return;if(chk())return}}}
-function playerTurn(u){if((MODE=='ai'||MODE=='adv')&&u.side=='f')return aiTurn(u);return new Promise(res=>{const cmd=$('#cmd');cmd.style.borderColor=u.side=='p'?'#ffc857':'#6fd6ff';
+function playerTurn0(u){if((MODE=='ai'||MODE=='adv')&&u.side=='f')return aiTurn(u);return new Promise(res=>{const cmd=$('#cmd');cmd.style.borderColor=u.side=='p'?'#ffc857':'#6fd6ff';
 const fin=async f=>{cmd.innerHTML='';clearTgt();await f();res()};
 const menu=()=>{clearTgt();cmd.innerHTML=`<div class=who>ผู้เล่น ${u.side=='p'?1:2} · ${u.e} ตาของ ${u.n}</div><div class=pi>💠 ${u.pn}: ${u.pd}</div><button id=ba>⚔️ โจมตี</button><button id=bs ${u.mp<u.cost?'disabled':''}>✨ ${u.sk}<small>${u.cost} MP</small></button><button id=bg>🛡️ ป้องกัน</button>`;
 $('#ba').onclick=()=>ask(t=>fin(()=>attack(u,t)));
@@ -630,7 +640,7 @@ S.forEach(s=>{cx.globalAlpha=.3+.5*Math.abs(Math.sin(t/900+s.p));cx.fillStyle='#
 P=P.filter(p=>p.l>0);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vx*=.95;p.vy*=.95;p.l-=p.d;cx.globalAlpha=Math.max(0,p.l);cx.strokeStyle=p.col;cx.lineWidth=p.s;cx.shadowColor=p.col;cx.shadowBlur=10;cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(p.x-p.vx*2,p.y-p.vy*2);cx.stroke()});
 R=R.filter(r=>r.l>0);R.forEach(r=>{r.r+=6;r.l-=.035;cx.globalAlpha=Math.max(0,r.l);cx.strokeStyle=r.col;cx.lineWidth=4;cx.shadowBlur=18;cx.shadowColor=r.col;cx.beginPath();cx.arc(r.x,r.y,r.r,0,6.283);cx.stroke()});
 cx.shadowBlur=0;requestAnimationFrame(loop)}requestAnimationFrame(loop);
-function end(t,sub,btns,extra){over=true;const e=$('#end');e.innerHTML=`<div class=big>${t}</div><div style="line-height:1.7">${sub}</div><div class=bt></div>${extra||''}`;
+function end(t,sub,btns,extra){autoBtn(0);over=true;const e=$('#end');e.innerHTML=`<div class=big>${t}</div><div style="line-height:1.7">${sub}</div><div class=bt></div>${extra||''}`;
 btns.forEach(([l,f])=>{const b=document.createElement('button');b.textContent=l;b.onclick=f;e.querySelector('.bt').append(b)});e.style.display='flex';
 for(let i=0;i<14;i++)setTimeout(()=>{for(let j=0;j<40;j++){const a=Math.random()*6.283,v=2+Math.random()*8;P.push({x:Math.random()*cv.width,y:Math.random()*cv.height*.6,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,d:.015,s:3,col:rnd(['#ffc857','#ff5a3c','#7dff8a','#9be7ff','#ff9ecb'])})}},i*220)}
 function statsHTML(){const all=[...party,...foes],mx=k=>Math.max(1,...all.map(u=>u[k])),cols=[['sD','⚔️ ดาเมจ','#ffb347'],['sT','🩸 รับดาเมจ','#ff7a7a'],['sH','💚 ฮีล','#7dff8a']],mvp=all.reduce((a,b)=>b.sD>a.sD?b:a);
