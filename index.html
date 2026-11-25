@@ -778,7 +778,8 @@ const lg=o.lg?zP('M37 92H48V111H33Q32 105 37 103Z',o.lg)+zP('M52 92H63V103Q68 10
 tor=zP('M33 58Q50 52 67 58L65 94H35Z',o.t)+zP('M35 86H65V93H35Z',o.t2)+zR(46,85,8,9,'#ffd23f',2),
 arm=zP('M34 60Q22 68 24 84L31 85Q33 72 40 66Z',o.t)+zP('M66 60Q78 68 76 84L69 85Q67 72 60 66Z',o.t)+zC(27,86,5,o.sk)+zC(73,86,5,o.sk),
 hd=o.hd?o.hd:zC(50,38,20,o.sk)+(o.nohr||!o.hr?'':HR(o.hr))+EY;
-return HVC[i]=`<svg class="hv" viewBox="0 0 100 120" aria-hidden="true">${bk||''}${lg}${tor}${arm}${hd}${fr||''}</svg>`}
+const nc=(H[i]&&H[i].c)||'#fff';
+return HVC[i]=`<svg class="hv" viewBox="0 0 100 120" aria-hidden="true" style="filter:drop-shadow(0 0 4px ${nc}) drop-shadow(0 0 12px ${nc})">${bk||''}${lg}${tor}${arm}${hd}${fr||''}</svg>`.split('#1a0f3a').join(nc)}
 const hvd=d=>hv(H.indexOf(d)),ua=u=>u.i!=null&&H[u.i]&&H[u.i].e==u.e?hv(u.i):u.e;
 const itSc=it=>Object.entries(it.st).reduce((a,[k,v])=>a+v/BV[k],0),bestOf=(sl,h)=>G.inv.filter(x=>x.sl==sl&&(sl!='sig'||x.h==h)).reduce((a,b)=>!a||itSc(b)>itSc(a)?b:a,null),
 icH=(it,tag,at,sk)=>`<${tag} class=a-ic style="--k:${TIER[it.t].c}" ${at}><span class=ti>${slI(it.sl)}</span><div class=bd><b>${iNm(it)}</b><span class=tr>${TIER[it.t].n}</span><div class=pl>${Object.entries(it.st).map(([k,v])=>`<span>${SNM[k]} +${v}${SU[k]}</span>`).join('')}</div></div>${sk?`<span class="sk ${sk[0]}">${sk[1]}</span>`:''}</${tag}>`;
