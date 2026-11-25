@@ -285,7 +285,8 @@ button small{display:block;font-family:'Sarabun';font-size:11px;opacity:.8}
 .ico{width:100%;height:100%;display:block;filter:drop-shadow(0 3px 0 #000a) drop-shadow(0 0 5px var(--k))}
 .a-ic .ti{padding:7px;font-size:0;filter:none}
 .a-eq .ico{width:32px;height:32px}.a-eq:not([style*="--k:#"]) .ico{opacity:.5}
-.hv{width:.95em;height:1.14em;display:inline-block;vertical-align:-.2em;overflow:visible;filter:drop-shadow(0 3px 0 #0008)}
+.hv{width:.95em;height:1.14em;display:inline-block;vertical-align:-.2em;overflow:visible;filter:drop-shadow(0 0 4px var(--nc,#fff)) drop-shadow(0 0 12px var(--nc,#fff))}
+.a-nd .hv,.a-eb .hv,.a-ee .hv{width:.8em;height:.96em;vertical-align:0;overflow:hidden;filter:drop-shadow(0 0 2px var(--nc,#fff)) drop-shadow(0 0 5px var(--nc,#fff))}
 .a-art>span b,.a-hc .ar{line-height:1}
 /* ---------- battle HUD ---------- */
 #top{text-align:center;min-height:54px}
@@ -779,7 +780,7 @@ tor=zP('M33 58Q50 52 67 58L65 94H35Z',o.t)+zP('M35 86H65V93H35Z',o.t2)+zR(46,85,
 arm=zP('M34 60Q22 68 24 84L31 85Q33 72 40 66Z',o.t)+zP('M66 60Q78 68 76 84L69 85Q67 72 60 66Z',o.t)+zC(27,86,5,o.sk)+zC(73,86,5,o.sk),
 hd=o.hd?o.hd:zC(50,38,20,o.sk)+(o.nohr||!o.hr?'':HR(o.hr))+EY;
 const nc=(H[i]&&H[i].c)||'#fff';
-return HVC[i]=`<svg class="hv" viewBox="0 0 100 120" aria-hidden="true" style="filter:drop-shadow(0 0 4px ${nc}) drop-shadow(0 0 12px ${nc})">${bk||''}${lg}${tor}${arm}${hd}${fr||''}</svg>`.split('#1a0f3a').join(nc)}
+return HVC[i]=`<svg class="hv" viewBox="0 0 100 120" aria-hidden="true" style="--nc:${nc}">${bk||''}${lg}${tor}${arm}${hd}${fr||''}</svg>`.split('#1a0f3a').join(nc)}
 const hvd=d=>hv(H.indexOf(d)),ua=u=>u.i!=null&&H[u.i]&&H[u.i].e==u.e?hv(u.i):u.e;
 const itSc=it=>Object.entries(it.st).reduce((a,[k,v])=>a+v/BV[k],0),bestOf=(sl,h)=>G.inv.filter(x=>x.sl==sl&&(sl!='sig'||x.h==h)).reduce((a,b)=>!a||itSc(b)>itSc(a)?b:a,null),
 icH=(it,tag,at,sk)=>`<${tag} class=a-ic style="--k:${TIER[it.t].c}" ${at}><span class=ti>${slI(it.sl)}</span><div class=bd><b>${iNm(it)}</b><span class=tr>${TIER[it.t].n}</span><div class=pl>${Object.entries(it.st).map(([k,v])=>`<span>${SNM[k]} +${v}${SU[k]}</span>`).join('')}</div></div>${sk?`<span class="sk ${sk[0]}">${sk[1]}</span>`:''}</${tag}>`;
