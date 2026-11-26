@@ -360,7 +360,9 @@ button small{display:block;font-family:'Sarabun';font-size:11px;opacity:.8}
 @keyframes fl{0%{transform:translate(-50%,0) scale(.4);opacity:0}15%{transform:translate(-50%,-14px) scale(1.4);opacity:1}100%{transform:translate(-50%,-80px) scale(1);opacity:0}}
 
 /* ---------- command panel ---------- */
-#cmd{position:relative;z-index:8;min-height:76px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;padding:12px 28px 14px;border:0;border-top:3px solid #ffffff33;background:linear-gradient(#1b1030ee,#0b0618f5);clip-path:polygon(14px 0,100% 0,calc(100% - 14px) 100%,0 100%);transition:border-color .3s}
+#cmd,#cmd2{position:relative;z-index:8;min-height:76px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;padding:12px 28px 14px;border:0;border-top:3px solid #ffffff33;background:linear-gradient(#1b1030ee,#0b0618f5);clip-path:polygon(14px 0,100% 0,calc(100% - 14px) 100%,0 100%);transition:border-color .3s}
+#cmd2{display:none;order:-1;transform:rotate(180deg)}
+#stage.pvp #cmd2{order:0}#stage.pvp #foes{order:1}#stage.pvp #top{order:2}#stage.pvp #vs{order:3}#stage.pvp #party{order:4}#stage.pvp #cmd{order:5}#stage.pvp #vs::after{display:none}#stage.pvp #wv i{visibility:hidden;display:inline-block;width:46px}#stage.pvp #foes .u{rotate:180deg}#stage.pvp .foe .em{transform:none;animation-name:bob}#stage.pvp .foe.hit .em{animation-name:hit}#stage.pvp #cmd2{display:flex;margin-top:env(safe-area-inset-top,0px)}
 .who{color:var(--gold);width:100%;text-align:center;font-size:15px;text-shadow:0 2px 0 #000}
 .pi{width:100%;text-align:center;font-size:12.5px;color:#ffd98a}
 
@@ -371,6 +373,7 @@ button small{display:block;font-family:'Sarabun';font-size:11px;opacity:.8}
 #cut{position:fixed;left:0;right:0;top:30%;height:110px;z-index:9;pointer-events:none;display:none;align-items:center;gap:16px;padding:0 6vw;border-top:3px solid var(--c);border-bottom:3px solid var(--c);background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--c) 65%,#000) 15%,#000d 85%,transparent);box-shadow:0 0 40px var(--c)}
 #cut.go{display:flex;animation:ct 1s ease-out forwards}
 #cut.rt{flex-direction:row-reverse;animation-name:ctr}
+#cut.pv1{top:auto;bottom:clamp(100px,18%,160px)}#cut.pv2{top:clamp(100px,18%,160px);rotate:180deg}
 #cut span{font-size:70px;filter:drop-shadow(0 0 16px var(--c))}
 #cut b{font-family:var(--disp);font-weight:400;font-style:italic;font-size:clamp(26px,8vw,54px);color:#fff;-webkit-text-stroke:1.5px #000;text-shadow:4px 4px 0 var(--c)}
 @keyframes ct{0%{opacity:0;transform:skewY(-3deg) translateX(-60%)}15%{opacity:1;transform:skewY(-3deg) translateX(0)}80%{opacity:1;transform:skewY(-3deg) translateX(3%)}100%{opacity:0;transform:skewY(-3deg) translateX(40%)}}
@@ -387,7 +390,7 @@ button small{display:block;font-family:'Sarabun';font-size:11px;opacity:.8}
 </style></head><body>
 <div id="floor"></div><canvas id="cv"></canvas><div id="flash"></div><div id="banner"></div><div id="lines"></div><div id="cut"></div>
 <button id="auto" onclick="toggleAuto()"></button><button id="hm" onclick="home()">🏠</button><button id="stopinf" onclick="infStop()">⏹ ออกจากอินฟินิตี้</button>
-<div id="stage"><div id="top"><div id="wv"></div><div id="msg"></div></div><div class="row" id="foes"></div><div id="vs"></div><div class="row" id="party"></div><div id="cmd"></div></div>
+<div id="stage"><div id="cmd2"></div><div id="top"><div id="wv"></div><div id="msg"></div></div><div class="row" id="foes"></div><div id="vs"></div><div class="row" id="party"></div><div id="cmd"></div></div>
 <div id="menu"></div><div id="end"></div>
 <script>
 const $=s=>document.querySelector(s),sleep=ms=>new Promise(r=>setTimeout(r,ms)),rnd=a=>a[Math.random()*a.length|0];
@@ -578,7 +581,7 @@ let AUTO=false,AUTOK=null;try{AUTO=localStorage.getItem('arcane_auto')=='1'}catc
 function autoBtn(v){const b=$('#auto');if(!b)return;if(v!=null)$('#stopinf').style.display=v&&MODE=='adv'&&ADV&&ADV.inf?'block':'none';if(v!=null)b.style.display=v?'block':'none';b.className=AUTO?'on':'';b.innerHTML=AUTO?'<b>🤖</b> AUTO: เปิด':'🤖 AUTO: ปิด'}
 function toggleAuto(){AUTO=!AUTO;try{localStorage.setItem('arcane_auto',AUTO?'1':'0')}catch(e){}autoBtn();if(AUTO&&AUTOK)AUTOK()}
 function autoTurn(u){if(!DF[DIFF])DIFF='normal';return aiTurn(u)}
-function playerTurn(u){if(AUTO&&!over)return autoTurn(u);return new Promise(res=>{let done=0;AUTOK=()=>{if(done)return;done=1;AUTOK=null;$('#cmd').innerHTML='';clearTgt();autoTurn(u).then(res)};playerTurn0(u).then(()=>{if(!done){done=1;AUTOK=null;res()}})})}
+function playerTurn(u){if(AUTO&&!over)return autoTurn(u);return new Promise(res=>{let done=0;AUTOK=()=>{if(done)return;done=1;AUTOK=null;$('#cmd').innerHTML='';$('#cmd2').innerHTML='';clearTgt();autoTurn(u).then(res)};playerTurn0(u).then(()=>{if(!done){done=1;AUTOK=null;res()}})})}
 function pvpStart(a,b){PV=[a,b];party=a.map(i=>mk(i,'p'));foes=b.map(i=>mk(i,'f'));begin()}
 // ---------- units & loop
 function mk(i,side){const u={...H[i],...PS[i],snd:SN[i],side,i,guard:0,shield:0,frz:0,sD:0,sT:0,sH:0,burn:0,st:0,ncrit:0,mpMax:H[i].mp,hp:Math.round(H[i].hp*HPX),max:Math.round(H[i].hp*HPX)};u.ward=u.pid=='ward'?Math.round(u.max*.3):0;
@@ -587,7 +590,7 @@ el.innerHTML=`<div class=nm>${u.n}</div><div class=em>${ua(u)}</div><div class="
 el.onclick=()=>tgtCb&&tgtCb(u);u.el=el;upd(u);return u}
 function upd(u){const q=s=>u.el.querySelector(s);q('.hp i').style.width=u.hp/u.max*100+'%';q('.hp').style.setProperty('--w',u.hp/u.max*100+'%');u.el.classList.toggle('low',u.hp>0&&u.hp<u.max*.3);q('.mp i').style.width=u.mp/u.mpMax*100+'%';q('.num').textContent=`${u.hp}/${u.max} · MP ${u.mp}`;
 q('.sb').textContent=[u.ward>0?'🛡'+u.ward:'',u.burn>0?'🔥'+u.burn:'',u.frz>0?'❄️':'',u.shield>0?'✨':'',u.guard?'🔰':'',u.st>0?'⚡'+u.st:'',u.ncrit?'🎯':'',u.bt>0?'⚔️↑'+u.bt:'',u.et>0?'🎖️'+u.et:'',u.vt>0?'💢'+u.vt:'',u.dt>0?'⬇'+u.dt:'',u.tt>0?'📣'+u.tt:'',u.cv>0?'🏰'+u.cv:''].filter(Boolean).join(' ');u.el.classList.toggle('dead',u.hp<=0)}
-function begin(){autoBtn(1);M.style.display='none';$('#end').style.display='none';over=false;$('#cmd').innerHTML='';msg('');$('#party').innerHTML='';$('#foes').innerHTML='';
+function begin(){autoBtn(1);M.style.display='none';$('#end').style.display='none';over=false;$('#cmd').innerHTML='';$('#cmd2').innerHTML='';$('#stage').classList.toggle('pvp',MODE=='pvp');setTimeout(placeHm,0);$('#auto').style.top=MODE=='pvp'?'calc(96px + env(safe-area-inset-top,0px))':'';msg('');$('#party').innerHTML='';$('#foes').innerHTML='';
 party.forEach(u=>$('#party').append(u.el));foes.forEach(u=>$('#foes').append(u.el));$('#wv').innerHTML=MODE=='adv'?advWv():'<b class=t1>P1 '+'★'.repeat(W[0])+'</b><i>VS</i><b class=t2>'+'★'.repeat(W[1])+' '+(MODE=='ai'?'AI':'P2')+'</b>';
 const id=++BID;AU.music(null);AU.sfx('round');banner(MODE=='adv'?(ADV.inf?'WAVE '+ADV.w:ADV.hb!=null?'BOSS BATTLE':'STAGE '+(ADV.c+1)+'-'+ADV.s):'ROUND '+(++RN)).then(()=>{AU.sfx('fight');AU.music('battle');return banner('FIGHT!')}).then(()=>battle(id))}
 const chk=()=>!party.some(p=>p.hp>0)?(finish(0),1):!foes.some(f=>f.hp>0)?(finish(1),1):0;
@@ -597,7 +600,7 @@ if(u.burn>0){u.burn--;u.hb=1;msg(u.n+' ถูกไฟเผา 🔥');hit(u,{d:
 if(u.frz>0){u.frz--;upd(u);msg(u.n+' แข็งติดอยู่ ❄️');await sleep(800);continue}
 if(u.pid=='regen'&&u.hp<u.max)heal(u,Math.round(u.max*.05));if(u.pid=='bless'){const a=alive(ally(u)).sort((x,y)=>x.hp/x.max-y.hp/y.max)[0];if(a&&a.hp<a.max){heal(a,Math.round(a.max*.08),u);await sleep(500)}}
 u.el.classList.add('active');await playerTurn(u);u.el.classList.remove('active');if(id!=BID)return;if(chk())return}}}
-function playerTurn0(u){if((MODE=='ai'||MODE=='adv')&&u.side=='f')return aiTurn(u);return new Promise(res=>{const cmd=$('#cmd');cmd.style.borderColor=u.side=='p'?'#ffc857':'#6fd6ff';
+function playerTurn0(u){if((MODE=='ai'||MODE=='adv')&&u.side=='f')return aiTurn(u);return new Promise(res=>{const cmd=u.side=='f'&&MODE=='pvp'?$('#cmd2'):$('#cmd');cmd.style.borderColor=u.side=='p'?'#ffc857':'#6fd6ff';
 const fin=async f=>{cmd.innerHTML='';clearTgt();await f();res()};
 const menu=()=>{clearTgt();cmd.innerHTML=`<div class=who>ผู้เล่น ${u.side=='p'?1:2} · ${u.e} ตาของ ${u.n}</div><div class=pi>💠 ${u.pn}: ${u.pd}</div><button id=ba>⚔️ โจมตี</button><button id=bs ${u.mp<u.cost?'disabled':''}>✨ ${u.sk}<small>${u.cost} MP</small></button><button id=bg>🛡️ ป้องกัน</button>`;
 $('#ba').onclick=()=>ask(t=>fin(()=>attack(u,t)));
@@ -631,7 +634,7 @@ if(t.hp<=0){if(t.pid=='fox'&&!t.used){t.used=1;t.hp=Math.round(t.max*.3);t.burn=
 upd(t);return d}
 // ---------- combat
 function heal(t,a,src){const bn=t.burn>0||t.hb;if(bn)a=Math.max(1,Math.round(a*.5));a=Math.min(a,t.max-t.hp);t.hp+=a;(src||t).sH+=a;if(a>0)AU.sfx('heal');upd(t);if(bn&&a>0)float(t.el,'🔥ฮีล-50%','#ff9e7a',15);float(t.el,'+'+a,'#7dff8a',30);fx(t.el,'#7dff8a',24,'up')}
-function lunge(u){return u.el.animate([{transform:'none'},{transform:`translateY(${u.side=='p'?-60:60}px) scale(1.18)`,offset:.4},{transform:'none'}],{duration:480,easing:'ease-out'}).finished}
+function lunge(u){return u.el.animate([{transform:'none'},{transform:`translateY(${u.side=='p'||MODE=='pvp'?-60:60}px) scale(1.18)`,offset:.4},{transform:'none'}],{duration:480,easing:'ease-out'}).finished}
 async function attack(u,t){msg(`${u.n} โจมตี ${t.n}`);AU.cast(u,0);await lunge(u);fx(t.el,u.c,30,'slash');await sleep(120);hit(t,calc(u,t,1),u.c);
 u.mp=Math.min(u.mpMax,u.mp+4);upd(u);await sleep(650)}
 async function skill(u,t){u.mp-=u.cost;upd(u);msg(`${u.n} ใช้ ${u.sk}!`);if(HROLE.atk.includes(u.k))AU.cast(u,1);cutin(u);await lunge(u);flash(u.c);
@@ -671,7 +674,7 @@ P.push({x,y,vx,vy,l:1,d:.018+Math.random()*.025,s:1+Math.random()*3,col})}}
 function float(el,t,col,sz){const{x,y}=ctr(el),d=document.createElement('div');d.className='f';d.textContent=t;d.style.cssText=`left:${x+(Math.random()*30-15)}px;top:${y-20}px;color:${col};font-size:${sz}px`;document.body.append(d);setTimeout(()=>d.remove(),1150)}
 function shake(px){const s=$('#stage');s.classList.remove('shake');void s.offsetWidth;s.classList.add('shake')}
 function flash(col){const f=$('#flash');f.style.background=`radial-gradient(circle,${col}66,transparent 70%)`;f.animate([{opacity:.9},{opacity:0}],{duration:500});const l=$('#lines');l.style.setProperty('--c',col);l.animate([{opacity:.8,transform:'scale(1.25)'},{opacity:0,transform:'scale(1)'}],{duration:500})}
-function cutin(u){const c=$('#cut');c.style.setProperty('--c',u.c);c.innerHTML=`<span>${ua(u)}</span><b>${u.sk}</b>`;c.className='';void c.offsetWidth;c.className='go '+(u.side=='p'?'':'rt')}
+function cutin(u){const c=$('#cut');c.style.setProperty('--c',u.c);c.innerHTML=`<span>${ua(u)}</span><b>${u.sk}</b>`;c.className='';void c.offsetWidth;c.className='go '+(MODE=='pvp'?(u.side=='p'?'pv1':'pv2'):u.side=='p'?'':'rt')}
 function loop(t){cx.clearRect(0,0,cv.width,cv.height);cx.globalCompositeOperation='lighter';
 S.forEach(s=>{cx.globalAlpha=.3+.5*Math.abs(Math.sin(t/900+s.p));cx.fillStyle='#fff';cx.beginPath();cx.arc(s.x*cv.width,s.y*cv.height*.75,s.r,0,6.283);cx.fill()});
 P=P.filter(p=>p.l>0);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vx*=.95;p.vy*=.95;p.l-=p.d;cx.globalAlpha=Math.max(0,p.l);cx.strokeStyle=p.col;cx.lineWidth=p.s;cx.shadowColor=p.col;cx.shadowBlur=10;cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(p.x-p.vx*2,p.y-p.vy*2);cx.stroke()});
@@ -892,6 +895,8 @@ G.gems+=gem;G.bread+=br;G.xp+=xp;G.inv.push(...dr);const L1=lvOf(G.xp).l;sv();
 const ln=[w?`💎 +${gem}`:'เงาแข็งแกร่งมาก! อัปเลเวล ใส่ไอเทม หรือปรับทีมแล้วท้าใหม่',w?`🍞 +${br} (รวมคืนค่าเข้า ${F})`:'',`⭐ EXP +${xp}`,L1>L0?`🎉 เลเวลอัป! Lv.${L0} → Lv.${L1}`:'',lvNote(L0,L1),'',w&&!got?`🎲 ไม่ดรอป — รอบหน้าโอกาส ${Math.round(Math.min(1,.15+.12*(pt+1))*100)}%`:'',...dr.map(it=>`<span style="color:${TIER[it.t].c}">🌟 ${iNm(it)} [${TIER[it.t].n}] ${iTxt(it)}</span>${it.hv?(it.up?'<br>⬆ ดีกว่าชิ้นเดิมของคุณ!':'<br>⬇ ยังสู้ชิ้นเดิมไม่ได้ ลองล่าอีกครั้ง'):''}`)].filter(Boolean).join('<br>');
 end(w?`🏆 ล้มเงา${H[i].n} ระดับ ${L} สำเร็จ!`:'💀 พ่ายแพ้',ln,[['🔁 ท้าอีกครั้ง',()=>hbStart(i)],['👹 หน้าบอส',()=>advGo('boss')],['🗺️ แผนที่',()=>advGo('map')]],statsHTML())}
 
-let _rz;addEventListener('resize',()=>{clearTimeout(_rz);_rz=setTimeout(()=>{try{if(AT=='map'&&getComputedStyle(advEl()).display!='none')rMap()}catch(e){}},200)});
+function placeHm(){const h=$('#hm'),i=$('#wv i');if(!h)return;if(MODE!='pvp'||!i||!i.offsetWidth){h.style.left=h.style.top='';return}const r=i.getBoundingClientRect();h.style.left=Math.round(r.left+r.width/2-h.offsetWidth/2)+'px';h.style.top=Math.round(r.top+r.height/2-h.offsetHeight/2)+'px'}
+if(window.ResizeObserver){const ro=new ResizeObserver(placeHm);ro.observe($('#wv'));ro.observe($('#stage'))}
+let _rz;addEventListener('resize',()=>{placeHm();clearTimeout(_rz);_rz=setTimeout(()=>{try{if(AT=='map'&&getComputedStyle(advEl()).display!='none')rMap()}catch(e){}},200)});
 home();
 </script></body></html>
